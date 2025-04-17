@@ -1,0 +1,472 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:3647033658409699425",
+      "lastPropertyId": "13:4278148028726656131",
+      "name": "Item",
+      "properties": [
+        {
+          "id": "1:1322109077305042849",
+          "name": "obxId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:247339018156602338",
+          "name": "id",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "1:2313384049095609502"
+        },
+        {
+          "id": "3:1649343047595435191",
+          "name": "productRefId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:8592331478245401921",
+          "relationTarget": "Product"
+        },
+        {
+          "id": "4:8280072194251662269",
+          "name": "pickupId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "3:8605713273026118524",
+          "relationTarget": "Pickup"
+        },
+        {
+          "id": "5:125008882924616440",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "6:5957112636219597871",
+          "name": "localImagePaths",
+          "type": 30
+        },
+        {
+          "id": "7:5536886676443353665",
+          "name": "imageUrls",
+          "type": 30
+        },
+        {
+          "id": "8:6832656818320124970",
+          "name": "isUploaded",
+          "type": 1
+        },
+        {
+          "id": "9:7178083298772884945",
+          "name": "totalPrice",
+          "type": 8
+        },
+        {
+          "id": "10:6909274945856951762",
+          "name": "customPrice",
+          "type": 8
+        },
+        {
+          "id": "11:8692766262218993373",
+          "name": "weight",
+          "type": 8
+        },
+        {
+          "id": "12:3855520001340210942",
+          "name": "quantity",
+          "type": 8
+        },
+        {
+          "id": "13:4278148028726656131",
+          "name": "coordinates",
+          "type": 30
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:3499062822283679481",
+      "lastPropertyId": "15:6023074019746406043",
+      "name": "Picker",
+      "properties": [
+        {
+          "id": "1:8314008027966298228",
+          "name": "obxId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5020205973696603870",
+          "name": "id",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "4:3682713917540823008"
+        },
+        {
+          "id": "3:8627885469762187926",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:5761886418214060758",
+          "name": "email",
+          "type": 9
+        },
+        {
+          "id": "5:750408345269233354",
+          "name": "licenseNo",
+          "type": 9
+        },
+        {
+          "id": "6:3460085882618159150",
+          "name": "phoneNo",
+          "type": 9
+        },
+        {
+          "id": "7:7844116810777831617",
+          "name": "isAvailable",
+          "type": 1
+        },
+        {
+          "id": "8:1233029182517145552",
+          "name": "isDriver",
+          "type": 1
+        },
+        {
+          "id": "9:8391164291390453409",
+          "name": "isHelper",
+          "type": 1
+        },
+        {
+          "id": "10:1328413011392562589",
+          "name": "isOnLeave",
+          "type": 1
+        },
+        {
+          "id": "11:2122959790375096085",
+          "name": "isPicker",
+          "type": 1
+        },
+        {
+          "id": "12:7694050225210338490",
+          "name": "isWorking",
+          "type": 1
+        },
+        {
+          "id": "13:8868498782434592399",
+          "name": "routeName",
+          "type": 9
+        },
+        {
+          "id": "14:6719664997820649904",
+          "name": "assignedVehicleId",
+          "type": 9
+        },
+        {
+          "id": "15:6023074019746406043",
+          "name": "assignedVehicleName",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:4524830248819560669",
+      "lastPropertyId": "34:5997213107813513016",
+      "name": "Pickup",
+      "properties": [
+        {
+          "id": "1:8830903428903477154",
+          "name": "obxId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5313038494781644158",
+          "name": "id",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "5:776316616095459848"
+        },
+        {
+          "id": "3:3282101039302408929",
+          "name": "firebaseIndex",
+          "type": 6
+        },
+        {
+          "id": "4:6630882644611377850",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:6015255730337998695",
+          "name": "mobileNo",
+          "type": 9
+        },
+        {
+          "id": "6:4454327885273844939",
+          "name": "address",
+          "type": 9
+        },
+        {
+          "id": "7:2173064974354681515",
+          "name": "area",
+          "type": 9
+        },
+        {
+          "id": "8:2630647186908017995",
+          "name": "pincode",
+          "type": 9
+        },
+        {
+          "id": "9:6276025324422526039",
+          "name": "aov",
+          "type": 9
+        },
+        {
+          "id": "10:2061485383797670252",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "11:5133901119980439547",
+          "name": "expectedWeight",
+          "type": 9
+        },
+        {
+          "id": "12:6155851859633449714",
+          "name": "items",
+          "type": 30
+        },
+        {
+          "id": "13:5645036926989233304",
+          "name": "routeModelId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "6:5737767317417573135",
+          "relationTarget": "RouteModel"
+        },
+        {
+          "id": "14:2120329357333915293",
+          "name": "slot",
+          "type": 9
+        },
+        {
+          "id": "15:8698588829538967037",
+          "name": "finalSlot",
+          "type": 9
+        },
+        {
+          "id": "16:62571810724518853",
+          "name": "status",
+          "type": 9
+        },
+        {
+          "id": "17:6405587990205067554",
+          "name": "subStatus",
+          "type": 9
+        },
+        {
+          "id": "18:1638793154381925846",
+          "name": "isCompleted",
+          "type": 1
+        },
+        {
+          "id": "19:3610707955158825955",
+          "name": "isLocked",
+          "type": 1
+        },
+        {
+          "id": "20:4009101271381943011",
+          "name": "lockedBy",
+          "type": 9
+        },
+        {
+          "id": "21:7033087422162197779",
+          "name": "pickerId",
+          "type": 9
+        },
+        {
+          "id": "22:3902465263740290773",
+          "name": "pickerPhoneNo",
+          "type": 9
+        },
+        {
+          "id": "23:4027711034227314849",
+          "name": "helperId",
+          "type": 9
+        },
+        {
+          "id": "24:4655357118912138576",
+          "name": "helperPhoneNo",
+          "type": 9
+        },
+        {
+          "id": "25:2000592081910937505",
+          "name": "routeId",
+          "type": 9
+        },
+        {
+          "id": "26:7227035950931356317",
+          "name": "mapLink",
+          "type": 9
+        },
+        {
+          "id": "27:8795241633232125482",
+          "name": "coordinates",
+          "type": 30
+        },
+        {
+          "id": "28:8753400249586304795",
+          "name": "totalPrice",
+          "type": 8
+        },
+        {
+          "id": "29:5857162600044542677",
+          "name": "totalWeightQuantity",
+          "type": 8
+        },
+        {
+          "id": "30:5107347732320985238",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "31:7019963449942266440",
+          "name": "date",
+          "type": 10
+        },
+        {
+          "id": "32:7055597313563106130",
+          "name": "finalDate",
+          "type": 10
+        },
+        {
+          "id": "33:4762735058724552472",
+          "name": "updatedAt",
+          "type": 12
+        },
+        {
+          "id": "34:5997213107813513016",
+          "name": "completedAt",
+          "type": 12
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:4438245468046021917",
+      "lastPropertyId": "5:2549285746337794808",
+      "name": "Product",
+      "properties": [
+        {
+          "id": "1:6581673323777569260",
+          "name": "obxId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1010674370842179722",
+          "name": "id",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "7:366559691916291565"
+        },
+        {
+          "id": "3:5141925006218215191",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:2602152634755786670",
+          "name": "price",
+          "type": 9
+        },
+        {
+          "id": "5:2549285746337794808",
+          "name": "unit",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:5973206277801937997",
+      "lastPropertyId": "11:1803655940889327948",
+      "name": "RouteModel",
+      "properties": [
+        {
+          "id": "1:8451399680287254762",
+          "name": "obxId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1358936430378888721",
+          "name": "id",
+          "type": 9,
+          "flags": 2080,
+          "indexId": "8:9009702185145953642"
+        },
+        {
+          "id": "3:503851572910096226",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:823828170414892913",
+          "name": "mapLink",
+          "type": 9
+        },
+        {
+          "id": "5:7061528622955075248",
+          "name": "morningAssetCheck",
+          "type": 9
+        },
+        {
+          "id": "6:8351414650719990514",
+          "name": "eveningAssetCheck",
+          "type": 9
+        },
+        {
+          "id": "7:7370068806018240265",
+          "name": "pickerFirebaseId",
+          "type": 9
+        },
+        {
+          "id": "8:4184521304928893870",
+          "name": "helperId",
+          "type": 9
+        },
+        {
+          "id": "9:6108113720106004663",
+          "name": "pickupIds",
+          "type": 30
+        },
+        {
+          "id": "10:7722640618588450751",
+          "name": "scheduledDate",
+          "type": 10
+        },
+        {
+          "id": "11:1803655940889327948",
+          "name": "updatedAt",
+          "type": 12
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "5:5973206277801937997",
+  "lastIndexId": "8:9009702185145953642",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
