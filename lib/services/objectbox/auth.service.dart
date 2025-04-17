@@ -7,9 +7,10 @@ import 'dart:async';
 
 class OBAuthService {
   ObjectBox objectbox;
+  final VoidCallback? onSynced;
   StreamSubscription? _pickerSubscription;
 
-  OBAuthService({required this.objectbox});
+  OBAuthService({required this.objectbox, this.onSynced});
 
   void syncPicker() {
     _pickerSubscription?.cancel();
@@ -21,6 +22,7 @@ class OBAuthService {
       _pickerSubscription = ReadService()
           .getPicker(id: existingPickerData.id)
           .listen((pickerData) {
+            onSynced?.call();
             objectbox.pickerBox.put(
               pickerData.copyWith(obxId: existingPickerData.obxId),
             );

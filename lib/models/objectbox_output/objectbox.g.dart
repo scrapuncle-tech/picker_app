@@ -14,6 +14,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import '../../models/app_sync_status.entity.dart';
 import '../../models/item.entity.dart';
 import '../../models/local_pickup.entity.dart';
 import '../../models/picker.entity.dart';
@@ -667,7 +668,36 @@ final _entities = <obx_int.ModelEntity>[
       backlinks: <obx_int.ModelBacklink>[
         obx_int.ModelBacklink(
             name: 'pickupsData', srcEntity: 'Pickup', srcField: 'routeModel')
-      ])
+      ]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(7, 268734170302123877),
+      name: 'SyncStatus',
+      lastPropertyId: const obx_int.IdUid(4, 7130673956283102337),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 3944528681064313609),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 7801946328115112777),
+            name: 'isSyncing',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7891867666782947022),
+            name: 'isSynced',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7130673956283102337),
+            name: 'lastSyncTime',
+            type: 12,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[])
 ];
 
 /// Shortcut for [obx.Store.new] that passes [getObjectBoxModel] and for Flutter
@@ -705,7 +735,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(6, 8073611703555323437),
+      lastEntityId: const obx_int.IdUid(7, 268734170302123877),
       lastIndexId: const obx_int.IdUid(11, 8041517500316570220),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -1462,6 +1492,44 @@ obx_int.ModelDefinition getObjectBoxModel() {
               obx_int.RelInfo<Pickup>.toOneBacklink(13, object.obxId,
                   (Pickup srcObject) => srcObject.routeModel));
           return object;
+        }),
+    SyncStatus: obx_int.EntityDefinition<SyncStatus>(
+        model: _entities[6],
+        toOneRelations: (SyncStatus object) => [],
+        toManyRelations: (SyncStatus object) => {},
+        getId: (SyncStatus object) => object.id,
+        setId: (SyncStatus object, int id) {
+          object.id = id;
+        },
+        objectToFB: (SyncStatus object, fb.Builder fbb) {
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addBool(1, object.isSyncing);
+          fbb.addBool(2, object.isSynced);
+          fbb.addInt64(3, object.lastSyncTime.microsecondsSinceEpoch * 1000);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final isSyncingParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 6, false);
+          final isSyncedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 8, false);
+          final lastSyncTimeParam = DateTime.fromMicrosecondsSinceEpoch(
+              (const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0) /
+                      1000)
+                  .round());
+          final object = SyncStatus(
+              id: idParam,
+              isSyncing: isSyncingParam,
+              isSynced: isSyncedParam,
+              lastSyncTime: lastSyncTimeParam);
+
+          return object;
         })
   };
 
@@ -1944,4 +2012,23 @@ class RouteModel_ {
   /// see [RouteModel.pickupsData]
   static final pickupsData =
       obx.QueryBacklinkToMany<Pickup, RouteModel>(Pickup_.routeModel);
+}
+
+/// [SyncStatus] entity fields to define ObjectBox queries.
+class SyncStatus_ {
+  /// See [SyncStatus.id].
+  static final id =
+      obx.QueryIntegerProperty<SyncStatus>(_entities[6].properties[0]);
+
+  /// See [SyncStatus.isSyncing].
+  static final isSyncing =
+      obx.QueryBooleanProperty<SyncStatus>(_entities[6].properties[1]);
+
+  /// See [SyncStatus.isSynced].
+  static final isSynced =
+      obx.QueryBooleanProperty<SyncStatus>(_entities[6].properties[2]);
+
+  /// See [SyncStatus.lastSyncTime].
+  static final lastSyncTime =
+      obx.QueryDateNanoProperty<SyncStatus>(_entities[6].properties[3]);
 }

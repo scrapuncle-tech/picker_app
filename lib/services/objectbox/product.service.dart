@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import '../../models/objectbox_output/objectbox.g.dart';
 import '../../models/product.entity.dart';
@@ -7,9 +8,10 @@ import 'object_box.dart';
 
 class OBProductService {
   ObjectBox objectbox;
+  final VoidCallback? onSynced;
   StreamSubscription? _productSubscription;
 
-  OBProductService({required this.objectbox});
+  OBProductService({required this.objectbox, this.onSynced});
 
   void syncProducts() {
     // Cancel any existing subscription first
@@ -18,6 +20,7 @@ class OBProductService {
     _productSubscription = ReadService().getProducts().listen((
       List<Product> products,
     ) {
+      onSynced?.call();
       List<Product> updatedProducts = [];
 
       for (Product currentProduct in products) {

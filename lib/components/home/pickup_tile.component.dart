@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/pickup.entity.dart';
 import '../../providers/current_pickup.provider.dart';
-import '../../services/basic.service.dart';
+import '../../services/helper/basic.service.dart';
 import '../../utilities/theme/color_data.dart';
 import '../../utilities/theme/size_data.dart';
 import '../../views/update_pickup.page.dart';

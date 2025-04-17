@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 import '../components/common/text.component.dart';
 import '../components/home/header.component.dart';
 import '../components/home/pickup_tile.component.dart';
+import '../components/home/time_ago_text.component.dart';
 import '../models/pickup.entity.dart';
 import '../models/route_info.model.dart';
 import '../providers/route.provider.dart';
@@ -21,7 +21,6 @@ class HomePage extends ConsumerWidget {
 
     double height = sizeData.height;
     double width = sizeData.width;
-    double aspectRatio = sizeData.aspectRatio;
 
     RouteInfo routeInfo = ref.watch(routeInfoProvider);
 
@@ -33,23 +32,13 @@ class HomePage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             CustomText(
-              text: "REFRESH",
-              size: sizeData.subHeader,
-              color: colorData.fontColor(.6),
+              text: "LAST REFRESH : ",
+              size: sizeData.verySmall,
+              color: colorData.fontColor(.5),
               weight: FontWeight.w900,
             ),
             SizedBox(width: width * 0.02),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Symbols.refresh_rounded,
-                size: aspectRatio * 70,
-                fill: 1,
-                weight: 700,
-                grade: 200,
-                color: Colors.green,
-              ),
-            ),
+            TimeAgoText(),
           ],
         ),
         SizedBox(height: height * .01),

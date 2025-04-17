@@ -648,9 +648,38 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "7:268734170302123877",
+      "lastPropertyId": "4:7130673956283102337",
+      "name": "SyncStatus",
+      "properties": [
+        {
+          "id": "1:3944528681064313609",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7801946328115112777",
+          "name": "isSyncing",
+          "type": 1
+        },
+        {
+          "id": "3:7891867666782947022",
+          "name": "isSynced",
+          "type": 1
+        },
+        {
+          "id": "4:7130673956283102337",
+          "name": "lastSyncTime",
+          "type": 12
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "6:8073611703555323437",
+  "lastEntityId": "7:268734170302123877",
   "lastIndexId": "11:8041517500316570220",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

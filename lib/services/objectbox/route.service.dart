@@ -12,7 +12,8 @@ import 'object_box.dart';
 
 class OBRouteService {
   final ObjectBox objectbox;
-  OBRouteService({required this.objectbox});
+  final VoidCallback? onSynced;
+  OBRouteService({required this.objectbox, this.onSynced});
 
   final Set<String> _activeRouteListeners = {};
   final Set<String> _activePickupListeners = {};
@@ -26,6 +27,7 @@ class OBRouteService {
     _pickerSubscription = OBAuthService(
       objectbox: objectbox,
     ).getPicker().listen((picker) {
+      onSynced?.call();
       if (picker == null || _activeRouteListeners.contains(picker.id)) return;
 
       _activeRouteListeners.add(picker.id);
@@ -33,6 +35,7 @@ class OBRouteService {
       final routeSubscription = ReadService().getRoute(pickerId: picker.id).listen((
         route,
       ) async {
+        onSynced?.call();
         if (route == null) {
           objectbox.routeBox.removeAll();
           objectbox.pickupBox.removeAll();
@@ -98,6 +101,7 @@ class OBRouteService {
           final pickupSubscription = ReadService()
               .getPickup(id: pickupId)
               .listen((pickup) {
+                onSynced?.call();
                 final existingPickup =
                     objectbox.pickupBox
                         .query(Pickup_.id.equals(pickup.id))

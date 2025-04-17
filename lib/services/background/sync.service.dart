@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/app_sync_status.entity.dart';
 import '../objectbox/auth.service.dart';
 import '../objectbox/object_box.dart';
 import '../objectbox/product.service.dart';
@@ -23,18 +24,50 @@ class SyncService {
           result.contains(ConnectivityResult.mobile) ||
           result.contains(ConnectivityResult.ethernet)) {
         debugPrint('Internet connection restored. Triggering sync...');
+        updateSyncStatus(isSyncing: true);
         startSync();
       } else {
+        debugPrint('Internet connection lost. Stopping sync...');
         stopSync();
       }
     });
   }
 
+  void updateSyncStatus({bool isSyncing = false}) {
+    final existingStatus =
+        objectbox.syncStatusBox.query().build().findFirst() ??
+        SyncStatus(
+          isSyncing: false,
+          isSynced: false,
+          lastSyncTime: DateTime.now(),
+        );
+
+    final updated = existingStatus.copyWith(
+      isSyncing: isSyncing,
+      isSynced: !isSyncing,
+      lastSyncTime: DateTime.now(),
+    );
+
+    objectbox.syncStatusBox.put(updated);
+  }
+
   void startSync() {
     debugPrint('Starting sync...');
-    OBAuthService obAuthService = OBAuthService(objectbox: objectbox);
-    OBRouteService obRouteService = OBRouteService(objectbox: objectbox);
-    OBProductService productService = OBProductService(objectbox: objectbox);
+
+    void updateStatus() => updateSyncStatus(isSyncing: false);
+
+    OBAuthService obAuthService = OBAuthService(
+      objectbox: objectbox,
+      onSynced: updateStatus,
+    );
+    OBRouteService obRouteService = OBRouteService(
+      objectbox: objectbox,
+      onSynced: updateStatus,
+    );
+    OBProductService productService = OBProductService(
+      objectbox: objectbox,
+      onSynced: updateStatus,
+    );
 
     obAuthService.syncPicker();
     obRouteService.syncRoute();

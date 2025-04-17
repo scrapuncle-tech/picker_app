@@ -20,3 +20,21 @@ Color getStatusColor(String status) {
       return Colors.grey; // Default color for unknown status
   }
 }
+
+String formatTimeAgo(DateTime time) {
+  final now = DateTime.now();
+  final difference = now.difference(time);
+
+  if (difference.inSeconds < 60) {
+    return '${difference.inSeconds}s ago';
+  } else if (difference.inMinutes < 60) {
+    final seconds = difference.inSeconds % 60;
+    return '${difference.inMinutes}m${seconds > 0 ? ' ${seconds}s' : ''} ago';
+  } else if (difference.inHours < 24) {
+    final minutes = difference.inMinutes % 60;
+    return '${difference.inHours}h${minutes > 0 ? ' ${minutes}m' : ''} ago';
+  } else {
+    final days = difference.inDays;
+    return '$days day${days > 1 ? 's' : ''} ago';
+  }
+}
