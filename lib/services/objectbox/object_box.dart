@@ -2,6 +2,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../../models/item.entity.dart';
+import '../../models/local_pickup.entity.dart';
 import '../../models/objectbox_output/objectbox.g.dart';
 import '../../models/picker.entity.dart';
 import '../../models/pickup.entity.dart';
@@ -32,5 +33,5 @@ class ObjectBox {
   Box<Pickup> get pickupBox => store.box<Pickup>();
   Box<Item> get itemBox => store.box<Item>();
   Box<Product> get productBox => store.box<Product>();
-  Box<Pickup> get localStatePickupBox => store.box<Pickup>();
+  Box<LocalPickup> get localStatePickupBox => store.box<LocalPickup>();
 }

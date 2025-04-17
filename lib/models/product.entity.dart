@@ -5,7 +5,7 @@ class Product {
   @Id()
   int obxId;
 
-  @Unique()
+  @Unique(onConflict: ConflictStrategy.replace)
   @Index()
   String id;
   //

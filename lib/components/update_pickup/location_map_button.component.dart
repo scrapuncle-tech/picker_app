@@ -17,7 +17,8 @@ class LocationMapButton extends ConsumerWidget {
 
   void _openGoogleMaps(double latitude, double longitude) async {
     final Uri url = Uri.parse(
-        "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude");
+      "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude",
+    );
 
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
@@ -44,10 +45,7 @@ class LocationMapButton extends ConsumerWidget {
           horizontal: aspectRatio * 16,
         ),
         decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.green.withAlpha(160),
-            width: 1.5,
-          ),
+          border: Border.all(color: Colors.green.withAlpha(160), width: 1.5),
           borderRadius: BorderRadius.circular(8),
           gradient: LinearGradient(
             colors: [Colors.green.withAlpha(80), Colors.green.withAlpha(20)],

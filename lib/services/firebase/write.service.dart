@@ -2,32 +2,43 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 import '../../models/item.entity.dart';
 import '../../models/pickup.entity.dart';
 import '../../utilities/firebase_constants.dart';
 
+/// Keeps track of pickups currently being uploaded to avoid duplicate uploads
+
 class WriteService {
   /// Uploads item images and saves both items and pickup to Firestore.
   Future<void> putPickup({required Pickup pickup}) async {
-    print(pickup.id);
-    if (pickup.id.isEmpty) return;
-    // Step 1: Upload all item images and get download URLs
-    Map<String, List<String>> itemImageUrls = await _uploadItemImages(
-      pickup.itemsData,
-    );
+    try {
+      print("NEED to push to firebase : $pickup");
+      // Step 1: Upload all item images and get download URLs
+      Map<String, List<String>> itemImageUrls = await _uploadItemImages(
+        pickup.itemsData,
+      );
 
-    // Step 2: Save all items to Firestore with uploaded image URLs
-    List<String> itemIds = await _saveItemsToFirestore(
-      pickup.itemsData,
-      itemImageUrls,
-    );
+      // Step 2: Save all items to Firestore with uploaded image URLs
+      List<String> itemIds = await _saveItemsToFirestore(
+        pickup.itemsData,
+        itemImageUrls,
+      );
 
-    // Step 3: Save the pickup entry to Firestore with reference to item IDs
-    await FirebaseFirestore.instance
-        .collection(FirebaseConstants.pickupCollection)
-        .doc(pickup.id)
-        .set(pickup.toFirebase(itemIds: itemIds), SetOptions(merge: true));
+      print("Item IDS: $itemIds ");
+
+      // Step 3: Save the pickup entry to Firestore with reference to item IDs
+      await FirebaseFirestore.instance
+          .collection(FirebaseConstants.pickupCollection)
+          .doc(pickup.id)
+          .set(pickup.toFirebase(itemIds: itemIds), SetOptions(merge: true));
+    } catch (e) {
+      // Optional: handle errors or rethrow
+      rethrow;
+    } finally {
+      debugPrint("Done pushing to firebase");
+    }
   }
 
   /// Uploads images for each item and maps their IDs to the uploaded URLs.
@@ -37,13 +48,11 @@ class WriteService {
     Map<String, List<String>> itemImageUrls = {};
 
     for (Item item in itemsList) {
-      // If images already uploaded, use existing URLs
       if (item.imageUrls != null && item.imageUrls!.isNotEmpty) {
         itemImageUrls[item.id] = item.imageUrls!;
         continue;
       }
 
-      // Else upload local images if present
       if (item.localImagePaths != null && item.localImagePaths!.isNotEmpty) {
         List<String> uploadedUrls = [];
 
@@ -51,14 +60,13 @@ class WriteService {
           try {
             String imageUrl = await _uploadImageToStorage(imagePath);
             uploadedUrls.add(imageUrl);
-          } catch (e) {
-            // Optional: log or handle image upload failure
+          } catch (_) {
+            // Optional: log or skip
           }
         }
 
         itemImageUrls[item.id] = uploadedUrls;
       } else {
-        // No images at all
         itemImageUrls[item.id] = [];
       }
     }
@@ -89,21 +97,17 @@ class WriteService {
     List<String> itemIds = [];
 
     for (Item item in itemsList) {
-      // Generate a Firestore doc reference
       DocumentReference docRef =
           FirebaseFirestore.instance
               .collection(FirebaseConstants.itemsCollection)
               .doc();
 
-      // Create a copy of the item with updated ID and image URLs
       Item updatedItem = item.copyWith(
         id: docRef.id,
         imageUrls: itemImageUrls[item.id],
       );
 
-      // Save item to Firestore
       await docRef.set(updatedItem.toFirebase(), SetOptions(merge: true));
-
       itemIds.add(docRef.id);
     }
 

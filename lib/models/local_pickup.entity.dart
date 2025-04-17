@@ -1,10 +1,11 @@
 import 'package:objectbox/objectbox.dart';
 
 import 'item.entity.dart';
+import 'pickup.entity.dart';
 import 'route.entity.dart';
 
 @Entity()
-class Pickup {
+class LocalPickup {
   @Id()
   int obxId;
 
@@ -26,7 +27,7 @@ class Pickup {
   List<String> items;
 
   /// Relation to items
-  @Backlink('pickup')
+  @Backlink('localPickup')
   final itemsData = ToMany<Item>();
   // Each pickup belongs to a single route
   final routeModel = ToOne<RouteModel>();
@@ -59,7 +60,7 @@ class Pickup {
   @Property(type: PropertyType.dateNano)
   DateTime? completedAt;
 
-  Pickup({
+  LocalPickup({
     this.obxId = 0,
     required this.id,
     required this.firebaseIndex,
@@ -95,7 +96,7 @@ class Pickup {
     this.completedAt,
   });
 
-  Pickup copyWith({
+  LocalPickup copyWith({
     int? obxId,
     String? id,
     int? firebaseIndex,
@@ -131,7 +132,7 @@ class Pickup {
     DateTime? completedAt,
     List<Item>? itemsData,
   }) {
-    Pickup pickup = Pickup(
+    LocalPickup pickup = LocalPickup(
       obxId: obxId ?? this.obxId,
       id: id ?? this.id,
       firebaseIndex: firebaseIndex ?? this.firebaseIndex,
@@ -171,7 +172,81 @@ class Pickup {
     return pickup;
   }
 
-  static Pickup fromFirebase(Map<String, dynamic> data) {
+  static LocalPickup fromPickup(Pickup pickup) {
+    LocalPickup localPickup = LocalPickup(
+      id: pickup.id,
+      firebaseIndex: pickup.firebaseIndex,
+      name: pickup.name,
+      mobileNo: pickup.mobileNo,
+      address: pickup.address,
+      area: pickup.area,
+      pincode: pickup.pincode,
+      aov: pickup.aov,
+      description: pickup.description,
+      expectedWeight: pickup.expectedWeight,
+      items: pickup.items,
+      slot: pickup.slot,
+      finalSlot: pickup.finalSlot,
+      status: pickup.status,
+      subStatus: pickup.subStatus,
+      isCompleted: pickup.isCompleted,
+      isLocked: pickup.isLocked,
+      lockedBy: pickup.lockedBy,
+      pickerId: pickup.pickerId,
+      pickerPhoneNo: pickup.pickerPhoneNo,
+      helperId: pickup.helperId,
+      helperPhoneNo: pickup.helperPhoneNo,
+      routeId: pickup.routeId,
+      mapLink: pickup.mapLink,
+      createdAt: pickup.createdAt,
+      date: pickup.date,
+      finalDate: pickup.finalDate,
+      updatedAt: pickup.updatedAt,
+      coordinates: pickup.coordinates,
+    );
+
+    localPickup.itemsData.addAll(pickup.itemsData);
+    return localPickup;
+  }
+
+  Pickup toPickup() {
+    Pickup pickup = Pickup(
+      id: id,
+      firebaseIndex: firebaseIndex,
+      name: name,
+      mobileNo: mobileNo,
+      address: address,
+      area: area,
+      pincode: pincode,
+      aov: aov,
+      description: description,
+      expectedWeight: expectedWeight,
+      items: items,
+      slot: slot,
+      finalSlot: finalSlot,
+      status: status,
+      subStatus: subStatus,
+      isCompleted: isCompleted,
+      isLocked: isLocked,
+      lockedBy: lockedBy,
+      pickerId: pickerId,
+      pickerPhoneNo: pickerPhoneNo,
+      helperId: helperId,
+      helperPhoneNo: helperPhoneNo,
+      routeId: routeId,
+      mapLink: mapLink,
+      createdAt: createdAt,
+      date: date,
+      finalDate: finalDate,
+      updatedAt: updatedAt,
+      coordinates: coordinates,
+    );
+
+    pickup.itemsData.addAll(itemsData);
+    return pickup;
+  }
+
+  static LocalPickup fromFirebase(Map<String, dynamic> data) {
     List<String> coordinates =
         (data['coordinates'] != null &&
                 data['coordinates']['latitude'] != null &&
@@ -182,7 +257,7 @@ class Pickup {
             ]
             : [];
 
-    return Pickup(
+    return LocalPickup(
       id: data['id'] ?? '',
       firebaseIndex:
           data['index'] != null ? int.parse(data['index'].toString()) : 0,
@@ -268,7 +343,7 @@ class Pickup {
 
   @override
   String toString() {
-    return 'Pickup('
+    return 'LocalPickup('
         'obxId: $obxId, '
         'id: $id, '
         'firebaseIndex: $firebaseIndex, '

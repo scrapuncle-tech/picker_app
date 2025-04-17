@@ -4,16 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:background_fetch/background_fetch.dart';
 
 // Imports for app-specific screens and providers
-// import 'functions/background_offline_sync.function.dart';
 import 'services/background/app_lifecycle_manager.dart';
 import 'services/background/app_state_sync.service.dart';
-import 'services/background/sync.service.dart';
-import 'services/background/worker_manager.service.dart';
+import 'services/background/background_fetch.service.dart';
 import 'services/objectbox/object_box.dart';
 import 'services/firebase/firebase_options.dart';
-// import 'services/offline_sync.dart';
 import 'layouts/on_boarding.dart';
 import 'layouts/splash_screen.dart';
 import 'providers/app_keys.provider.dart';
@@ -45,10 +43,8 @@ Future<void> main() async {
     ),
   );
 
-  // await Workmanager().initialize(
-  //   callbackDispatcher,
-  //   isInDebugMode: true, // Turn off in production
-  // );
+  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+  await BackgroundFetchService.configureBackgroundFetch();
 
   // Start the app with Riverpod state management
   runApp(ProviderScope(child: MyApp()));

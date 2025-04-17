@@ -31,13 +31,13 @@ class PickupTile extends ConsumerWidget {
     double width = sizeData.width;
     double aspectRatio = sizeData.aspectRatio;
 
-    bool isCompleted = localCompletionState || pickup.isCompleted;
+    bool isGlobalCompleted = pickup.isCompleted;
 
     return Stack(
       clipBehavior: Clip.none,
       children: [
         Opacity(
-          opacity: isCompleted ? 1 : 0.8,
+          opacity: !localCompletionState ? 1 : 0.8,
           child: CustomInkWell(
             onPressed: () {
               // if (isLocalCompleted && !completionState) return;
@@ -217,7 +217,7 @@ class PickupTile extends ConsumerWidget {
                     children: [
                       PhoneCallButton(
                         customerNo: pickup.mobileNo,
-                        disable: isCompleted,
+                        disable: isGlobalCompleted || localCompletionState,
                       ),
                       SizedBox(height: height * 0.02),
                       // WhatsAppButton(
@@ -226,9 +226,15 @@ class PickupTile extends ConsumerWidget {
                       // ),
                       MapButton(
                         mapLink: pickup.mapLink,
-                        lat: double.tryParse(pickup.coordinates[0]),
-                        lng: double.tryParse(pickup.coordinates[1]),
-                        disable: isCompleted,
+                        lat:
+                            pickup.coordinates.isNotEmpty
+                                ? double.tryParse(pickup.coordinates[0])
+                                : 0,
+                        lng:
+                            pickup.coordinates.length > 1
+                                ? double.tryParse(pickup.coordinates[1])
+                                : 0,
+                        disable: isGlobalCompleted || localCompletionState,
                       ),
                     ],
                   ),

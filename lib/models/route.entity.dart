@@ -6,7 +6,7 @@ import 'pickup.entity.dart';
 class RouteModel {
   @Id()
   int obxId;
-  @Unique()
+  @Unique(onConflict: ConflictStrategy.replace)
   @Index()
   String id;
   //

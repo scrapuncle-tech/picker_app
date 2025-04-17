@@ -1,7 +1,6 @@
 import 'dart:isolate';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-
 import '../../main.dart';
 import 'sync.service.dart';
 import '../firebase/firebase_options.dart';
@@ -15,6 +14,7 @@ class AppStateSync {
     if (_isolate != null) return;
 
     _receivePort = ReceivePort();
+    _receivePort!.listen(_handleMessage);
 
     final isolateData = SyncIsolateData(
       sendPort: _receivePort!.sendPort,
@@ -26,25 +26,19 @@ class AppStateSync {
       isolateData,
       debugName: "SyncIsolate",
     );
+  }
 
-    _receivePort!.listen((message) async {
-      debugPrint("[SYNC LOG]: $message");
+  void _handleMessage(dynamic message) {
+    debugPrint("[SYNC LOG]: $message");
 
-      // Handle sync request in the main isolate
-      if (message == 'start_sync') {
-        if (objectbox == null) {
-          debugPrint("[SYNC LOG]: ObjectBox not initialized in main isolate.");
-          return;
-        }
-
-        try {
-          SyncService(objectbox: objectbox!).monitorConnectivity();
-          debugPrint("[SYNC LOG]: Main isolate sync completed.");
-        } catch (e) {
-          debugPrint("[SYNC LOG]: Main isolate sync error: $e");
-        }
+    if (message == 'start_sync' && objectbox != null) {
+      try {
+        SyncService(objectbox: objectbox!).monitorConnectivity();
+        debugPrint("[SYNC LOG]: Sync initialized from main isolate.");
+      } catch (e) {
+        debugPrint("[SYNC LOG]: Sync error in main isolate: $e");
       }
-    });
+    }
   }
 
   void stopSync() {
@@ -64,19 +58,15 @@ class SyncIsolateData {
 }
 
 Future<void> syncEntryPoint(SyncIsolateData data) async {
-  // Ensure platform channels are initialized for background isolate
   BackgroundIsolateBinaryMessenger.ensureInitialized(data.rootIsolateToken);
-
-  final send = data.sendPort;
 
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    // Simulate background logic, then send sync trigger
-    send.send('start_sync');
+    data.sendPort.send('start_sync');
   } catch (e) {
-    send.send('Sync isolate error: $e');
+    data.sendPort.send('Sync isolate error: $e');
   }
 }

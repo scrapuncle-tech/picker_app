@@ -1,4 +1,5 @@
 import 'package:objectbox/objectbox.dart';
+import 'local_pickup.entity.dart';
 import 'pickup.entity.dart';
 import 'product.entity.dart';
 
@@ -7,7 +8,7 @@ class Item {
   @Id()
   int obxId;
 
-  @Unique()
+  @Unique(onConflict: ConflictStrategy.replace)
   @Index()
   String id;
 
@@ -18,7 +19,8 @@ class Item {
   /// Backed Product relation stored in ObjectBox
   final ToOne<Product> productRef = ToOne<Product>();
 
-  final pickup = ToOne<Pickup>();
+  final pickup = ToOne<Pickup>(); // For synced pickup
+  final localPickup = ToOne<LocalPickup>(); // For offline/local pickup
 
   // Getter for product that uses either the transient field or relation
   Product get product => _product ?? productRef.target!;
@@ -139,7 +141,7 @@ class Item {
         'createdAt: ${createdAt.toIso8601String()}, '
         'customPrice: $customPrice, '
         'isUploaded: $isUploaded, '
-        'product: ${product.toString()}, '
+        'product: ${product.toFirebase()}, '
         'localImagePaths: $localImagePaths, '
         'imageUrls: $imageUrls, '
         'totalPrice: $totalPrice, '

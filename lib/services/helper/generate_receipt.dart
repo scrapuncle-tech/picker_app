@@ -23,18 +23,20 @@ class BluetoothReceiptPrinter {
     if (Platform.isAndroid) {
       // For Android we need location permissions for Bluetooth scanning
       // In Android 12+ we also need Bluetooth scan and connect permissions
-      Map<Permission, PermissionStatus> statuses = await [
-        Permission.location,
-        Permission.bluetoothScan,
-        Permission.bluetoothConnect,
-      ].request();
+      Map<Permission, PermissionStatus> statuses =
+          await [
+            Permission.location,
+            Permission.bluetoothScan,
+            Permission.bluetoothConnect,
+          ].request();
 
       bool allGranted = true;
       statuses.forEach((permission, status) {
         if (!status.isGranted) {
           allGranted = false;
           debugPrint(
-              '${permission.toString()} permission is not granted: $status');
+            '${permission.toString()} permission is not granted: $status',
+          );
         }
       });
 
@@ -94,7 +96,8 @@ class BluetoothReceiptPrinter {
         // Update the list of available devices
         availableBluetoothDevices = results.map((r) => r.device).toList();
         debugPrint(
-            "Found ${availableBluetoothDevices.length} Bluetooth devices");
+          "Found ${availableBluetoothDevices.length} Bluetooth devices",
+        );
       });
 
       // Wait for scan to complete
@@ -166,10 +169,10 @@ class BluetoothReceiptPrinter {
       Uint8List data = Uint8List.fromList(bytes);
 
       // Send in chunks to accommodate BLE limitations
-      const int CHUNK_SIZE = 20;
+      const int chunkSize = 20;
 
-      for (int i = 0; i < data.length; i += CHUNK_SIZE) {
-        int end = (i + CHUNK_SIZE < data.length) ? i + CHUNK_SIZE : data.length;
+      for (int i = 0; i < data.length; i += chunkSize) {
+        int end = (i + chunkSize < data.length) ? i + chunkSize : data.length;
         Uint8List chunk = data.sublist(i, end);
 
         await printCharacteristic!.write(chunk, withoutResponse: true);
@@ -196,7 +199,8 @@ class BluetoothReceiptPrinter {
 
   // Generate the formatted receipt data
   Future<List<int>> generateReceiptData(
-      Map<String, dynamic> receiptData) async {
+    Map<String, dynamic> receiptData,
+  ) async {
     // Initialize the printer profile
     final profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm80, profile);
@@ -207,7 +211,10 @@ class BluetoothReceiptPrinter {
     bytes += generator.text(
       'SUPERMARKET RECEIPT',
       styles: const PosStyles(
-          align: PosAlign.center, bold: true, height: PosTextSize.size2),
+        align: PosAlign.center,
+        bold: true,
+        height: PosTextSize.size2,
+      ),
     );
     bytes += generator.text(
       'Thank you for shopping with us!',
@@ -248,26 +255,10 @@ class BluetoothReceiptPrinter {
 
     // Table header
     bytes += generator.row([
-      PosColumn(
-        text: 'Item',
-        width: 6,
-        styles: const PosStyles(bold: true),
-      ),
-      PosColumn(
-        text: 'Price',
-        width: 2,
-        styles: const PosStyles(bold: true),
-      ),
-      PosColumn(
-        text: 'Qty',
-        width: 2,
-        styles: const PosStyles(bold: true),
-      ),
-      PosColumn(
-        text: 'Total',
-        width: 2,
-        styles: const PosStyles(bold: true),
-      ),
+      PosColumn(text: 'Item', width: 6, styles: const PosStyles(bold: true)),
+      PosColumn(text: 'Price', width: 2, styles: const PosStyles(bold: true)),
+      PosColumn(text: 'Qty', width: 2, styles: const PosStyles(bold: true)),
+      PosColumn(text: 'Total', width: 2, styles: const PosStyles(bold: true)),
     ]);
 
     bytes += generator.hr();
@@ -286,22 +277,10 @@ class BluetoothReceiptPrinter {
       grandTotal += totalPrice;
 
       bytes += generator.row([
-        PosColumn(
-          text: item['itemName'] ?? '',
-          width: 6,
-        ),
-        PosColumn(
-          text: '$price${priceType == 'custom' ? '*' : ''}',
-          width: 2,
-        ),
-        PosColumn(
-          text: '$quantity$unit',
-          width: 2,
-        ),
-        PosColumn(
-          text: totalPrice.toStringAsFixed(2),
-          width: 2,
-        ),
+        PosColumn(text: item['itemName'] ?? '', width: 6),
+        PosColumn(text: '$price${priceType == 'custom' ? '*' : ''}', width: 2),
+        PosColumn(text: '$quantity$unit', width: 2),
+        PosColumn(text: totalPrice.toStringAsFixed(2), width: 2),
       ]);
     }
 
@@ -314,10 +293,7 @@ class BluetoothReceiptPrinter {
         width: 6,
         styles: const PosStyles(bold: true),
       ),
-      PosColumn(
-        text: '',
-        width: 4,
-      ),
+      PosColumn(text: '', width: 4),
       PosColumn(
         text: grandTotal.toStringAsFixed(2),
         width: 2,

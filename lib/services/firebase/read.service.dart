@@ -66,7 +66,6 @@ class ReadService {
         ...snapshot.data()!,
         'id': snapshot.id,
       });
-      yield pickup; // Initial emit with empty data
 
       List<Item> items = await Future.wait(
         pickup.items.map((id) => getItem(id: id)),
@@ -86,7 +85,10 @@ class ReadService {
 
     // Check if the snapshot exists
     if (documentSnapshot.exists) {
-      return Item.fromFirebase(documentSnapshot.data()!);
+      return Item.fromFirebase({
+        ...documentSnapshot.data()!,
+        'id': documentSnapshot.id,
+      });
     } else {
       throw Exception("Item not found");
     }

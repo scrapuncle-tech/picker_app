@@ -23,14 +23,14 @@ class SyncService {
           result.contains(ConnectivityResult.mobile) ||
           result.contains(ConnectivityResult.ethernet)) {
         debugPrint('Internet connection restored. Triggering sync...');
-        _startSync();
+        startSync();
       } else {
-        _stopSync();
+        stopSync();
       }
     });
   }
 
-  void _startSync() {
+  void startSync() {
     debugPrint('Starting sync...');
     OBAuthService obAuthService = OBAuthService(objectbox: objectbox);
     OBRouteService obRouteService = OBRouteService(objectbox: objectbox);
@@ -42,7 +42,7 @@ class SyncService {
     productService.syncProducts();
   }
 
-  void _stopSync() {
+  void stopSync() {
     debugPrint('Stopping sync...');
     OBAuthService obAuthService = OBAuthService(objectbox: objectbox);
     OBRouteService obRouteService = OBRouteService(objectbox: objectbox);

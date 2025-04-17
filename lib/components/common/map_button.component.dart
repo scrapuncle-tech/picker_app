@@ -15,28 +15,31 @@ class MapButton extends ConsumerWidget {
   final bool needHintText;
   final bool disable;
 
-  const MapButton(
-      {super.key,
-      required this.mapLink,
-      this.lat,
-      this.lng,
-      this.needHintText = false,
-      this.disable = false});
+  const MapButton({
+    super.key,
+    required this.mapLink,
+    this.lat,
+    this.lng,
+    this.needHintText = false,
+    this.disable = false,
+  });
 
   void _openGoogleMaps(WidgetRef ref) async {
-    final Uri url = Uri.parse(mapLink.isNotEmpty
-        ? mapLink
-        : lat != 0 || lng != 0
-            ? "https://www.google.com/maps/search/?api=1&query=$lat,$lng"
-            : "");
-
+    final Uri url = Uri.parse(
+      mapLink.isNotEmpty
+          ? mapLink
+          : lat != 0 || lng != 0
+          ? "https://www.google.com/maps/search/?api=1&query=$lat,$lng"
+          : "",
+    );
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
       CustomSnackBar.show(
-          message: "Could not open Google Maps",
-          ref: ref,
-          type: SnackBarType.error);
+        message: "Could not open Google Maps",
+        ref: ref,
+        type: SnackBarType.error,
+      );
       debugPrint("Could not open Google Maps");
     }
   }
@@ -52,53 +55,56 @@ class MapButton extends ConsumerWidget {
 
     return Opacity(
       opacity: disable ? 0.5 : 1,
-      child: needHintText
-          ? CustomInkWell(
-              onPressed: disable ? () {} : () => _openGoogleMaps(ref),
-              borderRadius: 12,
-              splashColor: Colors.greenAccent.withAlpha(100),
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: aspectRatio * 12,
-                  horizontal: aspectRatio * 16,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.greenAccent.withAlpha(160),
-                    width: 2,
+      child:
+          needHintText
+              ? CustomInkWell(
+                onPressed: disable ? () {} : () => _openGoogleMaps(ref),
+                borderRadius: 12,
+                splashColor: Colors.greenAccent.withAlpha(100),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: aspectRatio * 12,
+                    horizontal: aspectRatio * 16,
                   ),
-                  borderRadius: BorderRadius.circular(12),
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.greenAccent.withAlpha(80),
-                      Colors.greenAccent.withAlpha(20)
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.greenAccent.withAlpha(160),
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.greenAccent.withAlpha(80),
+                        Colors.greenAccent.withAlpha(20),
+                      ],
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      CustomText(
+                        text: "Whatsapp =>",
+                        size: sizeData.subHeader,
+                        weight: FontWeight.w900,
+                      ),
+                      SizedBox(width: aspectRatio * 16),
+                      Image.asset(
+                        "assets/icons/gmap.png",
+                        width: aspectRatio * 80,
+                        height: aspectRatio * 80,
+                      ),
                     ],
                   ),
                 ),
-                child: Row(children: [
-                  CustomText(
-                    text: "Whatsapp =>",
-                    size: sizeData.subHeader,
-                    weight: FontWeight.w900,
-                  ),
-                  SizedBox(width: aspectRatio * 16),
-                  Image.asset(
-                    "assets/icons/gmap.png",
-                    width: aspectRatio * 80,
-                    height: aspectRatio * 80,
-                  ),
-                ]),
+              )
+              : CustomInkWell(
+                splashColor: colorData.secondaryColor(1),
+                onPressed: disable ? () {} : () => _openGoogleMaps(ref),
+                child: Image.asset(
+                  "assets/icons/gmap.png",
+                  width: aspectRatio * 80,
+                  height: aspectRatio * 80,
+                ),
               ),
-            )
-          : CustomInkWell(
-              splashColor: colorData.secondaryColor(1),
-              onPressed: disable ? () {} : () => _openGoogleMaps(ref),
-              child: Image.asset(
-                "assets/icons/gmap.png",
-                width: aspectRatio * 80,
-                height: aspectRatio * 80,
-              ),
-            ),
     );
   }
 }

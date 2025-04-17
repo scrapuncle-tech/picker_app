@@ -9,7 +9,7 @@ class RouteInfoNotifier extends StateNotifier<RouteInfo> {
   final OBRouteService _routeService = OBRouteService(objectbox: objectbox!);
   RouteInfoNotifier() : super(RouteInfo.empty()) {
     getRouteData();
-    // mergeLocalPickupChanges();
+    mergeLocalPickupChanges();
   }
 
   void getRouteData() {
@@ -27,17 +27,6 @@ class RouteInfoNotifier extends StateNotifier<RouteInfo> {
             route.pickupsData
                 .where((data) => data.isCompleted == false)
                 .toList();
-
-        /// check for any local changes of the uncompleted pickups
-        List<Pickup> localPickups = await _routeService.getLocalPickups().first;
-        for (Pickup localPickup in localPickups) {
-          int index = notCompletedPickups.indexWhere(
-            (data) => data.id == localPickup.id,
-          );
-          if (index != -1) {
-            notCompletedPickups[index] = localPickup;
-          }
-        }
 
         /// get all the completed pickups
         List<Pickup> completedPickups =
@@ -68,10 +57,9 @@ class RouteInfoNotifier extends StateNotifier<RouteInfo> {
   /// and also remove the pickups that are not there in the uncompleted pickups list
   void mergeLocalPickupChanges() async {
     _routeService.getLocalPickups().listen((List<Pickup> localPickups) {
-      if (!state.isLoading && state.pickups.isNotEmpty) {
+      print("LOCAL PICKUPS : $localPickups");
+      if (state.pickups.isNotEmpty) {
         List<Pickup> notCompletedPickups = state.pickups;
-
-        List<Pickup> invalidPickups = [];
 
         for (Pickup localPickup in localPickups) {
           int index = notCompletedPickups.indexWhere(
@@ -81,15 +69,6 @@ class RouteInfoNotifier extends StateNotifier<RouteInfo> {
             notCompletedPickups[index] = localPickup;
           }
         }
-
-        // remove the invalid pickups
-        for (Pickup pickup in notCompletedPickups) {
-          if (!localPickups.any((data) => data.id == pickup.id)) {
-            invalidPickups.add(pickup);
-          }
-        }
-
-        _routeService.removeInvalidLocalPickups(pickups: invalidPickups);
 
         // Sort the pickups by index
         notCompletedPickups.sort(
