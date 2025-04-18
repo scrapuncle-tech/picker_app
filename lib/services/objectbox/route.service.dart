@@ -57,6 +57,7 @@ class OBRouteService {
         debugPrint("Syncing route => ${updatedRoute.id}");
 
         final Set<String> latestPickupIds = updatedRoute.pickupIds.toSet();
+        debugPrint("Pikup IDS : $latestPickupIds");
 
         // Get existing pickups for this route
         final existingPickupsInRoute =
@@ -91,10 +92,7 @@ class OBRouteService {
         int totalPickups = updatedRoute.pickupIds.length;
         int fetchedCount = 0;
 
-        if (totalPickups == 0) {
-          _replaceRouteWithPickups(updatedRoute, {});
-          return;
-        }
+        _replaceRouteWithPickups(updatedRoute, {});
 
         for (final pickupId in updatedRoute.pickupIds) {
           // Don't skip existing listeners — we might still need to refresh them

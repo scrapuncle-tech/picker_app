@@ -51,28 +51,32 @@ class ReadService {
   }
 
   Stream<Pickup> getPickup({required String id}) async* {
-    final docStream =
-        FirebaseFirestore.instance
-            .collection(FirebaseConstants.pickupCollection)
-            .doc(id)
-            .snapshots();
+    try {
+      final docStream =
+          FirebaseFirestore.instance
+              .collection(FirebaseConstants.pickupCollection)
+              .doc(id)
+              .snapshots();
 
-    await for (var snapshot in docStream) {
-      if (!snapshot.exists) {
-        throw Exception("pickup not found");
+      await for (var snapshot in docStream) {
+        if (!snapshot.exists) {
+          throw Exception("pickup not found");
+        }
+
+        Pickup pickup = Pickup.fromFirebase({
+          ...snapshot.data()!,
+          'id': snapshot.id,
+        });
+
+        List<Item> items = await Future.wait(
+          pickup.items.map((id) => getItem(id: id)),
+        );
+
+        pickup.itemsData.addAll(items);
+        yield pickup; // Re-emit with itemsData populated
       }
-
-      Pickup pickup = Pickup.fromFirebase({
-        ...snapshot.data()!,
-        'id': snapshot.id,
-      });
-
-      List<Item> items = await Future.wait(
-        pickup.items.map((id) => getItem(id: id)),
-      );
-
-      pickup.itemsData.addAll(items);
-      yield pickup; // Re-emit with itemsData populated
+    } catch (e) {
+      debugPrint("Error on fetching the pickup : $id");
     }
   }
 
