@@ -96,7 +96,7 @@ class ReadService {
               .doc(id)
               .get();
 
-      if (doc.exists) {
+      if (doc.exists && doc.data() != null) {
         return Item.fromFirebase({...doc.data()!, 'id': doc.id});
       } else {
         return null;
