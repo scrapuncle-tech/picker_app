@@ -6,7 +6,6 @@ class Picker {
   int obxId;
 
   @Unique(onConflict: ConflictStrategy.replace)
-  @Index()
   String id;
   //
   String name;

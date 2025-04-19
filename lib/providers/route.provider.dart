@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../main.dart';
@@ -57,7 +58,7 @@ class RouteInfoNotifier extends StateNotifier<RouteInfo> {
   /// and also remove the pickups that are not there in the uncompleted pickups list
   void mergeLocalPickupChanges() async {
     _routeService.getLocalPickups().listen((List<Pickup> localPickups) {
-      print("LOCAL PICKUPS : $localPickups");
+      debugPrint("LOCAL PICKUPS : $localPickups");
       if (state.pickups.isNotEmpty) {
         List<Pickup> notCompletedPickups = state.pickups;
 

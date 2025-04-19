@@ -6,7 +6,6 @@ class Product {
   int obxId;
 
   @Unique(onConflict: ConflictStrategy.replace)
-  @Index()
   String id;
   //
   String name;
@@ -39,10 +38,10 @@ class Product {
 
   static Product fromFirebase(Map<String, dynamic> data) {
     return Product(
-      id: data['id'],
-      name: data['name'],
-      price: data['price'],
-      unit: data['unit'],
+      id: data['id'] ?? '',
+      name: data['name'] ?? '',
+      price: data['price'] ?? '',
+      unit: data['unit'] ?? '',
     );
   }
 

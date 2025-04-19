@@ -17,6 +17,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 import '../../models/app_sync_status.entity.dart';
 import '../../models/item.entity.dart';
 import '../../models/local_pickup.entity.dart';
+import '../../models/logger.entity.dart';
 import '../../models/picker.entity.dart';
 import '../../models/pickup.entity.dart';
 import '../../models/product.entity.dart';
@@ -672,7 +673,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(7, 268734170302123877),
       name: 'SyncStatus',
-      lastPropertyId: const obx_int.IdUid(4, 7130673956283102337),
+      lastPropertyId: const obx_int.IdUid(5, 1717916722104076567),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -694,6 +695,30 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(4, 7130673956283102337),
             name: 'lastSyncTime',
             type: 12,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(8, 6808545179855262196),
+      name: 'Logger',
+      lastPropertyId: const obx_int.IdUid(4, 7063670462603754317),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2560201760939213397),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7689705237446431526),
+            name: 'message',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 7063670462603754317),
+            name: 'statusIndex',
+            type: 6,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -735,13 +760,13 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(7, 268734170302123877),
+      lastEntityId: const obx_int.IdUid(8, 6808545179855262196),
       lastIndexId: const obx_int.IdUid(11, 8041517500316570220),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredPropertyUids: const [1717916722104076567, 8856645923749986610],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -1502,7 +1527,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (SyncStatus object, fb.Builder fbb) {
-          fbb.startTable(5);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addBool(1, object.isSyncing);
           fbb.addBool(2, object.isSynced);
@@ -1528,6 +1553,37 @@ obx_int.ModelDefinition getObjectBoxModel() {
               isSyncing: isSyncingParam,
               isSynced: isSyncedParam,
               lastSyncTime: lastSyncTimeParam);
+
+          return object;
+        }),
+    Logger: obx_int.EntityDefinition<Logger>(
+        model: _entities[7],
+        toOneRelations: (Logger object) => [],
+        toManyRelations: (Logger object) => {},
+        getId: (Logger object) => object.id,
+        setId: (Logger object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Logger object, fb.Builder fbb) {
+          final messageOffset =
+              object.message == null ? null : fbb.writeString(object.message!);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(2, messageOffset);
+          fbb.addInt64(3, object.statusIndex);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final messageParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 8);
+          final object = Logger(id: idParam, message: messageParam)
+            ..statusIndex = const fb.Int64Reader()
+                .vTableGetNullable(buffer, rootOffset, 10);
 
           return object;
         })
@@ -2031,4 +2087,19 @@ class SyncStatus_ {
   /// See [SyncStatus.lastSyncTime].
   static final lastSyncTime =
       obx.QueryDateNanoProperty<SyncStatus>(_entities[6].properties[3]);
+}
+
+/// [Logger] entity fields to define ObjectBox queries.
+class Logger_ {
+  /// See [Logger.id].
+  static final id =
+      obx.QueryIntegerProperty<Logger>(_entities[7].properties[0]);
+
+  /// See [Logger.message].
+  static final message =
+      obx.QueryStringProperty<Logger>(_entities[7].properties[1]);
+
+  /// See [Logger.statusIndex].
+  static final statusIndex =
+      obx.QueryIntegerProperty<Logger>(_entities[7].properties[2]);
 }

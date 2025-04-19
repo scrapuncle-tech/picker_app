@@ -7,7 +7,6 @@ class RouteModel {
   @Id()
   int obxId;
   @Unique(onConflict: ConflictStrategy.replace)
-  @Index()
   String id;
   //
 
@@ -82,6 +81,15 @@ class RouteModel {
   }
 
   factory RouteModel.fromFirebase(Map<String, dynamic> data) {
+    DateTime? parseDate(String? dateStr) {
+      if (dateStr == null || dateStr.isEmpty) return null;
+      try {
+        return DateTime.parse(dateStr);
+      } catch (_) {
+        return null;
+      }
+    }
+
     RouteModel route = RouteModel(
       id: data['id'],
       name: data['name'] ?? '',
@@ -91,8 +99,8 @@ class RouteModel {
       pickerFirebaseId: data['picker'] ?? '',
       pickupIds: List<String>.from(data['pickups'] ?? []),
       helperId: data['helper'] ?? '',
-      scheduledDate: DateTime.parse(data['scheduledDate'] ?? DateTime.now()),
-      updatedAt: DateTime.parse(data['updatedAt'] ?? data['scheduledDate']),
+      scheduledDate: parseDate(data['scheduledDate']) ?? DateTime.now(),
+      updatedAt: parseDate(data['updatedAt']) ?? DateTime.now(),
     );
 
     return route;

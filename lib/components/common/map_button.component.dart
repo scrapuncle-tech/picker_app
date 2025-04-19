@@ -35,10 +35,9 @@ class MapButton extends ConsumerWidget {
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
-      CustomSnackBar.show(
+      CustomSnackBar.log(
         message: "Could not open Google Maps",
-        ref: ref,
-        type: SnackBarType.error,
+        status: SnackBarType.error,
       );
       debugPrint("Could not open Google Maps");
     }

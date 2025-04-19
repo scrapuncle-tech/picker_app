@@ -651,7 +651,7 @@
     },
     {
       "id": "7:268734170302123877",
-      "lastPropertyId": "4:7130673956283102337",
+      "lastPropertyId": "5:1717916722104076567",
       "name": "SyncStatus",
       "properties": [
         {
@@ -677,9 +677,33 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "8:6808545179855262196",
+      "lastPropertyId": "4:7063670462603754317",
+      "name": "Logger",
+      "properties": [
+        {
+          "id": "1:2560201760939213397",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "3:7689705237446431526",
+          "name": "message",
+          "type": 9
+        },
+        {
+          "id": "4:7063670462603754317",
+          "name": "statusIndex",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "7:268734170302123877",
+  "lastEntityId": "8:6808545179855262196",
   "lastIndexId": "11:8041517500316570220",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
@@ -687,7 +711,10 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    1717916722104076567,
+    8856645923749986610
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

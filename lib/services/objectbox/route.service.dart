@@ -36,10 +36,11 @@ class OBRouteService {
         route,
       ) async {
         onSynced?.call();
+
+        objectbox.routeBox.removeAll();
+        objectbox.pickupBox.removeAll();
+
         if (route == null) {
-          objectbox.routeBox.removeAll();
-          objectbox.pickupBox.removeAll();
-          objectbox.localStatePickupBox.removeAll();
           return;
         }
 
@@ -201,7 +202,7 @@ class OBRouteService {
           debugPrint("Trying to sync the local pickups to firebase");
 
           for (final pickup in query.find()) {
-            WriteService().putPickup(pickup: pickup.toPickup());
+            await WriteService().putPickup(pickup: pickup.toPickup());
             objectbox.localStatePickupBox.remove(pickup.obxId);
           }
         });

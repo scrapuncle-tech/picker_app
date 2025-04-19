@@ -72,10 +72,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
         }
       });
     } catch (e) {
-      CustomSnackBar.show(
-        message: e.toString(),
-        type: SnackBarType.error,
-        ref: ref,
+      CustomSnackBar.log(
+        status: SnackBarType.error,
+        message: "Failed to login",
       );
       state = state.copyWith(
         error: e.toString(),
@@ -127,10 +126,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
             }
           });
     } catch (e) {
-      CustomSnackBar.show(
-        message: e.toString(),
-        type: SnackBarType.error,
-        ref: ref,
+      CustomSnackBar.log(
+        status: SnackBarType.error,
+        message: "Failed to signup",
       );
       state = state.copyWith(
         error: e.toString(),

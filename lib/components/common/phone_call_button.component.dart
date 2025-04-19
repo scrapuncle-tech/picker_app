@@ -25,6 +25,51 @@ class PhoneCallButton extends ConsumerWidget {
     this.disable = false,
   });
 
+  void _handleXmlResponse(String responseText, WidgetRef ref) {
+    if (responseText.contains('<Status>in-progress</Status>')) {
+      debugPrint("✅ Call initiated successfully");
+      CustomSnackBar.log(
+        message: 'Call started.',
+        status: SnackBarType.success,
+      );
+    } else if (responseText.contains('NDNC')) {
+      CustomSnackBar.log(
+        message: 'Number is on NDNC list.',
+        status: SnackBarType.error,
+      );
+    } else {
+      final errorMessage =
+          RegExp(
+            r'<Message>(.*?)</Message>',
+          ).firstMatch(responseText)?.group(1) ??
+          'Could not start call.';
+      CustomSnackBar.log(message: errorMessage, status: SnackBarType.error);
+    }
+  }
+
+  void _handleJsonResponse(String responseBody, WidgetRef ref) {
+    try {
+      final Map<String, dynamic> responseData = json.decode(responseBody);
+      if (responseData['Call'] != null) {
+        debugPrint("✅ Call initiated successfully");
+        CustomSnackBar.log(
+          message: 'Call started.',
+          status: SnackBarType.success,
+        );
+      } else {
+        CustomSnackBar.log(
+          message: 'Call could not be started.',
+          status: SnackBarType.error,
+        );
+      }
+    } catch (_) {
+      CustomSnackBar.log(
+        message: 'Invalid call response.',
+        status: SnackBarType.error,
+      );
+    }
+  }
+
   Future<void> _initiateExotelCall({
     required String customerNo,
     required String pickerPhoneNo,
@@ -59,66 +104,10 @@ class PhoneCallButton extends ConsumerWidget {
       } else {
         _handleJsonResponse(response.body, ref);
       }
-    } catch (e) {
-      CustomSnackBar.show(
-        ref: ref,
-        message: 'Error initiating call: $e',
-        type: SnackBarType.error,
-      );
-    }
-  }
-
-  void _handleXmlResponse(String responseText, WidgetRef ref) {
-    if (responseText.contains('<Status>in-progress</Status>')) {
-      debugPrint("✅ Call initiated successfully");
-      CustomSnackBar.show(
-        ref: ref,
-        message: 'Call initiated successfully',
-        type: SnackBarType.success,
-      );
-    } else if (responseText.contains('NDNC')) {
-      CustomSnackBar.show(
-        ref: ref,
-        message:
-            'This number is registered under NDNC. Please use a different number or contact support.',
-        type: SnackBarType.error,
-      );
-    } else {
-      final errorMessage =
-          RegExp(
-            r'<Message>(.*?)</Message>',
-          ).firstMatch(responseText)?.group(1) ??
-          'Failed to initiate call';
-      CustomSnackBar.show(
-        ref: ref,
-        message: errorMessage,
-        type: SnackBarType.error,
-      );
-    }
-  }
-
-  void _handleJsonResponse(String responseBody, WidgetRef ref) {
-    try {
-      final Map<String, dynamic> responseData = json.decode(responseBody);
-      if (responseData['Call'] != null) {
-        debugPrint("✅ Call initiated successfully");
-        CustomSnackBar.show(
-          ref: ref,
-          message: 'Call initiated successfully',
-          type: SnackBarType.success,
-        );
-      } else {
-        CustomSnackBar.show(
-          ref: ref,
-          message: 'Failed to initiate call. No call data found.',
-          type: SnackBarType.error,
-        );
-      }
-    } catch (e) {
-      CustomSnackBar.show(
-        ref: ref,
-        message: 'Error parsing JSON response: $e',
-        type: SnackBarType.error,
+    } catch (_) {
+      CustomSnackBar.log(
+        message: 'Could not connect. Try again.',
+        status: SnackBarType.error,
       );
     }
   }

@@ -154,7 +154,9 @@ class UpdatePickupPage extends ConsumerWidget {
       canPop: true,
       onPopInvokedWithResult: (didPop, _) {
         if (didPop) {
-          ref.read(currentPickupProvider.notifier).close();
+          if (!isCompleted) {
+            ref.read(currentPickupProvider.notifier).close();
+          }
         }
       },
       child: Scaffold(
@@ -185,10 +187,12 @@ class UpdatePickupPage extends ConsumerWidget {
                       left: 0,
                       child: CustomBackButton(
                         onPressed:
-                            () =>
-                                ref
-                                    .read(currentPickupProvider.notifier)
-                                    .close(),
+                            !isCompleted
+                                ? () =>
+                                    ref
+                                        .read(currentPickupProvider.notifier)
+                                        .close()
+                                : null,
                       ),
                     ),
                   ],

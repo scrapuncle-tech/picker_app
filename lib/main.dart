@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:background_fetch/background_fetch.dart';
 
 // Imports for app-specific screens and providers
+import 'components/common/custom_snackbar.component.dart';
 import 'services/background/app_lifecycle_manager.dart';
 import 'services/background/app_state_sync.service.dart';
 import 'services/background/background_fetch.service.dart';
@@ -68,6 +69,7 @@ class _MyAppState extends ConsumerState<MyApp> with CustomThemeDataMixin {
     // Defer the sync service to avoid blocking startup UI
     WidgetsBinding.instance.addPostFrameCallback((_) {
       appStateSyncService.startSync();
+      CustomSnackBar.listen(ref: ref);
     });
   }
 

@@ -61,6 +61,7 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
     final updatedPickup = pickup.copyWith(
       isCompleted: true,
       completedAt: DateTime.now(),
+      updatedAt: DateTime.now(),
       status: 'completed',
     );
 

@@ -54,17 +54,20 @@ class _LoginSignupPageState extends ConsumerState<LoginSignupPage> {
 
   void login() async {
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      CustomSnackBar.show(
-          message: 'Please fill in all fields',
-          type: SnackBarType.error,
-          ref: ref);
+      CustomSnackBar.log(
+        message: 'Please fill in all fields',
+        status: SnackBarType.error,
+      );
       return;
     }
 
-    ref.read(authProvider.notifier).signIn(
-        email: emailController.text,
-        password: passwordController.text,
-        ref: ref);
+    ref
+        .read(authProvider.notifier)
+        .signIn(
+          email: emailController.text,
+          password: passwordController.text,
+          ref: ref,
+        );
   }
 
   void signup() async {
@@ -72,25 +75,24 @@ class _LoginSignupPageState extends ConsumerState<LoginSignupPage> {
         passwordController.text.isEmpty ||
         nameController.text.isEmpty ||
         phoneNoController.text.isEmpty) {
-      CustomSnackBar.show(
-          message: 'Please fill in all fields',
-          type: SnackBarType.error,
-          ref: ref);
+      CustomSnackBar.log(
+        message: 'Please fill in all fields',
+        status: SnackBarType.error,
+      );
       return;
     }
     try {
-      ref.read(authProvider.notifier).signUp(
-          name: nameController.text,
-          email: emailController.text,
-          password: passwordController.text,
-          phone: phoneNoController.text,
-          ref: ref);
+      ref
+          .read(authProvider.notifier)
+          .signUp(
+            name: nameController.text,
+            email: emailController.text,
+            password: passwordController.text,
+            phone: phoneNoController.text,
+            ref: ref,
+          );
     } catch (e) {
-      CustomSnackBar.show(
-        message: e.toString(),
-        type: SnackBarType.error,
-        ref: ref,
-      );
+      CustomSnackBar.log(message: e.toString(), status: SnackBarType.error);
     }
   }
 
@@ -151,9 +153,10 @@ class _LoginSignupPageState extends ConsumerState<LoginSignupPage> {
                   ),
                   SizedBox(height: height * .02),
                   CustomText(
-                    text: isLogin
-                        ? "Sign in to your account"
-                        : "Create your account",
+                    text:
+                        isLogin
+                            ? "Sign in to your account"
+                            : "Create your account",
                     size: aspectRatio * 40,
                     color: colorData.fontColor(1),
                   ),
@@ -355,21 +358,23 @@ class _AuthTextFieldState extends ConsumerState<AuthTextField> {
     return Container(
       padding: EdgeInsets.only(left: width * .04),
       decoration: BoxDecoration(
-        borderRadius: widget.isFirst
-            ? const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              )
-            : widget.isLast
+        borderRadius:
+            widget.isFirst
                 ? const BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  )
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                )
+                : widget.isLast
+                ? const BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                )
                 : null,
         border: Border(
-          top: widget.isFirst
-              ? BorderSide(color: colorData.secondaryColor(), width: 2)
-              : BorderSide.none,
+          top:
+              widget.isFirst
+                  ? BorderSide(color: colorData.secondaryColor(), width: 2)
+                  : BorderSide.none,
           bottom: BorderSide(color: colorData.secondaryColor(), width: 2),
           left: BorderSide(color: colorData.secondaryColor(), width: 2),
           right: BorderSide(color: colorData.secondaryColor(), width: 2),
@@ -386,9 +391,10 @@ class _AuthTextFieldState extends ConsumerState<AuthTextField> {
               color: colorData.fontColor(.8),
             ),
             obscureText: isPassword && !isVisisble,
-            keyboardType: isPassword
-                ? TextInputType.visiblePassword
-                : isEmail
+            keyboardType:
+                isPassword
+                    ? TextInputType.visiblePassword
+                    : isEmail
                     ? TextInputType.emailAddress
                     : TextInputType.text,
             cursorColor: Colors.blueAccent,
@@ -408,18 +414,20 @@ class _AuthTextFieldState extends ConsumerState<AuthTextField> {
               }
             },
             decoration: InputDecoration(
-              suffixIcon: isPassword
-                  ? GestureDetector(
-                      onTap: toggleVisibility,
-                      child: Icon(
-                        !isVisisble ? Icons.visibility : Icons.visibility_off,
-                        color: colorData.fontColor(.5),
-                      ),
-                    )
-                  : null,
-              contentPadding: isPassword
-                  ? EdgeInsets.only(top: aspectRatio * 30)
-                  : EdgeInsets.zero,
+              suffixIcon:
+                  isPassword
+                      ? GestureDetector(
+                        onTap: toggleVisibility,
+                        child: Icon(
+                          !isVisisble ? Icons.visibility : Icons.visibility_off,
+                          color: colorData.fontColor(.5),
+                        ),
+                      )
+                      : null,
+              contentPadding:
+                  isPassword
+                      ? EdgeInsets.only(top: aspectRatio * 30)
+                      : EdgeInsets.zero,
               border: InputBorder.none,
               hintText: widget.hintText,
               hintStyle: TextStyle(

@@ -42,8 +42,8 @@ class AuthFunctions {
 
       final picker = Picker.fromFirebase(pickerData.data()!);
       yield AuthProcessState.success(picker);
-    } catch (e) {
-      yield AuthProcessState.error('Sign in failed: $e');
+    } on FirebaseAuthException catch (e) {
+      yield AuthProcessState.error('Sign up failed: ${e.message}');
     }
   }
 
@@ -86,8 +86,8 @@ class AuthFunctions {
           .set(pickerData.toFirebase());
 
       yield AuthProcessState.success(pickerData);
-    } catch (e) {
-      yield AuthProcessState.error('Sign up failed: $e');
+    } on FirebaseAuthException catch (e) {
+      yield AuthProcessState.error('Sign up failed: ${e.message}');
     }
   }
 

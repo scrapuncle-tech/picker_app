@@ -9,7 +9,6 @@ class Item {
   int obxId;
 
   @Unique(onConflict: ConflictStrategy.replace)
-  @Index()
   String id;
 
   /// Transient Product object not stored in ObjectBox
@@ -36,7 +35,9 @@ class Item {
 
   List<String>? localImagePaths;
   List<String>? imageUrls;
+
   bool isUploaded;
+
   double totalPrice;
   double? customPrice;
   double weight;
@@ -89,8 +90,6 @@ class Item {
       quantity: quantity ?? this.quantity,
       coordinates: coordinates ?? this.coordinates,
     );
-
-    // Set product after creation
     item.product = product ?? this.product;
     return item;
   }
@@ -98,12 +97,22 @@ class Item {
   static Item fromFirebase(Map<String, dynamic> data) {
     final product = Product.fromFirebase(data['product']);
 
+    DateTime? parseDate(String? dateStr) {
+      if (dateStr == null || dateStr.isEmpty) return null;
+      try {
+        return DateTime.parse(dateStr);
+      } catch (_) {
+        return null;
+      }
+    }
+
     final item = Item(
       id: data['id'],
-      createdAt: DateTime.parse(
-        data['createdAt'] ?? DateTime.now().toIso8601String(),
-      ),
-      customPrice: data['customPrice']?.toDouble(),
+      createdAt: parseDate(data['createdAt']) ?? DateTime.now(),
+      customPrice:
+          (data['customPrice'] != null)
+              ? (data['customPrice'] as num).toDouble()
+              : null,
       isUploaded: data['isUploaded'] ?? false,
       localImagePaths: List<String>.from(data['localImagePaths'] ?? []),
       imageUrls: List<String>.from(data['imageUrls'] ?? []),
@@ -113,7 +122,6 @@ class Item {
       coordinates: List<String>.from(data['coordinates'] ?? []),
     );
 
-    // Set product after creation
     item.product = product;
     return item;
   }
@@ -121,11 +129,12 @@ class Item {
   Map<String, dynamic> toFirebase() {
     return {
       'id': id,
-      'createdAt': createdAt.toIso8601String().split('T').first,
+      'createdAt': createdAt.toIso8601String(),
       'customPrice': customPrice,
       'isUploaded': isUploaded,
       'product': product.toFirebase(),
       'imageUrls': imageUrls,
+      'localImagePaths': localImagePaths,
       'totalPrice': totalPrice,
       'weight': weight,
       'quantity': quantity,
@@ -141,7 +150,6 @@ class Item {
         'createdAt: ${createdAt.toIso8601String()}, '
         'customPrice: $customPrice, '
         'isUploaded: $isUploaded, '
-        'product: ${product.toFirebase()}, '
         'localImagePaths: $localImagePaths, '
         'imageUrls: $imageUrls, '
         'totalPrice: $totalPrice, '

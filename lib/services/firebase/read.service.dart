@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/common/custom_snackbar.component.dart';
 import '../../models/item.entity.dart';
 import '../../models/picker.entity.dart';
 import '../../models/pickup.entity.dart';
@@ -15,13 +16,17 @@ class ReadService {
         .doc(id)
         .snapshots()
         .map((snapshot) {
-          // Check if the snapshot exists
           if (snapshot.exists) {
-            Picker picker = Picker.fromFirebase(snapshot.data()!);
-            return picker;
+            return Picker.fromFirebase(snapshot.data()!);
           } else {
             throw Exception("Picker not found");
           }
+        })
+        .handleError((e) {
+          CustomSnackBar.log(
+            message: "Failed to get picker $id: $e",
+            status: SnackBarType.error,
+          );
         });
   }
 
@@ -35,66 +40,73 @@ class ReadService {
         )
         .snapshots()
         .map((snapshot) {
-          // Check if the snapshot exists
           if (snapshot.docs.isNotEmpty && snapshot.docs[0].exists) {
-            RouteModel route = RouteModel.fromFirebase({
+            return RouteModel.fromFirebase({
               ...snapshot.docs[0].data(),
               'id': snapshot.docs[0].id,
             });
-
-            return route;
           } else {
             debugPrint("Route not found");
             return null;
           }
+        })
+        .handleError((e) {
+          CustomSnackBar.log(
+            message: "Failed to get route for picker $pickerId: $e",
+            status: SnackBarType.error,
+          );
         });
   }
 
   Stream<Pickup> getPickup({required String id}) async* {
-    try {
-      final docStream =
-          FirebaseFirestore.instance
-              .collection(FirebaseConstants.pickupCollection)
-              .doc(id)
-              .snapshots();
+    final docStream =
+        FirebaseFirestore.instance
+            .collection(FirebaseConstants.pickupCollection)
+            .doc(id)
+            .snapshots();
 
-      await for (var snapshot in docStream) {
-        if (!snapshot.exists) {
-          throw Exception("pickup not found");
+    await for (var snapshot in docStream) {
+      try {
+        if (snapshot.exists && snapshot.data() != null) {
+          final rawData = snapshot.data()!;
+
+          Pickup pickup = Pickup.fromFirebase({...rawData, 'id': snapshot.id});
+
+          List<Item?> items = await Future.wait(
+            pickup.items.map((id) => getItem(id: id)),
+          );
+
+          pickup.itemsData.addAll(items.whereType<Item>());
+          yield pickup;
         }
-
-        Pickup pickup = Pickup.fromFirebase({
-          ...snapshot.data()!,
-          'id': snapshot.id,
-        });
-
-        List<Item> items = await Future.wait(
-          pickup.items.map((id) => getItem(id: id)),
+      } catch (e) {
+        CustomSnackBar.log(
+          message: "Failed to get pickup $id: $e",
+          status: SnackBarType.error,
         );
-
-        pickup.itemsData.addAll(items);
-        yield pickup; // Re-emit with itemsData populated
       }
-    } catch (e) {
-      debugPrint("Error on fetching the pickup : $id");
     }
   }
 
-  Future<Item> getItem({required String id}) async {
-    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-        await FirebaseFirestore.instance
-            .collection(FirebaseConstants.itemsCollection)
-            .doc(id)
-            .get();
+  Future<Item?> getItem({required String id}) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> doc =
+          await FirebaseFirestore.instance
+              .collection(FirebaseConstants.itemsCollection)
+              .doc(id)
+              .get();
 
-    // Check if the snapshot exists
-    if (documentSnapshot.exists) {
-      return Item.fromFirebase({
-        ...documentSnapshot.data()!,
-        'id': documentSnapshot.id,
-      });
-    } else {
-      throw Exception("Item not found");
+      if (doc.exists) {
+        return Item.fromFirebase({...doc.data()!, 'id': doc.id});
+      } else {
+        return null;
+      }
+    } catch (e) {
+      CustomSnackBar.log(
+        message: "Failed to get item $id: $e",
+        status: SnackBarType.error,
+      );
+      rethrow;
     }
   }
 
@@ -106,6 +118,12 @@ class ReadService {
           return snapshot.docs
               .map((doc) => Product.fromFirebase({...doc.data(), 'id': doc.id}))
               .toList();
+        })
+        .handleError((e) {
+          CustomSnackBar.log(
+            message: "Failed to get products: $e",
+            status: SnackBarType.error,
+          );
         });
   }
 }

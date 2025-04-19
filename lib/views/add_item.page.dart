@@ -70,17 +70,15 @@ class _AddItemPageState extends ConsumerState<AddItemPage> {
           selectedImages.add(File(image.path));
         });
       } else {
-        CustomSnackBar.show(
+        CustomSnackBar.log(
           message: "Please select at least 1 image",
-          type: SnackBarType.error,
-          ref: ref,
+          status: SnackBarType.error,
         );
       }
     } else {
-      CustomSnackBar.show(
+      CustomSnackBar.log(
         message: "You can only add 20 images",
-        type: SnackBarType.error,
-        ref: ref,
+        status: SnackBarType.error,
       );
     }
   }

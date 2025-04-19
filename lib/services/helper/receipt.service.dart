@@ -72,10 +72,9 @@ class ReceiptService {
       Navigator.pop(context);
 
       // Show success message
-      CustomSnackBar.show(
-        ref: ref,
+      CustomSnackBar.log(
         message: "PDF receipt saved to: ${pdfFile.path}",
-        type: SnackBarType.success,
+        status: SnackBarType.success,
       );
 
       // Open the PDF file
@@ -86,10 +85,9 @@ class ReceiptService {
         Navigator.pop(context);
       }
 
-      CustomSnackBar.show(
-        ref: ref,
-        message: "Failed to generate PDF: ${e.toString()}",
-        type: SnackBarType.error,
+      CustomSnackBar.log(
+        status: SnackBarType.error,
+        message: "Failed to generate PDF",
       );
     }
   }
@@ -104,10 +102,9 @@ class ReceiptService {
   ) async {
     // Validate items exist
     if (pickup.itemsData.isEmpty) {
-      CustomSnackBar.show(
-        ref: ref,
+      CustomSnackBar.log(
         message: "ITEMS NOT FOUND",
-        type: SnackBarType.error,
+        status: SnackBarType.error,
       );
       return;
     }
@@ -130,10 +127,9 @@ class ReceiptService {
 
       // Check if devices are available
       if (printerService.availableBluetoothDevices.isEmpty) {
-        CustomSnackBar.show(
-          ref: ref,
+        CustomSnackBar.log(
           message: "No Bluetooth devices found. Creating PDF instead.",
-          type: SnackBarType.error,
+          status: SnackBarType.error,
         );
 
         await generateAndDownloadPdf(context, ref, pickup);
@@ -166,10 +162,9 @@ class ReceiptService {
         Navigator.pop(context);
       }
 
-      CustomSnackBar.show(
-        ref: ref,
-        message: "Bluetooth error: ${e.toString()}. Creating PDF instead.",
-        type: SnackBarType.error,
+      CustomSnackBar.log(
+        status: SnackBarType.error,
+        message: "Bluetooth error. Creating PDF instead.",
       );
 
       await generateAndDownloadPdf(context, ref, pickup);
@@ -212,10 +207,9 @@ class ReceiptService {
         );
       } else {
         // If connection fails, create PDF instead
-        CustomSnackBar.show(
-          ref: ref,
+        CustomSnackBar.log(
           message: "Failed to connect to the printer. Creating PDF instead.",
-          type: SnackBarType.error,
+          status: SnackBarType.error,
         );
 
         await generateAndDownloadPdf(context, ref, pickup);
@@ -226,10 +220,9 @@ class ReceiptService {
         Navigator.pop(context);
       }
 
-      CustomSnackBar.show(
-        ref: ref,
-        message: "Printing error: ${e.toString()}. Creating PDF instead.",
-        type: SnackBarType.error,
+      CustomSnackBar.log(
+        status: SnackBarType.error,
+        message: "Printing error. Creating PDF instead.",
       );
 
       await generateAndDownloadPdf(context, ref, pickup);
@@ -265,10 +258,9 @@ class ReceiptService {
     // Close printing dialog
     Navigator.pop(context);
 
-    CustomSnackBar.show(
-      ref: ref,
+    CustomSnackBar.log(
       message: "Receipt printed successfully",
-      type: SnackBarType.success,
+      status: SnackBarType.success,
     );
   }
 
@@ -309,10 +301,9 @@ class ReceiptService {
 
     setCompleted();
 
-    CustomSnackBar.show(
-      ref: ref,
+    CustomSnackBar.log(
       message: "Successfully completed the pickup of customer ${pickup.name}",
-      type: SnackBarType.success,
+      status: SnackBarType.success,
     );
 
     Navigator.pop(context);

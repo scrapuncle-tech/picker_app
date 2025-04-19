@@ -10,7 +10,6 @@ class LocalPickup {
   int obxId;
 
   @Unique(onConflict: ConflictStrategy.replace)
-  @Index()
   String id;
   //
 
@@ -257,6 +256,15 @@ class LocalPickup {
             ]
             : [];
 
+    DateTime? parseDate(String? dateStr) {
+      if (dateStr == null || dateStr.isEmpty) return null;
+      try {
+        return DateTime.parse(dateStr);
+      } catch (_) {
+        return null;
+      }
+    }
+
     return LocalPickup(
       id: data['id'] ?? '',
       firebaseIndex:
@@ -286,19 +294,11 @@ class LocalPickup {
       coordinates: coordinates,
       totalPrice: data['totalPrice'] ?? 0,
       totalWeightQuantity: data['totalWeightQuantity'] ?? 0,
-      createdAt: DateTime.parse(
-        data['createdAt'] ?? DateTime.now().toIso8601String(),
-      ),
-      date: DateTime.parse(data['date'] ?? DateTime.now().toIso8601String()),
-      finalDate: DateTime.parse(
-        data['finalDate'] ?? DateTime.now().toIso8601String(),
-      ),
-      updatedAt:
-          data['updatedAt'] != null ? DateTime.parse(data['updatedAt']) : null,
-      completedAt:
-          data['completedAt'] != null
-              ? DateTime.parse(data['completedAt'])
-              : null,
+      createdAt: parseDate(data['createdAt']) ?? DateTime.now(),
+      date: parseDate(data['date']) ?? DateTime.now(),
+      finalDate: parseDate(data['finalDate']) ?? DateTime.now(),
+      updatedAt: parseDate(data['updatedAt']),
+      completedAt: parseDate(data['completedAt']),
     );
   }
 

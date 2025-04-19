@@ -51,7 +51,9 @@ class ItemDisplayCard extends ConsumerWidget {
                     radius: 12,
                     url: item.imageUrls!.first,
                   )
-                  : ClipRRect(
+                  : item.localImagePaths != null &&
+                      item.localImagePaths!.isNotEmpty
+                  ? ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.file(
                       File(item.localImagePaths!.first),
@@ -59,7 +61,8 @@ class ItemDisplayCard extends ConsumerWidget {
                       height: width * .2,
                       fit: BoxFit.cover,
                     ),
-                  ),
+                  )
+                  : SizedBox(),
               SizedBox(width: width * 0.02),
               Expanded(
                 child: Column(
