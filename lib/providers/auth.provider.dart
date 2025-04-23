@@ -33,22 +33,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
     });
   }
 
-  Future<void> signIn({
-    required String email,
-    required String password,
-    required WidgetRef ref,
-  }) async {
+  Future<void> signIn({required String email, required String password}) async {
     try {
       state = state.copyWith(status: AuthStateStatus.loading, error: null);
 
       _authFunctions.signIn(email: email, password: password).listen((data) {
         switch (data.status) {
-          case Status.started:
-            state = state.copyWith(
-              status: AuthStateStatus.loading,
-              error: null,
-            );
-            break;
           case Status.loading:
             state = state.copyWith(
               status: AuthStateStatus.loading,
@@ -88,7 +78,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
     required String name,
     required String phone,
-    required WidgetRef ref,
   }) async {
     try {
       state = state.copyWith(status: AuthStateStatus.loading, error: null);
@@ -97,12 +86,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
           .signUp(email: email, password: password, name: name, phone: phone)
           .listen((data) {
             switch (data.status) {
-              case Status.started:
-                state = state.copyWith(
-                  status: AuthStateStatus.loading,
-                  error: null,
-                );
-                break;
               case Status.loading:
                 state = state.copyWith(
                   status: AuthStateStatus.loading,
@@ -129,6 +112,59 @@ class AuthNotifier extends StateNotifier<AuthState> {
       CustomSnackBar.log(
         status: SnackBarType.error,
         message: "Failed to signup",
+      );
+      state = state.copyWith(
+        error: e.toString(),
+        status: AuthStateStatus.error,
+      );
+    }
+  }
+
+  Future<void> signInWithPhone({
+    required String phone,
+    required String password,
+  }) async {
+    try {
+      state = state.copyWith(status: AuthStateStatus.loading, error: null);
+      final email = await _authFunctions.getEmailByPhone(phone);
+      if (email == null) {
+        state = state.copyWith(
+          status: AuthStateStatus.error,
+          error: 'No user found with this phone number',
+        );
+        CustomSnackBar.log(
+          status: SnackBarType.error,
+          message: 'No user found with this phone number',
+        );
+        return;
+      }
+      _authFunctions.signIn(email: email, password: password).listen((data) {
+        switch (data.status) {
+          case Status.loading:
+            state = state.copyWith(
+              status: AuthStateStatus.loading,
+              error: null,
+            );
+            break;
+          case Status.success:
+            state = state.copyWith(
+              status: AuthStateStatus.authenticated,
+              pickerData: data.picker,
+              error: null,
+            );
+            break;
+          case Status.error:
+            state = state.copyWith(
+              status: AuthStateStatus.error,
+              error: data.message,
+            );
+            break;
+        }
+      });
+    } catch (e) {
+      CustomSnackBar.log(
+        status: SnackBarType.error,
+        message: "Failed to login with phone",
       );
       state = state.copyWith(
         error: e.toString(),

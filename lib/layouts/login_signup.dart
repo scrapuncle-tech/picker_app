@@ -17,11 +17,12 @@ class LoginSignupPage extends ConsumerStatefulWidget {
 
 class _LoginSignupPageState extends ConsumerState<LoginSignupPage> {
   bool isLogin = true;
+  bool usePhone = false;
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  TextEditingController phoneNoController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
   late Ticker _ticker;
   Duration _elapsed = Duration.zero;
@@ -49,10 +50,35 @@ class _LoginSignupPageState extends ConsumerState<LoginSignupPage> {
       emailController.clear();
       passwordController.clear();
       nameController.clear();
+      phoneController.clear();
+      usePhone = false;
+    });
+  }
+
+  void toggleLoginType(bool phone) {
+    setState(() {
+      usePhone = phone;
+      emailController.clear();
     });
   }
 
   void login() async {
+    if (usePhone) {
+      if (phoneController.text.isEmpty || passwordController.text.isEmpty) {
+        CustomSnackBar.log(
+          message: 'Please fill in all fields',
+          status: SnackBarType.error,
+        );
+        return;
+      }
+      ref
+          .read(authProvider.notifier)
+          .signInWithPhone(
+            phone: phoneController.text,
+            password: passwordController.text,
+          );
+      return;
+    }
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       CustomSnackBar.log(
         message: 'Please fill in all fields',
@@ -60,40 +86,29 @@ class _LoginSignupPageState extends ConsumerState<LoginSignupPage> {
       );
       return;
     }
-
     ref
         .read(authProvider.notifier)
-        .signIn(
-          email: emailController.text,
-          password: passwordController.text,
-          ref: ref,
-        );
+        .signIn(email: emailController.text, password: passwordController.text);
   }
 
   void signup() async {
     if (emailController.text.isEmpty ||
         passwordController.text.isEmpty ||
-        nameController.text.isEmpty ||
-        phoneNoController.text.isEmpty) {
+        nameController.text.isEmpty) {
       CustomSnackBar.log(
         message: 'Please fill in all fields',
         status: SnackBarType.error,
       );
       return;
     }
-    try {
-      ref
-          .read(authProvider.notifier)
-          .signUp(
-            name: nameController.text,
-            email: emailController.text,
-            password: passwordController.text,
-            phone: phoneNoController.text,
-            ref: ref,
-          );
-    } catch (e) {
-      CustomSnackBar.log(message: e.toString(), status: SnackBarType.error);
-    }
+    ref
+        .read(authProvider.notifier)
+        .signUp(
+          name: nameController.text,
+          email: emailController.text,
+          password: passwordController.text,
+          phone: phoneController.text,
+        );
   }
 
   @override
@@ -161,59 +176,98 @@ class _LoginSignupPageState extends ConsumerState<LoginSignupPage> {
                     color: colorData.fontColor(1),
                   ),
                   SizedBox(height: height * .02),
-                  // AuthProviderButton(
-                  //   function: () {},
-                  //   text: "Sign ${isLogin ? "in" : "up"} with Google",
-                  //   iconPath: "assets/icons/google.png",
-                  // ),
-                  // SizedBox(height: height * .025),
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       child: Container(
-                  //         height: 2,
-                  //         margin: EdgeInsets.only(right: width * .04),
-                  //         decoration: BoxDecoration(
-                  //           borderRadius: BorderRadius.circular(50),
-                  //           color: colorData.secondaryColor(),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     CustomText(
-                  //       text: "Or continue with",
-                  //       size: aspectRatio * 25,
-                  //       color: colorData.fontColor(.5),
-                  //     ),
-                  //     Expanded(
-                  //       child: Container(
-                  //         height: 2,
-                  //         margin: EdgeInsets.only(left: width * .04),
-                  //         decoration: BoxDecoration(
-                  //           borderRadius: BorderRadius.circular(50),
-                  //           color: colorData.secondaryColor(),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                  AuthProviderButton(
+                    function: () {},
+                    text: "Sign ${isLogin ? "in" : "up"} with Google",
+                    iconPath: "assets/icons/google.png",
+                  ),
                   SizedBox(height: height * .025),
+                  if (isLogin)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () => toggleLoginType(false),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color:
+                                  !usePhone
+                                      ? colorData.secondaryColor(.2)
+                                      : Colors.transparent,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: CustomText(
+                              text: "Email",
+                              size: aspectRatio * 25,
+                              color: colorData.fontColor(!usePhone ? 1 : .5),
+                              weight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: () => toggleLoginType(true),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color:
+                                  usePhone
+                                      ? colorData.secondaryColor(.2)
+                                      : Colors.transparent,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: CustomText(
+                              text: "Phone No",
+                              size: aspectRatio * 25,
+                              color: colorData.fontColor(usePhone ? 1 : .5),
+                              weight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  if (isLogin) SizedBox(height: height * .025),
                   if (!isLogin)
                     AuthTextField(
                       controller: nameController,
                       hintText: "Full Name",
                       isFirst: true,
                     ),
-                  AuthTextField(
-                    controller: emailController,
-                    hintText: "Email address",
-                    needValidation: !isLogin,
-                    isFirst: isLogin,
-                  ),
-                  if (!isLogin)
+                  if (isLogin && usePhone)
                     AuthTextField(
-                      controller: phoneNoController,
+                      controller: phoneController,
                       hintText: "Phone number",
                       needValidation: false,
+                      isNumber: true,
+                      isFirst: isLogin,
+                    ),
+                  if (!usePhone && isLogin)
+                    AuthTextField(
+                      controller: emailController,
+                      hintText: "Email address",
+                      needValidation: !isLogin,
+                      isFirst: isLogin,
+                    ),
+                  if (!isLogin)
+                    AuthTextField(
+                      controller: emailController,
+                      hintText: "Email address",
+                      needValidation: !isLogin,
+                      isFirst: false,
+                    ),
+                  if (!isLogin)
+                    AuthTextField(
+                      controller: phoneController,
+                      hintText: "Phone number",
+                      needValidation: false,
+                      isNumber: true,
                       isFirst: false,
                     ),
                   AuthTextField(
@@ -295,6 +349,7 @@ class AuthTextField extends ConsumerStatefulWidget {
     this.needValidation = false,
     this.isFirst = false,
     this.isLast = false,
+    this.isNumber = false,
   });
 
   final TextEditingController controller;
@@ -302,6 +357,7 @@ class AuthTextField extends ConsumerStatefulWidget {
   final bool needValidation;
   final bool isFirst;
   final bool isLast;
+  final bool isNumber;
 
   @override
   ConsumerState<AuthTextField> createState() => _AuthTextFieldState();
@@ -396,6 +452,8 @@ class _AuthTextFieldState extends ConsumerState<AuthTextField> {
                     ? TextInputType.visiblePassword
                     : isEmail
                     ? TextInputType.emailAddress
+                    : widget.isNumber
+                    ? TextInputType.number
                     : TextInputType.text,
             cursorColor: Colors.blueAccent,
             onChanged: (value) {
@@ -413,6 +471,7 @@ class _AuthTextFieldState extends ConsumerState<AuthTextField> {
                 });
               }
             },
+
             decoration: InputDecoration(
               suffixIcon:
                   isPassword

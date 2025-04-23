@@ -8,8 +8,6 @@ import 'dart:io' show Platform;
 
 class BluetoothReceiptPrinter {
   bool connected = false;
-  List<BluetoothDevice> availableBluetoothDevices = [];
-  BluetoothDevice? selectedDevice;
   BluetoothCharacteristic? printCharacteristic;
 
   // Constructor with permission check
@@ -75,86 +73,6 @@ class BluetoothReceiptPrinter {
     return false;
   }
 
-  // Scan for available Bluetooth devices
-  Future<void> getBluetooth() async {
-    // First ensure permissions are granted
-    bool permissionsGranted = await checkAndRequestPermissions();
-    if (!permissionsGranted) {
-      debugPrint('Required permissions not granted');
-      return;
-    }
-
-    try {
-      // Clear previous list
-      availableBluetoothDevices = [];
-
-      // Start scanning
-      await FlutterBluePlus.startScan(timeout: const Duration(seconds: 4));
-
-      // Listen to scan results
-      var subscription = FlutterBluePlus.scanResults.listen((results) {
-        // Update the list of available devices
-        availableBluetoothDevices = results.map((r) => r.device).toList();
-        debugPrint(
-          "Found ${availableBluetoothDevices.length} Bluetooth devices",
-        );
-      });
-
-      // Wait for scan to complete
-      await FlutterBluePlus.isScanning.where((val) => val == false).first;
-      await subscription.cancel();
-    } catch (e) {
-      debugPrint("Error scanning for devices: $e");
-    }
-  }
-
-  // Connect to a device
-  Future<void> setConnect(String deviceId) async {
-    // Check permissions before connecting
-    bool permissionsGranted = await checkAndRequestPermissions();
-    if (!permissionsGranted) {
-      debugPrint('Required permissions not granted');
-      return;
-    }
-
-    try {
-      // Find the device with the matching ID
-      final device = availableBluetoothDevices.firstWhere(
-        (d) => d.remoteId.toString() == deviceId,
-        orElse: () => throw Exception("Device not found"),
-      );
-
-      selectedDevice = device;
-      debugPrint("Connecting to ${device.platformName}");
-
-      // Connect to the device
-      await device.connect();
-
-      // Discover services
-      List<BluetoothService> services = await device.discoverServices();
-
-      // Find the first writable characteristic
-      for (var service in services) {
-        for (var characteristic in service.characteristics) {
-          if (characteristic.properties.write ||
-              characteristic.properties.writeWithoutResponse) {
-            printCharacteristic = characteristic;
-            connected = true;
-            debugPrint("Found writable characteristic: ${characteristic.uuid}");
-            return;
-          }
-        }
-      }
-
-      if (printCharacteristic == null) {
-        throw Exception("No writable characteristic found");
-      }
-    } catch (e) {
-      debugPrint("Connection error: $e");
-      connected = false;
-    }
-  }
-
   // Print a receipt
   Future<void> printTicket(Map<String, dynamic> receiptData) async {
     if (!connected || printCharacteristic == null) {
@@ -188,12 +106,13 @@ class BluetoothReceiptPrinter {
 
   // Disconnect from device
   Future<void> disconnect() async {
-    if (selectedDevice != null) {
-      await selectedDevice!.disconnect();
+    try {
+      // There is no direct reference to the device from the characteristic, so just set state flags
       connected = false;
-      selectedDevice = null;
       printCharacteristic = null;
       debugPrint("Disconnected from device");
+    } catch (e) {
+      debugPrint("Error disconnecting: $e");
     }
   }
 
@@ -203,13 +122,13 @@ class BluetoothReceiptPrinter {
   ) async {
     // Initialize the printer profile
     final profile = await CapabilityProfile.load();
-    final generator = Generator(PaperSize.mm80, profile);
+    final generator = Generator(PaperSize.mm58, profile);
 
     List<int> bytes = [];
 
     // Add header with store info (you can customize this)
     bytes += generator.text(
-      'SUPERMARKET RECEIPT',
+      'SCRAPUNCLE RECEIPT',
       styles: const PosStyles(
         align: PosAlign.center,
         bold: true,

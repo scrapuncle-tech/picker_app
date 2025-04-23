@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:open_file/open_file.dart';
 
 import '../../components/common/custom_snackbar.component.dart';
-import '../../components/update_pickup/bluetooth_device_dialog.dart';
 import '../../models/pickup.entity.dart';
 import 'generate_receipt.dart';
 import 'pdf_receipt_generator.dart';
@@ -109,53 +108,43 @@ class ReceiptService {
       return;
     }
 
-    // Show loading dialog while initializing bluetooth
+    // Show loading dialog while printing
     _showLoadingDialog(
       context,
-      "Searching...",
+      "Printing receipt...",
       color: secondaryColor,
       width: width,
     );
 
     BluetoothReceiptPrinter printerService = BluetoothReceiptPrinter();
     try {
-      // Initialize bluetooth
-      await printerService.getBluetooth();
-
-      // Close the loading dialog
-      Navigator.pop(context);
-
-      // Check if devices are available
-      if (printerService.availableBluetoothDevices.isEmpty) {
+      // Directly attempt to print to already connected device
+      if (!printerService.connected ||
+          printerService.printCharacteristic == null) {
+        // Close loading dialog
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
         CustomSnackBar.log(
-          message: "No Bluetooth devices found. Creating PDF instead.",
           status: SnackBarType.error,
+          message: "No connected Bluetooth printer found.",
         );
-
-        await generateAndDownloadPdf(context, ref, pickup);
         return;
       }
 
-      // Show device selection dialog
-      final selectedDevice =
-          await BluetoothDeviceDialog.showDeviceSelectionDialog(
-            context: context,
-            ref: ref,
-            devices: printerService.availableBluetoothDevices,
-          );
+      // Print the receipt
+      final receiptData = _createReceiptData(pickup);
+      await printerService.printTicket(receiptData);
 
-      // Connect and print if device selected
-      if (selectedDevice != null) {
-        await _connectAndPrint(
-          context,
-          ref,
-          selectedDevice,
-          printerService,
-          pickup,
-          secondaryColor,
-          width,
-        );
+      // Close loading dialog
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
       }
+
+      CustomSnackBar.log(
+        message: "Receipt printed successfully",
+        status: SnackBarType.success,
+      );
     } catch (e) {
       // Close loading dialog if open
       if (Navigator.canPop(context)) {
@@ -164,104 +153,10 @@ class ReceiptService {
 
       CustomSnackBar.log(
         status: SnackBarType.error,
-        message: "Bluetooth error. Creating PDF instead.",
+        message:
+            "Printing error. Please check your Bluetooth printer connection.",
       );
-
-      await generateAndDownloadPdf(context, ref, pickup);
     }
-  }
-
-  // Connect to printer and print receipt
-  Future<void> _connectAndPrint(
-    BuildContext context,
-    WidgetRef ref,
-    dynamic selectedDevice,
-    BluetoothReceiptPrinter printerService,
-    Pickup pickup,
-    Color secondaryColor,
-    double width,
-  ) async {
-    // Show a connecting indicator
-    _showLoadingDialog(
-      context,
-      "Connecting",
-      color: secondaryColor,
-      width: width,
-    );
-
-    try {
-      // Connect to the device
-      await printerService.setConnect(selectedDevice.remoteId.toString());
-
-      // Close the loading dialog
-      Navigator.pop(context);
-
-      if (printerService.connected) {
-        await _printReceiptToBluetooth(
-          context,
-          ref,
-          printerService,
-          pickup,
-          secondaryColor,
-          width,
-        );
-      } else {
-        // If connection fails, create PDF instead
-        CustomSnackBar.log(
-          message: "Failed to connect to the printer. Creating PDF instead.",
-          status: SnackBarType.error,
-        );
-
-        await generateAndDownloadPdf(context, ref, pickup);
-      }
-    } catch (e) {
-      // Close the loading dialog if still open
-      if (Navigator.canPop(context)) {
-        Navigator.pop(context);
-      }
-
-      CustomSnackBar.log(
-        status: SnackBarType.error,
-        message: "Printing error. Creating PDF instead.",
-      );
-
-      await generateAndDownloadPdf(context, ref, pickup);
-    } finally {
-      // Disconnect when done
-      await printerService.disconnect();
-    }
-  }
-
-  // Print receipt to bluetooth device
-  Future<void> _printReceiptToBluetooth(
-    BuildContext context,
-    WidgetRef ref,
-    BluetoothReceiptPrinter printerService,
-    Pickup pickup,
-    Color secondaryColor,
-    double width,
-  ) async {
-    // Show printing dialog
-    _showLoadingDialog(
-      context,
-      "Printing receipt...",
-      color: secondaryColor,
-      width: width,
-    );
-
-    // Create receipt data for printing
-    final receiptData = _createReceiptData(pickup);
-
-    // Print the receipt
-    await printerService.printTicket(receiptData);
-
-    // Close printing dialog
-    Navigator.pop(context);
-
-    CustomSnackBar.log(
-      message: "Receipt printed successfully",
-      status: SnackBarType.success,
-    );
   }
 
   // Helper method to show loading dialog

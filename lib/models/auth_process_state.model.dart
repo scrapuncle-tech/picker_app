@@ -1,6 +1,6 @@
 import 'picker.entity.dart';
 
-enum Status { started, loading, success, error }
+enum Status { loading, success, error }
 
 class AuthProcessState {
   final Status status;
@@ -9,8 +9,6 @@ class AuthProcessState {
 
   const AuthProcessState._({required this.status, this.picker, this.message});
 
-  factory AuthProcessState.started() =>
-      const AuthProcessState._(status: Status.started);
   factory AuthProcessState.loading() =>
       const AuthProcessState._(status: Status.loading);
   factory AuthProcessState.success(Picker picker) =>

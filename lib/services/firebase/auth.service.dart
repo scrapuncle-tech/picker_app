@@ -19,8 +19,6 @@ class AuthFunctions {
     required String email,
     required String password,
   }) async* {
-    yield AuthProcessState.started();
-
     try {
       yield AuthProcessState.loading();
 
@@ -54,7 +52,6 @@ class AuthFunctions {
     required String name,
     required String phone,
   }) async* {
-    yield AuthProcessState.started();
     try {
       yield AuthProcessState.loading();
 
@@ -89,6 +86,18 @@ class AuthFunctions {
     } on FirebaseAuthException catch (e) {
       yield AuthProcessState.error('Sign up failed: ${e.message}');
     }
+  }
+
+  // Get email by phone number from Firestore
+  Future<String?> getEmailByPhone(String phone) async {
+    final query =
+        await _firestore
+            .collection(FirebaseConstants.pickerCollection)
+            .where('phoneNo', isEqualTo: phone)
+            .limit(1)
+            .get();
+    if (query.docs.isEmpty) return null;
+    return query.docs.first.data()['email'] as String?;
   }
 
   Stream<Picker> pickerDataChanges({required String userId}) {
