@@ -125,6 +125,7 @@ class ReceiptService {
         if (Navigator.canPop(context)) {
           Navigator.pop(context);
         }
+        generateAndDownloadPdf(context, ref, pickup);
         CustomSnackBar.log(
           status: SnackBarType.error,
           message: "No connected Bluetooth printer found.",
@@ -150,6 +151,8 @@ class ReceiptService {
       if (Navigator.canPop(context)) {
         Navigator.pop(context);
       }
+
+      generateAndDownloadPdf(context, ref, pickup);
 
       CustomSnackBar.log(
         status: SnackBarType.error,

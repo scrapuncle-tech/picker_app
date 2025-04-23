@@ -10,7 +10,7 @@ import '../../models/route.entity.dart';
 import '../../utilities/firebase_constants.dart';
 
 class ReadService {
-  Stream<Picker> getPicker({required String id}) {
+  Stream<Picker?> getPicker({required String id}) {
     return FirebaseFirestore.instance
         .collection(FirebaseConstants.pickerCollection)
         .doc(id)
@@ -19,7 +19,7 @@ class ReadService {
           if (snapshot.exists) {
             return Picker.fromFirebase(snapshot.data()!);
           } else {
-            throw Exception("Picker not found");
+            return null;
           }
         })
         .handleError((e) {

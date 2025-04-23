@@ -17,6 +17,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   void _listenToAuthChanges() {
     _obAuthService.getPicker().listen((picker) {
+      print("picker: $picker");
       if (picker != null) {
         state = state.copyWith(
           pickerData: picker,
@@ -152,6 +153,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
               pickerData: data.picker,
               error: null,
             );
+
+            _obAuthService.setPicker(data.picker!);
             break;
           case Status.error:
             state = state.copyWith(

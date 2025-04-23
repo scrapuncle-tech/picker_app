@@ -16,20 +16,22 @@ class OBAuthService {
     _pickerSubscription?.cancel();
 
     Picker? existingPickerData =
-        objectbox.pickerBox.query().build().find().firstOrNull;
+        objectbox.pickerBox.query().build().find().lastOrNull;
 
     if (existingPickerData != null) {
       _pickerSubscription = ReadService()
           .getPicker(id: existingPickerData.id)
           .listen((pickerData) {
             onSynced?.call();
-            objectbox.pickerBox.put(
-              pickerData.copyWith(obxId: existingPickerData.obxId),
-            );
+            if (pickerData != null) {
+              objectbox.pickerBox.put(
+                pickerData.copyWith(obxId: existingPickerData.obxId),
+              );
+            } else {
+              int removedObjCount = objectbox.pickerBox.removeAll();
+              debugPrint("RemovedObjCount: $removedObjCount");
+            }
           });
-    } else {
-      int removedObjCount = objectbox.pickerBox.removeAll();
-      debugPrint("RemovedObjCount: $removedObjCount");
     }
   }
 
