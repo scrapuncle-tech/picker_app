@@ -60,9 +60,12 @@ class ItemDisplayCard extends ConsumerWidget {
                       width: width * .2,
                       height: width * .2,
                       fit: BoxFit.cover,
+                      errorBuilder:
+                          (context, error, stackTrace) =>
+                              CustomNetworkImage(size: width * .2, radius: 12),
                     ),
                   )
-                  : SizedBox(),
+                  : CustomNetworkImage(size: width * .2, radius: 12),
               SizedBox(width: width * 0.02),
               Expanded(
                 child: Column(

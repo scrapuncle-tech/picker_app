@@ -1,246 +1,114 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'dart:async';
-import 'dart:typed_data';
-import 'dart:io' show Platform;
 
 class BluetoothReceiptPrinter {
-  bool connected = false;
-  BluetoothCharacteristic? printCharacteristic;
+  final BlueThermalPrinter printer = BlueThermalPrinter.instance;
+  BluetoothDevice? connectedDevice;
 
-  // Constructor with permission check
-  BluetoothReceiptPrinter() {
-    // Check permissions when created
-    checkAndRequestPermissions();
-  }
-
-  // Check and request required permissions
-  Future<bool> checkAndRequestPermissions() async {
-    if (Platform.isAndroid) {
-      // For Android we need location permissions for Bluetooth scanning
-      // In Android 12+ we also need Bluetooth scan and connect permissions
-      Map<Permission, PermissionStatus> statuses =
-          await [
-            Permission.location,
-            Permission.bluetoothScan,
-            Permission.bluetoothConnect,
-          ].request();
-
-      bool allGranted = true;
-      statuses.forEach((permission, status) {
-        if (!status.isGranted) {
-          allGranted = false;
-          debugPrint(
-            '${permission.toString()} permission is not granted: $status',
-          );
-        }
-      });
-
-      if (!allGranted) {
-        debugPrint('Not all permissions granted, some features may not work');
-        return false;
-      }
-
-      // Check if Bluetooth is on
-      bool isOn =
-          await FlutterBluePlus.adapterState.first == BluetoothAdapterState.on;
-      if (!isOn) {
-        debugPrint('Bluetooth is turned off');
-        // On some devices, we can request to turn on Bluetooth
-        try {
-          await FlutterBluePlus.turnOn();
-        } catch (e) {
-          debugPrint('Cannot turn on Bluetooth: $e');
-          return false;
-        }
-      }
-
-      return true;
-    } else if (Platform.isIOS) {
-      // iOS doesn't need explicit permission for Bluetooth
-      // But we still check if Bluetooth is on
-      bool isOn =
-          await FlutterBluePlus.adapterState.first == BluetoothAdapterState.on;
-      if (!isOn) {
-        debugPrint('Bluetooth is turned off');
-        return false;
-      }
-      return true;
-    }
-
-    return false;
-  }
-
-  // Print a receipt
-  Future<void> printTicket(Map<String, dynamic> receiptData) async {
-    if (!connected || printCharacteristic == null) {
-      debugPrint("Not connected to a printer");
-      return;
-    }
-
+  // Connect to the first paired printer (or you can filter by name/address)
+  Future<bool> connectToPairedPrinter() async {
     try {
-      List<int> bytes = await generateReceiptData(receiptData);
-
-      // Convert to Uint8List
-      Uint8List data = Uint8List.fromList(bytes);
-
-      // Send in chunks to accommodate BLE limitations
-      const int chunkSize = 20;
-
-      for (int i = 0; i < data.length; i += chunkSize) {
-        int end = (i + chunkSize < data.length) ? i + chunkSize : data.length;
-        Uint8List chunk = data.sublist(i, end);
-
-        await printCharacteristic!.write(chunk, withoutResponse: true);
-        // Small delay to prevent buffer overflow
-        await Future.delayed(const Duration(milliseconds: 20));
+      List<BluetoothDevice> devices = await printer.getBondedDevices();
+      if (devices.isEmpty) {
+        debugPrint("No paired Bluetooth printers found.");
+        return false;
       }
-
-      debugPrint("Receipt printed successfully");
+      // Optionally, select the device by name or address
+      BluetoothDevice device = devices.first;
+      await printer.connect(device);
+      connectedDevice = device;
+      debugPrint("Connected to printer: ${device.name}");
+      return true;
     } catch (e) {
-      debugPrint("Error printing receipt: $e");
+      debugPrint("Failed to connect to printer: $e");
+      return false;
     }
   }
 
-  // Disconnect from device
   Future<void> disconnect() async {
-    try {
-      // There is no direct reference to the device from the characteristic, so just set state flags
-      connected = false;
-      printCharacteristic = null;
-      debugPrint("Disconnected from device");
-    } catch (e) {
-      debugPrint("Error disconnecting: $e");
-    }
+    await printer.disconnect();
+    connectedDevice = null;
   }
 
-  // Generate the formatted receipt data
-  Future<List<int>> generateReceiptData(
-    Map<String, dynamic> receiptData,
-  ) async {
-    // Initialize the printer profile
-    final profile = await CapabilityProfile.load();
-    final generator = Generator(PaperSize.mm58, profile);
-
-    List<int> bytes = [];
-
-    // Add header with store info (you can customize this)
-    bytes += generator.text(
-      'SCRAPUNCLE RECEIPT',
-      styles: const PosStyles(
-        align: PosAlign.center,
-        bold: true,
-        height: PosTextSize.size2,
-      ),
+  // Print a formatted receipt to the connected printer
+  Future<void> printReceipt(Map<String, dynamic> receiptData) async {
+    if (connectedDevice == null) {
+      bool connected = await connectToPairedPrinter();
+      if (!connected) {
+        debugPrint("No printer connected.");
+        return;
+      }
+    }
+    // Example: format the receipt for 58mm printer
+    printer.printNewLine();
+    printer.printCustom("SCRAP UNCLE RECEIPT", 2, 1); // Large, Centered
+    printer.printNewLine();
+    printer.printCustom(
+      "Customer: ${receiptData['customerDetails']['name'] ?? ''}",
+      1,
+      0,
     );
-    bytes += generator.text(
-      'Thank you for shopping with us!',
-      styles: const PosStyles(align: PosAlign.center),
+    printer.printCustom(
+      "Phone: ${receiptData['customerDetails']['phoneNo'] ?? ''}",
+      1,
+      0,
     );
-    bytes += generator.hr();
-
-    // CUSTOMER DETAILS
-    bytes += generator.text(
-      'CUSTOMER DETAILS',
-      styles: const PosStyles(bold: true, underline: true),
+    printer.printCustom(
+      "Address: ${receiptData['customerDetails']['location'] ?? ''}",
+      1,
+      0,
     );
-
-    final customerDetails = receiptData['customerDetails'] ?? {};
-    bytes += generator.text('Name: ${customerDetails['name'] ?? ''}');
-    bytes += generator.text('Phone: ${customerDetails['phoneNo'] ?? ''}');
-    bytes += generator.text('Address: ${customerDetails['location'] ?? ''}');
-    bytes += generator.text('Slot: ${customerDetails['slot'] ?? ''}');
-    bytes += generator.emptyLines(1);
-
-    // PICKER DETAILS
-    bytes += generator.text(
-      'PICKER DETAILS',
-      styles: const PosStyles(bold: true, underline: true),
+    printer.printCustom(
+      "Slot: ${receiptData['customerDetails']['slot'] ?? ''}",
+      1,
+      0,
     );
-
-    final pickerDetails = receiptData['pickerDetails'] ?? {};
-    bytes += generator.text('Name: ${pickerDetails['name'] ?? ''}');
-    bytes += generator.text('ID: ${pickerDetails['id'] ?? ''}');
-    bytes += generator.text('Phone: ${pickerDetails['phoneNo'] ?? ''}');
-    bytes += generator.emptyLines(1);
-
-    // ITEMS COLLECTED
-    bytes += generator.text(
-      'ITEMS COLLECTED',
-      styles: const PosStyles(bold: true, underline: true),
+    printer.printNewLine();
+    printer.printCustom(
+      "Picker: ${receiptData['pickerDetails']['name'] ?? ''}",
+      1,
+      0,
     );
-
-    // Table header
-    bytes += generator.row([
-      PosColumn(text: 'Item', width: 6, styles: const PosStyles(bold: true)),
-      PosColumn(text: 'Price', width: 2, styles: const PosStyles(bold: true)),
-      PosColumn(text: 'Qty', width: 2, styles: const PosStyles(bold: true)),
-      PosColumn(text: 'Total', width: 2, styles: const PosStyles(bold: true)),
-    ]);
-
-    bytes += generator.hr();
-
-    // Item rows
-    final itemsCollected = receiptData['itemsCollected'] ?? [];
+    printer.printCustom(
+      "ID: ${receiptData['pickerDetails']['id'] ?? ''}",
+      1,
+      0,
+    );
+    printer.printNewLine();
+    printer.printCustom("ITEMS COLLECTED", 1, 1);
+    printer.printCustom("Item         Qty   Total", 1, 0);
+    printer.printCustom("---------------------------", 1, 0);
+    final items = receiptData['itemsCollected'] ?? [];
     double grandTotal = 0.0;
-
-    for (var item in itemsCollected) {
-      final priceType = item['priceType'] ?? 'actual';
-      final price = item['price'] ?? 0.0;
-      final quantity = item['totalQuantity'] ?? 0;
-      final unit = item['unit'] ?? '';
-      final totalPrice = item['totalPrice'] ?? 0.0;
-
-      grandTotal += totalPrice;
-
-      bytes += generator.row([
-        PosColumn(text: item['itemName'] ?? '', width: 6),
-        PosColumn(text: '$price${priceType == 'custom' ? '*' : ''}', width: 2),
-        PosColumn(text: '$quantity$unit', width: 2),
-        PosColumn(text: totalPrice.toStringAsFixed(2), width: 2),
-      ]);
+    for (var item in items) {
+      final name = item['itemName'] ?? '';
+      final qty = item['totalQuantity'] ?? '';
+      final total = item['totalPrice']?.toStringAsFixed(2) ?? '';
+      grandTotal += item['totalPrice'] ?? 0.0;
+      // Make sure the line fits 58mm width
+      final line = _formatLine(name, qty, total);
+      printer.printCustom(line, 1, 0);
     }
-
-    bytes += generator.hr();
-
-    // TOTAL
-    bytes += generator.row([
-      PosColumn(
-        text: 'GRAND TOTAL:',
-        width: 6,
-        styles: const PosStyles(bold: true),
-      ),
-      PosColumn(text: '', width: 4),
-      PosColumn(
-        text: grandTotal.toStringAsFixed(2),
-        width: 2,
-        styles: const PosStyles(bold: true),
-      ),
-    ]);
-
-    bytes += generator.emptyLines(1);
-
-    // Declaration
+    printer.printCustom("---------------------------", 1, 0);
+    printer.printCustom("GRAND TOTAL: ${grandTotal.toStringAsFixed(2)}", 2, 0);
+    printer.printNewLine();
     if (receiptData.containsKey('declaration')) {
-      bytes += generator.text(
-        'DECLARATION',
-        styles: const PosStyles(bold: true),
-      );
-      bytes += generator.text(
-        receiptData['declaration'] ?? '',
-        styles: const PosStyles(align: PosAlign.center),
-      );
+      printer.printCustom("DECLARATION", 1, 1);
+      printer.printCustom(receiptData['declaration'] ?? '', 1, 0);
     }
+    printer.printNewLine();
+    printer.printCustom("Thank you for your business!", 1, 1);
+    printer.printNewLine();
+    printer.paperCut();
+  }
 
-    bytes += generator.emptyLines(1);
-    bytes += generator.text(
-      'Thank you for your purchase!',
-      styles: const PosStyles(align: PosAlign.center),
-    );
-    bytes += generator.cut();
-
-    return bytes;
+  // Helper to format a line for 58mm width (adjust as needed)
+  String _formatLine(String name, dynamic qty, String total) {
+    // Pad/truncate to fit 32 chars (approx 58mm)
+    String namePad = name.padRight(12).substring(0, 12);
+    String qtyPad = qty.toString().padLeft(4).substring(0, 4);
+    String totalPad = total.padLeft(8).substring(0, 8);
+    return "$namePad $qtyPad $totalPad";
   }
 }

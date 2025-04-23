@@ -118,24 +118,22 @@ class ReceiptService {
 
     BluetoothReceiptPrinter printerService = BluetoothReceiptPrinter();
     try {
-      // Directly attempt to print to already connected device
-      if (!printerService.connected ||
-          printerService.printCharacteristic == null) {
+      // Attempt to connect to paired printer if not already connected
+      bool connected = await printerService.connectToPairedPrinter();
+      if (!connected) {
         // Close loading dialog
         if (Navigator.canPop(context)) {
           Navigator.pop(context);
         }
-        generateAndDownloadPdf(context, ref, pickup);
         CustomSnackBar.log(
           status: SnackBarType.error,
-          message: "No connected Bluetooth printer found.",
+          message: "No paired Bluetooth printer found.",
         );
         return;
       }
-
       // Print the receipt
       final receiptData = _createReceiptData(pickup);
-      await printerService.printTicket(receiptData);
+      await printerService.printReceipt(receiptData);
 
       // Close loading dialog
       if (Navigator.canPop(context)) {
@@ -151,13 +149,9 @@ class ReceiptService {
       if (Navigator.canPop(context)) {
         Navigator.pop(context);
       }
-
-      generateAndDownloadPdf(context, ref, pickup);
-
       CustomSnackBar.log(
         status: SnackBarType.error,
-        message:
-            "Printing error. Please check your Bluetooth printer connection.",
+        message: "Printing error. Please check your Bluetooth printer connection.",
       );
     }
   }
