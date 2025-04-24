@@ -39,7 +39,7 @@ class BluetoothDeviceDialog {
                 Divider(color: colorData.fontColor(.2), thickness: 1),
               ],
             ),
-            content: Container(
+            content: SizedBox(
               width: width * 0.8,
               height: height * 0.4,
               child: Column(

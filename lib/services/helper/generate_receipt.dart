@@ -1,84 +1,112 @@
 import 'package:flutter/material.dart';
-import 'package:blue_thermal_printer/blue_thermal_printer.dart';
-import 'dart:async';
+import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 class BluetoothReceiptPrinter {
-  final BlueThermalPrinter printer = BlueThermalPrinter.instance;
-  BluetoothDevice? connectedDevice;
+  List<BluetoothInfo> bondedDevices = [];
+  BluetoothInfo? connectedDevice;
 
-  // Connect to the first paired printer (or you can filter by name/address)
+  // Initialize and scan for paired devices
   Future<bool> connectToPairedPrinter() async {
-    try {
-      List<BluetoothDevice> devices = await printer.getBondedDevices();
-      if (devices.isEmpty) {
-        debugPrint("No paired Bluetooth printers found.");
-        return false;
-      }
-      // Optionally, select the device by name or address
-      BluetoothDevice device = devices.first;
-      await printer.connect(device);
-      connectedDevice = device;
-      debugPrint("Connected to printer: ${device.name}");
-      return true;
-    } catch (e) {
-      debugPrint("Failed to connect to printer: $e");
+    final bool isBluetoothOn = await PrintBluetoothThermal.bluetoothEnabled;
+    if (!isBluetoothOn) {
+      debugPrint("Bluetooth is off.");
       return false;
     }
+
+    bondedDevices = await PrintBluetoothThermal.pairedBluetooths;
+    if (bondedDevices.isEmpty) {
+      debugPrint("No paired printers found.");
+      return false;
+    }
+
+    connectedDevice = bondedDevices.first;
+    final bool result = await PrintBluetoothThermal.connect(
+      macPrinterAddress: connectedDevice!.macAdress,
+    );
+    if (result) {
+      debugPrint("Connected to printer: ${connectedDevice!.name}");
+    } else {
+      debugPrint("Failed to connect to printer.");
+    }
+    return result;
   }
 
   Future<void> disconnect() async {
-    await printer.disconnect();
+    await PrintBluetoothThermal.disconnect;
     connectedDevice = null;
   }
 
-  // Print a formatted receipt to the connected printer
   Future<void> printReceipt(Map<String, dynamic> receiptData) async {
-    if (connectedDevice == null) {
-      bool connected = await connectToPairedPrinter();
-      if (!connected) {
-        debugPrint("No printer connected.");
-        return;
-      }
+    // Check if printer is connected
+    bool isConnected = await PrintBluetoothThermal.connectionStatus == true;
+    if (!isConnected) {
+      // Connect your printer here if needed
+      debugPrint("Printer not connected");
+      return;
     }
-    // Example: format the receipt for 58mm printer
-    printer.printNewLine();
-    printer.printCustom("SCRAP UNCLE RECEIPT", 2, 1); // Large, Centered
-    printer.printNewLine();
-    printer.printCustom(
-      "Customer: ${receiptData['customerDetails']['name'] ?? ''}",
-      1,
-      0,
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(text: "SCRAP UNCLE RECEIPT\n", size: 2),
     );
-    printer.printCustom(
-      "Phone: ${receiptData['customerDetails']['phoneNo'] ?? ''}",
-      1,
-      0,
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(text: "\n", size: 1),
     );
-    printer.printCustom(
-      "Address: ${receiptData['customerDetails']['location'] ?? ''}",
-      1,
-      0,
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(
+        text: "Customer: ${receiptData['customerDetails']['name'] ?? ''}\n",
+        size: 1,
+      ),
     );
-    printer.printCustom(
-      "Slot: ${receiptData['customerDetails']['slot'] ?? ''}",
-      1,
-      0,
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(
+        text: "Phone: ${receiptData['customerDetails']['phoneNo'] ?? ''}\n",
+        size: 1,
+      ),
     );
-    printer.printNewLine();
-    printer.printCustom(
-      "Picker: ${receiptData['pickerDetails']['name'] ?? ''}",
-      1,
-      0,
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(
+        text: "Address: ${receiptData['customerDetails']['location'] ?? ''}\n",
+        size: 1,
+      ),
     );
-    printer.printCustom(
-      "ID: ${receiptData['pickerDetails']['id'] ?? ''}",
-      1,
-      0,
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(
+        text: "Slot: ${receiptData['customerDetails']['slot'] ?? ''}\n\n",
+        size: 1,
+      ),
     );
-    printer.printNewLine();
-    printer.printCustom("ITEMS COLLECTED", 1, 1);
-    printer.printCustom("Item         Qty   Total", 1, 0);
-    printer.printCustom("---------------------------", 1, 0);
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(
+        text: "Picker: ${receiptData['pickerDetails']['name'] ?? ''}\n",
+        size: 1,
+      ),
+    );
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(
+        text: "ID: ${receiptData['pickerDetails']['id'] ?? ''}\n\n",
+        size: 1,
+      ),
+    );
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(text: "ITEMS COLLECTED\n", size: 1),
+    );
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(text: "Item         Qty   Total\n", size: 1),
+    );
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(text: "---------------------------\n", size: 1),
+    );
+
     final items = receiptData['itemsCollected'] ?? [];
     double grandTotal = 0.0;
     for (var item in items) {
@@ -86,26 +114,49 @@ class BluetoothReceiptPrinter {
       final qty = item['totalQuantity'] ?? '';
       final total = item['totalPrice']?.toStringAsFixed(2) ?? '';
       grandTotal += item['totalPrice'] ?? 0.0;
-      // Make sure the line fits 58mm width
       final line = _formatLine(name, qty, total);
-      printer.printCustom(line, 1, 0);
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(text: "$line\n", size: 1),
+      );
     }
-    printer.printCustom("---------------------------", 1, 0);
-    printer.printCustom("GRAND TOTAL: ${grandTotal.toStringAsFixed(2)}", 2, 0);
-    printer.printNewLine();
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(text: "---------------------------\n", size: 1),
+    );
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(
+        text: "GRAND TOTAL: ${grandTotal.toStringAsFixed(2)}\n\n",
+        size: 2,
+      ),
+    );
+
     if (receiptData.containsKey('declaration')) {
-      printer.printCustom("DECLARATION", 1, 1);
-      printer.printCustom(receiptData['declaration'] ?? '', 1, 0);
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(text: "DECLARATION\n", size: 1),
+      );
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(
+          text: "${receiptData['declaration']}\n",
+          size: 1,
+        ),
+      );
     }
-    printer.printNewLine();
-    printer.printCustom("Thank you for your business!", 1, 1);
-    printer.printNewLine();
-    printer.paperCut();
+
+    await PrintBluetoothThermal.writeString(
+      printText: PrintTextSize(
+        text: "\nThank you for your business!\n",
+        size: 1,
+      ),
+    );
+
+    // Feed and cut
+    await PrintBluetoothThermal.writeBytes([27, 100, 4]); // ESC d 4
+
+    debugPrint("Print complete");
   }
 
-  // Helper to format a line for 58mm width (adjust as needed)
   String _formatLine(String name, dynamic qty, String total) {
-    // Pad/truncate to fit 32 chars (approx 58mm)
     String namePad = name.padRight(12).substring(0, 12);
     String qtyPad = qty.toString().padLeft(4).substring(0, 4);
     String totalPad = total.padLeft(8).substring(0, 8);

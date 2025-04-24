@@ -86,14 +86,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.13"
-  blue_thermal_printer:
-    dependency: "direct main"
-    description:
-      name: blue_thermal_printer
-      sha256: "2b8a93f90be335494d2172dbc869c31b95638087f89591b4ad69fd9305eaf80b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.3"
   bluez:
     dependency: transitive
     description:
@@ -1181,6 +1173,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.1"
+  print_bluetooth_thermal:
+    dependency: "direct main"
+    description:
+      name: print_bluetooth_thermal
+      sha256: "74e3face536392562764f5555bf15e02c16de7436e9f7f0cb23a7f749c39691f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.6"
   pub_semver:
     dependency: transitive
     description:
@@ -1530,6 +1530,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  win_ble:
+    dependency: transitive
+    description:
+      name: win_ble
+      sha256: "2a867e13c4b355b101fc2c6e2ac85eeebf965db34eca46856f8b478e93b41e96"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   xdg_directories:
     dependency: transitive
     description:
