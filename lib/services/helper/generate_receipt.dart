@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
+import 'print_logo_image.dart';
+
 class BluetoothReceiptPrinter {
   List<BluetoothInfo> bondedDevices = [];
   BluetoothInfo? connectedDevice;
@@ -121,7 +123,6 @@ class BluetoothReceiptPrinter {
   }
 
   Future<bool> printReceipt(Map<String, dynamic> receiptData) async {
-    // Ensure printer is connected before attempting to print
     bool isConnected = await ensureConnection();
     if (!isConnected) {
       debugPrint("Failed to connect to printer");
@@ -130,6 +131,9 @@ class BluetoothReceiptPrinter {
 
     try {
       debugPrint("Starting to print receipt...");
+
+      // Print logo from assets
+      await printLogoImage();
 
       await PrintBluetoothThermal.writeString(
         printText: PrintTextSize(text: "SCRAP UNCLE RECEIPT\n", size: 2),
@@ -163,7 +167,21 @@ class BluetoothReceiptPrinter {
 
       await PrintBluetoothThermal.writeString(
         printText: PrintTextSize(
-          text: "Slot: ${receiptData['customerDetails']['slot'] ?? ''}\n\n",
+          text: "Slot: ${receiptData['customerDetails']['slot'] ?? ''}\n",
+          size: 1,
+        ),
+      );
+
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(
+          text: "Date: ${receiptData['date'] ?? ''}\n",
+          size: 1,
+        ),
+      );
+
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(
+          text: "Payment Type: ${receiptData['paymentType'] ?? ''}\n\n",
           size: 1,
         ),
       );
@@ -187,24 +205,27 @@ class BluetoothReceiptPrinter {
       );
 
       await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(text: "Item         Qty   Total\n", size: 1),
+        printText: PrintTextSize(text: "Item      Price Qty  Total\n", size: 1),
       );
 
       await PrintBluetoothThermal.writeString(
         printText: PrintTextSize(
-          text: "---------------------------\n",
+          text: "----------------------------\n",
           size: 1,
         ),
       );
 
       final items = receiptData['itemsCollected'] ?? [];
       double grandTotal = 0.0;
+
       for (var item in items) {
         final name = item['itemName'] ?? '';
+        final price = (item['pricePerUnit'] ?? 0.0).toStringAsFixed(2);
         final qty = item['totalQuantity'] ?? '';
         final total = item['totalPrice']?.toStringAsFixed(2) ?? '';
         grandTotal += item['totalPrice'] ?? 0.0;
-        final line = _formatLine(name, qty, total);
+
+        final line = _formatItemLine(name, price, qty, total);
         await PrintBluetoothThermal.writeString(
           printText: PrintTextSize(text: "$line\n", size: 1),
         );
@@ -212,7 +233,7 @@ class BluetoothReceiptPrinter {
 
       await PrintBluetoothThermal.writeString(
         printText: PrintTextSize(
-          text: "---------------------------\n",
+          text: "----------------------------\n",
           size: 1,
         ),
       );
@@ -243,9 +264,7 @@ class BluetoothReceiptPrinter {
         ),
       );
 
-      // Feed and cut
       await PrintBluetoothThermal.writeBytes([27, 100, 4]); // ESC d 4
-
       debugPrint("Print complete");
       return true;
     } catch (e) {
@@ -255,16 +274,14 @@ class BluetoothReceiptPrinter {
   }
 
   // Helper method to format the line with proper spacing
-  String _formatLine(String name, dynamic qty, String total) {
-    String namePad = name.padRight(12);
-    if (namePad.length > 12) namePad = namePad.substring(0, 12);
+  String _formatItemLine(String name, String price, dynamic qty, String total) {
+    String namePad = name.padRight(8);
+    if (namePad.length > 8) namePad = namePad.substring(0, 8);
 
+    String pricePad = price.padLeft(6);
     String qtyPad = qty.toString().padLeft(4);
-    if (qtyPad.length > 4) qtyPad = qtyPad.substring(0, 4);
+    String totalPad = total.padLeft(6);
 
-    String totalPad = total.padLeft(8);
-    if (totalPad.length > 8) totalPad = totalPad.substring(0, 8);
-
-    return "$namePad $qtyPad $totalPad";
+    return "$namePad $pricePad $qtyPad $totalPad";
   }
 }
