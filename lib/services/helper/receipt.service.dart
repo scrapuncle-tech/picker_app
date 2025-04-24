@@ -108,18 +108,35 @@ class ReceiptService {
       return;
     }
 
-    // Show loading dialog while printing
+    // Create a singleton or provide a way to reuse the printer service
+    // Consider making this a class variable or using a provider pattern
+    BluetoothReceiptPrinter printerService = BluetoothReceiptPrinter();
+
+    // Check permissions first
+    await printerService.checkAndRequestPermissions();
+
+    // Check if Bluetooth is enabled
+    bool isBluetoothOn = await printerService.isBluetoothEnabled();
+    if (!isBluetoothOn) {
+      CustomSnackBar.log(
+        status: SnackBarType.error,
+        message:
+            "Bluetooth is turned off. Please turn on Bluetooth and try again.",
+      );
+      return;
+    }
+
+    // Show loading dialog while connecting and printing
     _showLoadingDialog(
       context,
-      "Printing receipt...",
+      "Connecting to printer...",
       color: secondaryColor,
       width: width,
     );
 
-    BluetoothReceiptPrinter printerService = BluetoothReceiptPrinter();
     try {
-      // Attempt to connect to paired printer if not already connected
-      bool connected = await printerService.connectToPairedPrinter();
+      // Attempt to ensure connection to printer
+      bool connected = await printerService.ensureConnection();
       if (!connected) {
         // Close loading dialog
         if (Navigator.canPop(context)) {
@@ -127,32 +144,65 @@ class ReceiptService {
         }
         CustomSnackBar.log(
           status: SnackBarType.error,
-          message: "No paired Bluetooth printer found.",
+          message: "No paired Bluetooth printer found or failed to connect.",
         );
         return;
       }
-      // Print the receipt
+
+      // Update loading message
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
+      _showLoadingDialog(
+        context,
+        "Printing receipt...",
+        color: secondaryColor,
+        width: width,
+      );
+
+      // Create receipt data
       final receiptData = _createReceiptData(pickup);
-      await printerService.printReceipt(receiptData);
+
+      // Print the receipt
+      bool printSuccess = await printerService.printReceipt(receiptData);
+
+      // Add a short delay to ensure data has been sent
+      await Future.delayed(Duration(milliseconds: 500));
+
+      // Clean disconnect after printing
+      await printerService.disconnect();
 
       // Close loading dialog
       if (Navigator.canPop(context)) {
         Navigator.pop(context);
       }
 
-      CustomSnackBar.log(
-        message: "Receipt printed successfully",
-        status: SnackBarType.success,
-      );
+      if (printSuccess) {
+        CustomSnackBar.log(
+          message: "Receipt printed successfully",
+          status: SnackBarType.success,
+        );
+      } else {
+        CustomSnackBar.log(
+          status: SnackBarType.error,
+          message: "Failed to print receipt. Please try again.",
+        );
+      }
     } catch (e) {
       // Close loading dialog if open
       if (Navigator.canPop(context)) {
         Navigator.pop(context);
       }
+
+      // Try to disconnect in case of error
+      try {
+        await printerService.disconnect();
+      } catch (_) {}
+
       CustomSnackBar.log(
         status: SnackBarType.error,
         message:
-            "Printing error. Please check your Bluetooth printer connection.",
+            "Printing error: ${e.toString()}. Please check your Bluetooth printer connection.",
       );
     }
   }
