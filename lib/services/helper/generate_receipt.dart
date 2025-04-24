@@ -220,7 +220,7 @@ class BluetoothReceiptPrinter {
 
       for (var item in items) {
         final name = item['itemName'] ?? '';
-        final price = (item['pricePerUnit'] ?? 0.0).toStringAsFixed(2);
+        final price = (item['price'] ?? 0.0).toStringAsFixed(2);
         final qty = item['totalQuantity'] ?? '';
         final total = item['totalPrice']?.toStringAsFixed(2) ?? '';
         grandTotal += item['totalPrice'] ?? 0.0;

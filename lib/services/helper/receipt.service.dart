@@ -1,6 +1,7 @@
 // receipt_service.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 
 import '../../components/common/custom_snackbar.component.dart';
@@ -11,6 +12,8 @@ import 'pdf_receipt_generator.dart';
 class ReceiptService {
   // Create receipt data from pickup information
   Map<String, dynamic> _createReceiptData(Pickup pickup) {
+    DateTime dateTime = DateTime.now(); // or your custom DateTime
+    String formattedDate = DateFormat('MMM dd,yyyy hh:mm a').format(dateTime);
     return {
       'customerDetails': {
         'name': pickup.name,
@@ -18,6 +21,8 @@ class ReceiptService {
         'location': pickup.address,
         'slot': pickup.finalSlot.isEmpty ? pickup.slot : pickup.finalSlot,
       },
+      'date': formattedDate,
+      'paymentType': 'cash',
       'pickerDetails': {
         'name': 'Scrap Uncle Picker',
         'id': 'PID-001',
@@ -44,7 +49,6 @@ class ReceiptService {
               )
               .toList(),
       'totalAmount': pickup.totalPrice,
-      'date': DateTime.now().toString().split(' ')[0],
       'time': DateTime.now().toString().split(' ')[1].substring(0, 5),
       'pickupId': pickup.id,
       'declaration': 'I confirm that the above items have been collected.',
