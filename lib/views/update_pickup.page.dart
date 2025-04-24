@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../components/common/custom_back_button.component.dart';
 import '../components/common/custom_inkwell.component.dart';
 import '../components/common/gradient_button.component.dart';
+import '../components/common/map_button.component.dart';
 import '../components/common/text.component.dart';
 import '../components/common/phone_call_button.component.dart';
 import '../components/common/watsapp_button.component.dart';
@@ -213,10 +214,27 @@ class UpdatePickupPage extends ConsumerWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              WhatsAppButton(
-                                customerNo: currentPickupState.mobileNo,
-                                needHintText: true,
+                              // WhatsAppButton(
+                              //   customerNo: currentPickupState.mobileNo,
+                              //   needHintText: true,
+                              //   disable: isCompleted,
+                              // ),
+                              MapButton(
+                                mapLink: currentPickupState.mapLink,
+                                lat:
+                                    currentPickupState.coordinates.isNotEmpty
+                                        ? double.tryParse(
+                                          currentPickupState.coordinates[0],
+                                        )
+                                        : 0,
+                                lng:
+                                    currentPickupState.coordinates.length > 1
+                                        ? double.tryParse(
+                                          currentPickupState.coordinates[1],
+                                        )
+                                        : 0,
                                 disable: isCompleted,
+                                needHintText: true,
                               ),
                               PhoneCallButton(
                                 customerNo: currentPickupState.mobileNo,
@@ -244,10 +262,10 @@ class UpdatePickupPage extends ConsumerWidget {
                                     ? currentPickupState.slot
                                     : currentPickupState.finalSlot,
                           ),
-                          PickupInfoTile(
-                            hintText: "Expected Weight: ",
-                            text: currentPickupState.expectedWeight,
-                          ),
+                          // PickupInfoTile(
+                          //   hintText: "Expected Weight: ",
+                          //   text: currentPickupState.expectedWeight,
+                          // ),
                           PickupInfoTile(
                             hintText: "Address: ",
                             text: currentPickupState.address,
@@ -257,35 +275,35 @@ class UpdatePickupPage extends ConsumerWidget {
                             text:
                                 "${currentPickupState.area}, pin: ${currentPickupState.pincode}",
                           ),
-                          PickupInfoTile(
-                            hintText: "Description: ",
-                            text: currentPickupState.description,
-                          ),
-                          Row(
-                            children: [
-                              CustomText(
-                                text: "Location :",
-                                color: colorData.fontColor(.6),
-                                weight: FontWeight.w700,
-                              ),
-                              LocationMapButton(
-                                latitude:
-                                    double.tryParse(
-                                      currentPickupState.coordinates.isNotEmpty
-                                          ? currentPickupState.coordinates[0]
-                                          : '0',
-                                    ) ??
-                                    0.0,
-                                longitude:
-                                    double.tryParse(
-                                      currentPickupState.coordinates.length > 1
-                                          ? currentPickupState.coordinates[1]
-                                          : '0',
-                                    ) ??
-                                    0.0,
-                              ),
-                            ],
-                          ),
+                          // PickupInfoTile(
+                          //   hintText: "Description: ",
+                          //   text: currentPickupState.description,
+                          // ),
+                          // Row(
+                          //   children: [
+                          //     CustomText(
+                          //       text: "Location :",
+                          //       color: colorData.fontColor(.6),
+                          //       weight: FontWeight.w700,
+                          //     ),
+                          //     LocationMapButton(
+                          //       latitude:
+                          //           double.tryParse(
+                          //             currentPickupState.coordinates.isNotEmpty
+                          //                 ? currentPickupState.coordinates[0]
+                          //                 : '0',
+                          //           ) ??
+                          //           0.0,
+                          //       longitude:
+                          //           double.tryParse(
+                          //             currentPickupState.coordinates.length > 1
+                          //                 ? currentPickupState.coordinates[1]
+                          //                 : '0',
+                          //           ) ??
+                          //           0.0,
+                          //     ),
+                          //   ],
+                          // ),
                         ],
                       ),
 

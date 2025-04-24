@@ -142,25 +142,25 @@ class PickupTile extends ConsumerWidget {
                           ],
                         ),
                         SizedBox(height: aspectRatio * 16),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            CustomText(
-                              text: "Expected Weight: ",
-                              size: sizeData.small,
-                              color: colorData.fontColor(.5),
-                              weight: FontWeight.bold,
-                            ),
-                            SizedBox(width: width * .01),
-                            Expanded(
-                              child: CustomText(
-                                text: pickup.expectedWeight,
-                                size: sizeData.medium,
-                                weight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   crossAxisAlignment: CrossAxisAlignment.end,
+                        //   children: [
+                        //     CustomText(
+                        //       text: "Expected Weight: ",
+                        //       size: sizeData.small,
+                        //       color: colorData.fontColor(.5),
+                        //       weight: FontWeight.bold,
+                        //     ),
+                        //     SizedBox(width: width * .01),
+                        //     Expanded(
+                        //       child: CustomText(
+                        //         text: pickup.expectedWeight,
+                        //         size: sizeData.medium,
+                        //         weight: FontWeight.bold,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         SizedBox(height: aspectRatio * 16),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
