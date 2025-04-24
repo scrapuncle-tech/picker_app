@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 class BluetoothReceiptPrinter {
   List<BluetoothInfo> bondedDevices = [];
   BluetoothInfo? connectedDevice;
+
+  Future<void> checkAndRequestPermissions() async {
+    // Check and request necessary permissions
+    Map<Permission, PermissionStatus> statuses =
+        await [
+          Permission.bluetooth,
+          Permission.bluetoothScan,
+          Permission.bluetoothConnect,
+          Permission.bluetoothAdvertise,
+          Permission.location, // Required on some Android versions
+        ].request();
+
+    // Debug logs for permission statuses
+    statuses.forEach((perm, status) {
+      debugPrint(
+        "$perm permission is ${status.isGranted ? 'granted' : 'denied'}",
+      );
+    });
+
+    if (statuses.values.any((status) => !status.isGranted)) {
+      debugPrint("One or more permissions not granted.");
+    }
+  }
 
   // Initialize and scan for paired devices
   Future<bool> connectToPairedPrinter() async {

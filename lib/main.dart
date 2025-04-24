@@ -11,6 +11,7 @@ import 'components/common/custom_snackbar.component.dart';
 import 'services/background/app_lifecycle_manager.dart';
 import 'services/background/app_state_sync.service.dart';
 import 'services/background/background_fetch.service.dart';
+import 'services/helper/generate_receipt.dart';
 import 'services/objectbox/object_box.dart';
 import 'services/firebase/firebase_options.dart';
 import 'layouts/on_boarding.dart';
@@ -43,6 +44,8 @@ Future<void> main() async {
       statusBarIconBrightness: Brightness.dark,
     ),
   );
+
+  await BluetoothReceiptPrinter().checkAndRequestPermissions();
 
   BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
   await BackgroundFetchService.configureBackgroundFetch();

@@ -151,7 +151,8 @@ class ReceiptService {
       }
       CustomSnackBar.log(
         status: SnackBarType.error,
-        message: "Printing error. Please check your Bluetooth printer connection.",
+        message:
+            "Printing error. Please check your Bluetooth printer connection.",
       );
     }
   }
