@@ -35,93 +35,48 @@ class UpdatePickupPage extends ConsumerWidget {
     double width,
     double aspectRatio,
   ) {
-    return Row(
-      children: [
-        Opacity(
-          opacity: pickup.itemsData.isEmpty ? .5 : 1,
-          child: CustomInkWell(
-            onPressed: () async {
-              await _receiptService.handlePrintReceipt(
-                context,
-                ref,
-                pickup,
-                colorData.secondaryColor(1),
-                width,
-                false,
-              );
-            },
-            borderRadius: 50,
-            splashColor:
-                pickup.itemsData.isEmpty
-                    ? Colors.transparent
-                    : colorData.fontColor(.5),
-            margin: EdgeInsets.only(bottom: height * 0.05, top: height * .03),
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                vertical: aspectRatio * 24,
-                horizontal: aspectRatio * 36,
+    return Center(
+      child: Opacity(
+        opacity: pickup.itemsData.isEmpty ? .5 : 1,
+        child: CustomInkWell(
+          onPressed: () async {
+            await _receiptService.handlePrintReceipt(
+              context,
+              ref,
+              pickup,
+              colorData.secondaryColor(1),
+              width,
+            );
+          },
+          borderRadius: 50,
+          splashColor:
+              pickup.itemsData.isEmpty
+                  ? Colors.transparent
+                  : colorData.fontColor(.5),
+          margin: EdgeInsets.only(bottom: height * 0.05, top: height * .03),
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: aspectRatio * 24,
+              horizontal: aspectRatio * 36,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: colorData.fontColor(.1), width: 1.5),
+              borderRadius: BorderRadius.circular(50),
+              gradient: LinearGradient(
+                colors: [
+                  colorData.secondaryColor(.4),
+                  colorData.secondaryColor(1),
+                ],
               ),
-              decoration: BoxDecoration(
-                border: Border.all(color: colorData.fontColor(.1), width: 1.5),
-                borderRadius: BorderRadius.circular(50),
-                gradient: LinearGradient(
-                  colors: [
-                    colorData.secondaryColor(.4),
-                    colorData.secondaryColor(1),
-                  ],
-                ),
-              ),
-              child: CustomText(
-                text: "Print receipt by TEXT",
-                size: sizeData.superHeader,
-                weight: FontWeight.w900,
-              ),
+            ),
+            child: CustomText(
+              text: "Print receipt by TEXT",
+              size: sizeData.superHeader,
+              weight: FontWeight.w900,
             ),
           ),
         ),
-        Opacity(
-          opacity: pickup.itemsData.isEmpty ? .5 : 1,
-          child: CustomInkWell(
-            onPressed: () async {
-              await _receiptService.handlePrintReceipt(
-                context,
-                ref,
-                pickup,
-                colorData.secondaryColor(1),
-                width,
-                true,
-              );
-            },
-            borderRadius: 50,
-            splashColor:
-                pickup.itemsData.isEmpty
-                    ? Colors.transparent
-                    : colorData.fontColor(.5),
-            margin: EdgeInsets.only(bottom: height * 0.05, top: height * .03),
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                vertical: aspectRatio * 24,
-                horizontal: aspectRatio * 36,
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(color: colorData.fontColor(.1), width: 1.5),
-                borderRadius: BorderRadius.circular(50),
-                gradient: LinearGradient(
-                  colors: [
-                    colorData.secondaryColor(.4),
-                    colorData.secondaryColor(1),
-                  ],
-                ),
-              ),
-              child: CustomText(
-                text: "Print receipt by PDF",
-                size: sizeData.superHeader,
-                weight: FontWeight.w900,
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 

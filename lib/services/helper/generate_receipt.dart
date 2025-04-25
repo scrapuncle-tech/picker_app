@@ -128,37 +128,6 @@ class BluetoothReceiptPrinter {
     connectedDevice = null;
   }
 
-  Future<bool> printReceiptWithPDF(Map<String, dynamic> receiptData) async {
-    bool isConnected = await ensureConnection();
-    if (!isConnected) {
-      debugPrint("Failed to connect to printer");
-      return false;
-    }
-
-    try {
-      debugPrint("Starting to print receipt...");
-
-      // Print logo from assets
-      await printLogoImage();
-
-      // Generate PDF using the receiptData
-      final pdfGeneratorResult = await PdfReceiptGenerator.generateReceipt(
-        receiptData,
-      );
-
-      /// Write PDF bytes to printer ( alternative try to print the receipt with the pdf byteData )
-      /// This has more flexibility to align and print the receipt of our needs % BUT NEED TO CHECK THE PRINTING
-      await PrintBluetoothThermal.writeBytes(pdfGeneratorResult.$2);
-
-      await PrintBluetoothThermal.writeBytes([27, 100, 4]); // ESC d 4
-      debugPrint("Print complete");
-      return true;
-    } catch (e) {
-      debugPrint("Failed to print receipt: $e");
-      return false;
-    }
-  }
-
   Future<bool> printReceipt(Map<String, dynamic> receiptData) async {
     bool isConnected = await ensureConnection();
     if (!isConnected) {
