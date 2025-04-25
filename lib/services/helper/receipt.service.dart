@@ -105,6 +105,7 @@ class ReceiptService {
     Pickup pickup,
     Color secondaryColor,
     double width,
+    bool isPDF,
   ) async {
     // Validate items exist
     if (pickup.itemsData.isEmpty) {
@@ -171,7 +172,10 @@ class ReceiptService {
       final receiptData = _createReceiptData(pickup);
 
       // Print the receipt
-      bool printSuccess = await printerService.printReceipt(receiptData);
+      bool printSuccess =
+          isPDF
+              ? await printerService.printReceiptWithPDF(receiptData)
+              : await printerService.printReceipt(receiptData);
 
       // Add a short delay to ensure data has been sent
       await Future.delayed(Duration(milliseconds: 500));

@@ -7,9 +7,9 @@ import '../components/common/gradient_button.component.dart';
 import '../components/common/map_button.component.dart';
 import '../components/common/text.component.dart';
 import '../components/common/phone_call_button.component.dart';
-import '../components/common/watsapp_button.component.dart';
+// import '../components/common/watsapp_button.component.dart';
 import '../components/update_pickup/item_display_card.componenet.dart';
-import '../components/update_pickup/location_map_button.component.dart';
+// import '../components/update_pickup/location_map_button.component.dart';
 import '../components/update_pickup/pickupinfo_tile.component.dart';
 import '../models/item.entity.dart';
 import '../models/pickup.entity.dart';
@@ -35,48 +35,93 @@ class UpdatePickupPage extends ConsumerWidget {
     double width,
     double aspectRatio,
   ) {
-    return Center(
-      child: Opacity(
-        opacity: pickup.itemsData.isEmpty ? .5 : 1,
-        child: CustomInkWell(
-          onPressed: () async {
-            await _receiptService.handlePrintReceipt(
-              context,
-              ref,
-              pickup,
-              colorData.secondaryColor(1),
-              width,
-            );
-          },
-          borderRadius: 50,
-          splashColor:
-              pickup.itemsData.isEmpty
-                  ? Colors.transparent
-                  : colorData.fontColor(.5),
-          margin: EdgeInsets.only(bottom: height * 0.05, top: height * .03),
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              vertical: aspectRatio * 24,
-              horizontal: aspectRatio * 36,
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(color: colorData.fontColor(.1), width: 1.5),
-              borderRadius: BorderRadius.circular(50),
-              gradient: LinearGradient(
-                colors: [
-                  colorData.secondaryColor(.4),
-                  colorData.secondaryColor(1),
-                ],
+    return Row(
+      children: [
+        Opacity(
+          opacity: pickup.itemsData.isEmpty ? .5 : 1,
+          child: CustomInkWell(
+            onPressed: () async {
+              await _receiptService.handlePrintReceipt(
+                context,
+                ref,
+                pickup,
+                colorData.secondaryColor(1),
+                width,
+                false,
+              );
+            },
+            borderRadius: 50,
+            splashColor:
+                pickup.itemsData.isEmpty
+                    ? Colors.transparent
+                    : colorData.fontColor(.5),
+            margin: EdgeInsets.only(bottom: height * 0.05, top: height * .03),
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                vertical: aspectRatio * 24,
+                horizontal: aspectRatio * 36,
               ),
-            ),
-            child: CustomText(
-              text: "Print receipt",
-              size: sizeData.superHeader,
-              weight: FontWeight.w900,
+              decoration: BoxDecoration(
+                border: Border.all(color: colorData.fontColor(.1), width: 1.5),
+                borderRadius: BorderRadius.circular(50),
+                gradient: LinearGradient(
+                  colors: [
+                    colorData.secondaryColor(.4),
+                    colorData.secondaryColor(1),
+                  ],
+                ),
+              ),
+              child: CustomText(
+                text: "Print receipt by TEXT",
+                size: sizeData.superHeader,
+                weight: FontWeight.w900,
+              ),
             ),
           ),
         ),
-      ),
+        Opacity(
+          opacity: pickup.itemsData.isEmpty ? .5 : 1,
+          child: CustomInkWell(
+            onPressed: () async {
+              await _receiptService.handlePrintReceipt(
+                context,
+                ref,
+                pickup,
+                colorData.secondaryColor(1),
+                width,
+                true,
+              );
+            },
+            borderRadius: 50,
+            splashColor:
+                pickup.itemsData.isEmpty
+                    ? Colors.transparent
+                    : colorData.fontColor(.5),
+            margin: EdgeInsets.only(bottom: height * 0.05, top: height * .03),
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                vertical: aspectRatio * 24,
+                horizontal: aspectRatio * 36,
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(color: colorData.fontColor(.1), width: 1.5),
+                borderRadius: BorderRadius.circular(50),
+                gradient: LinearGradient(
+                  colors: [
+                    colorData.secondaryColor(.4),
+                    colorData.secondaryColor(1),
+                  ],
+                ),
+              ),
+              child: CustomText(
+                text: "Print receipt by PDF",
+                size: sizeData.superHeader,
+                weight: FontWeight.w900,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
