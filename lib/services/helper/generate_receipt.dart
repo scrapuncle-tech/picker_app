@@ -1,6 +1,11 @@
+import 'dart:typed_data';
+
+import 'package:esc_pos_utils_plus/esc_pos_utils_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
+import 'package:image/image.dart';
 
 import 'pdf_receipt_generator.dart';
 import 'print_logo_image.dart';
@@ -162,164 +167,284 @@ class BluetoothReceiptPrinter {
     }
 
     try {
-      debugPrint("Starting to print receipt...");
+      final profile = await CapabilityProfile.load();
+      final generator = Generator(PaperSize.mm58, profile);
+      List<int> bytes = [];
 
-      // Print logo from assets
-      await printLogoImage();
+      debugPrint("Starting to generate receipt...");
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(text: "SCRAP UNCLE RECEIPT\n", size: 2),
-      );
+      // Logo
+      final ByteData data = await rootBundle.load('assets/icons/logo_full.png');
+      final Uint8List imageBytes = data.buffer.asUint8List();
+      final image = decodeImage(imageBytes);
+      if (image != null) {
+        bytes += generator.image(image, align: PosAlign.center);
+      }
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(text: "\n", size: 1),
-      );
-
-      // await PrintBluetoothThermal.writeString(
-      //   printText: PrintTextSize(
-      //     text: "Customer: ${receiptData['customerDetails']['name'] ?? ''}\n",
-      //     size: 1,
-      //   ),
-      // );
-
-      // await PrintBluetoothThermal.writeString(
-      //   printText: PrintTextSize(
-      //     text: "Phone: ${receiptData['customerDetails']['phoneNo'] ?? ''}\n",
-      //     size: 1,
-      //   ),
-      // );
-
-      // await PrintBluetoothThermal.writeString(
-      //   printText: PrintTextSize(
-      //     text:
-      //         "Address: ${receiptData['customerDetails']['location'] ?? ''}\n",
-      //     size: 1,
-      //   ),
-      // );
-
-      // await PrintBluetoothThermal.writeString(
-      //   printText: PrintTextSize(
-      //     text: "Slot: ${receiptData['customerDetails']['slot'] ?? ''}\n",
-      //     size: 1,
-      //   ),
-      // );
-
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Date: ${receiptData['date'] ?? ''}\n",
-          size: 1,
+      // Header
+      bytes += generator.text(
+        'SCRAP UNCLE RECEIPT',
+        styles: PosStyles(
+          align: PosAlign.center,
+          bold: true,
+          height: PosTextSize.size2,
+          width: PosTextSize.size2,
         ),
       );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Payment Type: ${receiptData['paymentType'] ?? ''}\n\n",
-          size: 1,
-        ),
+      bytes += generator.feed(1);
+
+      // Date & Payment Type
+      bytes += generator.text('Date: ${receiptData['date'] ?? ''}');
+      bytes += generator.text(
+        'Payment Type: ${receiptData['paymentType'] ?? ''}',
       );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Picker: ${receiptData['pickerDetails']['name'] ?? ''}\n",
-          size: 1,
-        ),
+      bytes += generator.feed(1);
+
+      // Picker Info
+      bytes += generator.text(
+        'Picker: ${receiptData['pickerDetails']['name'] ?? ''}',
+      );
+      bytes += generator.text(
+        'ID: ${receiptData['pickerDetails']['id'] ?? ''}',
       );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "ID: ${receiptData['pickerDetails']['id'] ?? ''}\n\n",
-          size: 1,
-        ),
-      );
+      bytes += generator.feed(1);
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(text: "ITEMS COLLECTED\n", size: 1),
+      // Items Header
+      bytes += generator.text(
+        'ITEMS COLLECTED',
+        styles: PosStyles(bold: true, underline: true),
       );
-
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(text: "Item      Price Qty  Total\n", size: 1),
+      bytes += generator.text(
+        'Item        Price  Qty  Total',
+        styles: PosStyles(bold: true),
       );
+      bytes += generator.text('-------------------------------');
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "----------------------------\n",
-          size: 1,
-        ),
-      );
-
+      // Items List
       final items = receiptData['itemsCollected'] ?? [];
       double grandTotal = 0.0;
 
       for (var item in items) {
         try {
-          final name = item['itemName']?.toString() ?? 'Unknown';
+          final name = (item['itemName']?.toString() ?? 'Unknown')
+              .padRight(10)
+              .substring(0, 10);
           final priceVal = item['price'] ?? 0.0;
           final qtyVal = item['totalQuantity'] ?? 0;
           final totalVal = item['totalPrice'] ?? (priceVal * qtyVal);
 
-          final price =
-              (priceVal is num) ? priceVal.toStringAsFixed(2) : "0.00";
-          final qty = qtyVal.toString();
-          final total =
-              (totalVal is num) ? totalVal.toStringAsFixed(2) : "0.00";
+          final price = priceVal.toStringAsFixed(2).padLeft(6);
+          final qty = qtyVal.toString().padLeft(3);
+          final total = totalVal.toStringAsFixed(2).padLeft(6);
 
-          grandTotal += (totalVal is num) ? totalVal : 0.0;
+          grandTotal += totalVal;
 
-          final line = _formatItemLine(name, price, qty, total);
-          await PrintBluetoothThermal.writeString(
-            printText: PrintTextSize(text: "$line\n", size: 1),
-          );
+          bytes += generator.text('$name $price $qty $total');
         } catch (e) {
           debugPrint("Error processing item: $e");
         }
       }
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "----------------------------\n",
-          size: 1,
+      bytes += generator.text('-------------------------------');
+      bytes += generator.text(
+        'GRAND TOTAL: ₹${grandTotal.toStringAsFixed(2)}',
+        styles: PosStyles(
+          bold: true,
+          height: PosTextSize.size2,
+          width: PosTextSize.size2,
         ),
       );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "GRAND TOTAL: ${grandTotal.toStringAsFixed(2)}\n\n",
-          size: 2,
-        ),
+      bytes += generator.feed(1);
+      bytes += generator.text('Signature: _______________________');
+      bytes += generator.feed(2);
+      bytes += generator.text(
+        'Thank you for your business!',
+        styles: PosStyles(align: PosAlign.center),
       );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Signature: ----------------------------\n",
-          size: 1,
-        ),
-      );
+      bytes += generator.feed(4);
+      bytes += generator.cut();
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "\nThank you for your business!\n",
-          size: 1,
-        ),
-      );
-
-      await PrintBluetoothThermal.writeBytes([27, 100, 4]); // ESC d 4
-      debugPrint("Print complete");
-      return true;
+      // Send bytes to printer
+      final result = await PrintBluetoothThermal.writeBytes(bytes);
+      debugPrint("Print result: $result");
+      return result == true;
     } catch (e) {
       debugPrint("Error printing receipt: $e");
       return false;
     }
   }
 
-  // Helper method to format the line with proper spacing
-  String _formatItemLine(String name, String price, dynamic qty, String total) {
-    String namePad = name.padRight(8);
-    if (namePad.length > 8) namePad = namePad.substring(0, 8);
+  // Future<bool> printReceipt(Map<String, dynamic> receiptData) async {
+  //   bool isConnected = await ensureConnection();
+  //   if (!isConnected) {
+  //     debugPrint("Failed to connect to printer");
+  //     return false;
+  //   }
 
-    String pricePad = price.padLeft(6);
-    String qtyPad = qty.toString().padLeft(4);
-    String totalPad = total.padLeft(6);
+  //   try {
+  //     debugPrint("Starting to print receipt...");
 
-    return "$namePad $pricePad $qtyPad $totalPad";
-  }
+  //     // Print logo from assets
+  //     await printLogoImage();
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(text: "SCRAP UNCLE RECEIPT\n", size: 2),
+  //     );
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(text: "\n", size: 1),
+  //     );
+
+  //     // await PrintBluetoothThermal.writeString(
+  //     //   printText: PrintTextSize(
+  //     //     text: "Customer: ${receiptData['customerDetails']['name'] ?? ''}\n",
+  //     //     size: 1,
+  //     //   ),
+  //     // );
+
+  //     // await PrintBluetoothThermal.writeString(
+  //     //   printText: PrintTextSize(
+  //     //     text: "Phone: ${receiptData['customerDetails']['phoneNo'] ?? ''}\n",
+  //     //     size: 1,
+  //     //   ),
+  //     // );
+
+  //     // await PrintBluetoothThermal.writeString(
+  //     //   printText: PrintTextSize(
+  //     //     text:
+  //     //         "Address: ${receiptData['customerDetails']['location'] ?? ''}\n",
+  //     //     size: 1,
+  //     //   ),
+  //     // );
+
+  //     // await PrintBluetoothThermal.writeString(
+  //     //   printText: PrintTextSize(
+  //     //     text: "Slot: ${receiptData['customerDetails']['slot'] ?? ''}\n",
+  //     //     size: 1,
+  //     //   ),
+  //     // );
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(
+  //         text: "Date: ${receiptData['date'] ?? ''}\n",
+  //         size: 1,
+  //       ),
+  //     );
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(
+  //         text: "Payment Type: ${receiptData['paymentType'] ?? ''}\n\n",
+  //         size: 1,
+  //       ),
+  //     );
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(
+  //         text: "Picker: ${receiptData['pickerDetails']['name'] ?? ''}\n",
+  //         size: 1,
+  //       ),
+  //     );
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(
+  //         text: "ID: ${receiptData['pickerDetails']['id'] ?? ''}\n\n",
+  //         size: 1,
+  //       ),
+  //     );
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(text: "ITEMS COLLECTED\n", size: 1),
+  //     );
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(text: "Item      Price Qty  Total\n", size: 1),
+  //     );
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(
+  //         text: "----------------------------\n",
+  //         size: 1,
+  //       ),
+  //     );
+
+  //     final items = receiptData['itemsCollected'] ?? [];
+  //     double grandTotal = 0.0;
+
+  //     for (var item in items) {
+  //       try {
+  //         final name = item['itemName']?.toString() ?? 'Unknown';
+  //         final priceVal = item['price'] ?? 0.0;
+  //         final qtyVal = item['totalQuantity'] ?? 0;
+  //         final totalVal = item['totalPrice'] ?? (priceVal * qtyVal);
+
+  //         final price =
+  //             (priceVal is num) ? priceVal.toStringAsFixed(2) : "0.00";
+  //         final qty = qtyVal.toString();
+  //         final total =
+  //             (totalVal is num) ? totalVal.toStringAsFixed(2) : "0.00";
+
+  //         grandTotal += (totalVal is num) ? totalVal : 0.0;
+
+  //         final line = _formatItemLine(name, price, qty, total);
+  //         await PrintBluetoothThermal.writeString(
+  //           printText: PrintTextSize(text: "$line\n", size: 1),
+  //         );
+  //       } catch (e) {
+  //         debugPrint("Error processing item: $e");
+  //       }
+  //     }
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(
+  //         text: "----------------------------\n",
+  //         size: 1,
+  //       ),
+  //     );
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(
+  //         text: "GRAND TOTAL: ${grandTotal.toStringAsFixed(2)}\n\n",
+  //         size: 2,
+  //       ),
+  //     );
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(
+  //         text: "Signature: ----------------------------\n",
+  //         size: 1,
+  //       ),
+  //     );
+
+  //     await PrintBluetoothThermal.writeString(
+  //       printText: PrintTextSize(
+  //         text: "\nThank you for your business!\n",
+  //         size: 1,
+  //       ),
+  //     );
+
+  //     await PrintBluetoothThermal.writeBytes([27, 100, 4]); // ESC d 4
+  //     debugPrint("Print complete");
+  //     return true;
+  //   } catch (e) {
+  //     debugPrint("Error printing receipt: $e");
+  //     return false;
+  //   }
+  // }
+
+  // // Helper method to format the line with proper spacing
+  // String _formatItemLine(String name, String price, dynamic qty, String total) {
+  //   String namePad = name.padRight(8);
+  //   if (namePad.length > 8) namePad = namePad.substring(0, 8);
+
+  //   String pricePad = price.padLeft(6);
+  //   String qtyPad = qty.toString().padLeft(4);
+  //   String totalPad = total.padLeft(6);
+
+  //   return "$namePad $pricePad $qtyPad $totalPad";
+  // }
 }
