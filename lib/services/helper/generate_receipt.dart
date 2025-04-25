@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
+import 'pdf_receipt_generator.dart';
 import 'print_logo_image.dart';
 
 class BluetoothReceiptPrinter {
@@ -135,134 +136,154 @@ class BluetoothReceiptPrinter {
       // Print logo from assets
       await printLogoImage();
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(text: "SCRAP UNCLE RECEIPT\n", size: 2),
+      // Generate PDF using the receiptData
+      final pdfGeneratorResult = await PdfReceiptGenerator.generateReceipt(
+        receiptData,
       );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(text: "\n", size: 1),
-      );
+      /// Write PDF bytes to printer ( alternative try to print the receipt with the pdf byteData )
+      /// This has more flexibility to align and print the receipt of our needs % BUT NEED TO CHECK THE PRINTING
+      await PrintBluetoothThermal.writeBytes(pdfGeneratorResult.$2);
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Customer: ${receiptData['customerDetails']['name'] ?? ''}\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(text: "SCRAP UNCLE RECEIPT\n", size: 2),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Phone: ${receiptData['customerDetails']['phoneNo'] ?? ''}\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(text: "\n", size: 1),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text:
-              "Address: ${receiptData['customerDetails']['location'] ?? ''}\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "Customer: ${receiptData['customerDetails']['name'] ?? ''}\n",
+      //     size: 1,
+      //   ),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Slot: ${receiptData['customerDetails']['slot'] ?? ''}\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "Phone: ${receiptData['customerDetails']['phoneNo'] ?? ''}\n",
+      //     size: 1,
+      //   ),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Date: ${receiptData['date'] ?? ''}\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text:
+      //         "Address: ${receiptData['customerDetails']['location'] ?? ''}\n",
+      //     size: 1,
+      //   ),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Payment Type: ${receiptData['paymentType'] ?? ''}\n\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "Slot: ${receiptData['customerDetails']['slot'] ?? ''}\n",
+      //     size: 1,
+      //   ),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Picker: ${receiptData['pickerDetails']['name'] ?? ''}\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "Date: ${receiptData['date'] ?? ''}\n",
+      //     size: 1,
+      //   ),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "ID: ${receiptData['pickerDetails']['id'] ?? ''}\n\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "Payment Type: ${receiptData['paymentType'] ?? ''}\n\n",
+      //     size: 1,
+      //   ),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(text: "ITEMS COLLECTED\n", size: 1),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "Picker: ${receiptData['pickerDetails']['name'] ?? ''}\n",
+      //     size: 1,
+      //   ),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(text: "Item      Price Qty  Total\n", size: 1),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "ID: ${receiptData['pickerDetails']['id'] ?? ''}\n\n",
+      //     size: 1,
+      //   ),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "----------------------------\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(text: "ITEMS COLLECTED\n", size: 1),
+      // );
 
-      final items = receiptData['itemsCollected'] ?? [];
-      double grandTotal = 0.0;
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(text: "Item      Price Qty  Total\n", size: 1),
+      // );
 
-      for (var item in items) {
-        final name = item['itemName'] ?? '';
-        final price = (item['price'] ?? 0.0).toStringAsFixed(2);
-        final qty = item['totalQuantity'] ?? '';
-        final total = item['totalPrice']?.toStringAsFixed(2) ?? '';
-        grandTotal += item['totalPrice'] ?? 0.0;
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "----------------------------\n",
+      //     size: 1,
+      //   ),
+      // );
 
-        final line = _formatItemLine(name, price, qty, total);
-        await PrintBluetoothThermal.writeString(
-          printText: PrintTextSize(text: "$line\n", size: 1),
-        );
-      }
+      // final items = receiptData['itemsCollected'] ?? [];
+      // double grandTotal = 0.0;
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "----------------------------\n",
-          size: 1,
-        ),
-      );
+      // for (var item in items) {
+      //   try {
+      //     final name = item['itemName']?.toString() ?? 'Unknown';
+      //     final priceVal = item['price'] ?? 0.0;
+      //     final qtyVal = item['totalQuantity'] ?? 0;
+      //     final totalVal = item['totalPrice'] ?? (priceVal * qtyVal);
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "GRAND TOTAL: ${grandTotal.toStringAsFixed(2)}\n\n",
-          size: 2,
-        ),
-      );
+      //     final price =
+      //         (priceVal is num) ? priceVal.toStringAsFixed(2) : "0.00";
+      //     final qty = qtyVal.toString();
+      //     final total =
+      //         (totalVal is num) ? totalVal.toStringAsFixed(2) : "0.00";
 
-      if (receiptData.containsKey('declaration')) {
-        await PrintBluetoothThermal.writeString(
-          printText: PrintTextSize(text: "DECLARATION\n", size: 1),
-        );
-        await PrintBluetoothThermal.writeString(
-          printText: PrintTextSize(
-            text: "${receiptData['declaration']}\n",
-            size: 1,
-          ),
-        );
-      }
+      //     grandTotal += (totalVal is num) ? totalVal : 0.0;
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "\nThank you for your business!\n",
-          size: 1,
-        ),
-      );
+      //     final line = _formatItemLine(name, price, qty, total);
+      //     await PrintBluetoothThermal.writeString(
+      //       printText: PrintTextSize(text: "$line\n", size: 1),
+      //     );
+      //   } catch (e) {
+      //     debugPrint("Error processing item: $e");
+      //   }
+      // }
+
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "----------------------------\n",
+      //     size: 1,
+      //   ),
+      // );
+
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "GRAND TOTAL: ${grandTotal.toStringAsFixed(2)}\n\n",
+      //     size: 2,
+      //   ),
+      // );
+
+      // if (receiptData.containsKey('declaration')) {
+      //   await PrintBluetoothThermal.writeString(
+      //     printText: PrintTextSize(text: "DECLARATION\n", size: 1),
+      //   );
+      //   await PrintBluetoothThermal.writeString(
+      //     printText: PrintTextSize(
+      //       text: "${receiptData['declaration']}\n",
+      //       size: 1,
+      //     ),
+      //   );
+      // }
+
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "\nThank you for your business!\n",
+      //     size: 1,
+      //   ),
+      // );
 
       await PrintBluetoothThermal.writeBytes([27, 100, 4]); // ESC d 4
       debugPrint("Print complete");
@@ -274,14 +295,14 @@ class BluetoothReceiptPrinter {
   }
 
   // Helper method to format the line with proper spacing
-  String _formatItemLine(String name, String price, dynamic qty, String total) {
-    String namePad = name.padRight(8);
-    if (namePad.length > 8) namePad = namePad.substring(0, 8);
+  // String _formatItemLine(String name, String price, dynamic qty, String total) {
+  //   String namePad = name.padRight(8);
+  //   if (namePad.length > 8) namePad = namePad.substring(0, 8);
 
-    String pricePad = price.padLeft(6);
-    String qtyPad = qty.toString().padLeft(4);
-    String totalPad = total.padLeft(6);
+  //   String pricePad = price.padLeft(6);
+  //   String qtyPad = qty.toString().padLeft(4);
+  //   String totalPad = total.padLeft(6);
 
-    return "$namePad $pricePad $qtyPad $totalPad";
-  }
+  //   return "$namePad $pricePad $qtyPad $totalPad";
+  // }
 }

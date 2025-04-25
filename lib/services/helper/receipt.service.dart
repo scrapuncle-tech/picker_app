@@ -69,7 +69,10 @@ class ReceiptService {
       final receiptData = _createReceiptData(pickup);
 
       // Generate PDF using the receiptData
-      final pdfFile = await PdfReceiptGenerator.generateReceipt(receiptData);
+      final pdfGeneratorResult = await PdfReceiptGenerator.generateReceipt(
+        receiptData,
+      );
+      final pdfFile = pdfGeneratorResult.$1;
 
       // Close loading dialog
       Navigator.pop(context);

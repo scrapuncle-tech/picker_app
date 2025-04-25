@@ -7,7 +7,7 @@ import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 Future<void> printLogoImage() async {
   try {
-    final ByteData data = await rootBundle.load('assets/icons/logo.png');
+    final ByteData data = await rootBundle.load('assets/icons/logo_full.png');
     final Uint8List bytes = data.buffer.asUint8List();
 
     final img.Image? image = img.decodeImage(bytes);
@@ -23,7 +23,7 @@ Future<void> printLogoImage() async {
     // Resize image if needed
     final img.Image resized = img.copyResize(
       image,
-      width: 240,
+      width: 200,
     ); // Resize to fit 58mm
 
     final List<int> imageBytes = generator.image(resized);
