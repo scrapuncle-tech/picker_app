@@ -121,7 +121,7 @@ class ReceiptService {
     BluetoothReceiptPrinter printerService = BluetoothReceiptPrinter();
 
     // Check permissions first
-    await printerService.checkAndRequestPermissions();
+    // await printerService.checkAndRequestPermissions();
 
     // Check if Bluetooth is enabled
     bool isBluetoothOn = await printerService.isBluetoothEnabled();
