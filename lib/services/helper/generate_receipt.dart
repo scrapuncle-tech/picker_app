@@ -219,7 +219,7 @@ class BluetoothReceiptPrinter {
 
       bytes += generator.text('-------------------------------');
       bytes += generator.text(
-        'GRAND TOTAL: ₹${grandTotal.toStringAsFixed(2)}',
+        'GRAND TOTAL: Rs.${grandTotal.toStringAsFixed(2)}',
         styles: PosStyles(
           bold: true,
           height: PosTextSize.size2,
