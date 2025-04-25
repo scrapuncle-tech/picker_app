@@ -7,9 +7,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 import 'package:image/image.dart';
 
-import 'pdf_receipt_generator.dart';
-import 'print_logo_image.dart';
-
 class BluetoothReceiptPrinter {
   List<BluetoothInfo> bondedDevices = [];
   BluetoothInfo? connectedDevice;
@@ -156,8 +153,8 @@ class BluetoothReceiptPrinter {
         styles: PosStyles(
           align: PosAlign.center,
           bold: true,
-          height: PosTextSize.size2,
-          width: PosTextSize.size2,
+          height: PosTextSize.size1,
+          width: PosTextSize.size1,
         ),
       );
 
@@ -222,8 +219,8 @@ class BluetoothReceiptPrinter {
         'GRAND TOTAL: Rs.${grandTotal.toStringAsFixed(2)}',
         styles: PosStyles(
           bold: true,
-          height: PosTextSize.size2,
-          width: PosTextSize.size2,
+          height: PosTextSize.size1,
+          width: PosTextSize.size1,
         ),
       );
 
