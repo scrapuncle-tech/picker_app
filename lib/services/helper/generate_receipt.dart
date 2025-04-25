@@ -187,7 +187,7 @@ class BluetoothReceiptPrinter {
         'Item        Price  Qty  Total',
         styles: PosStyles(bold: true),
       );
-      bytes += generator.text('-------------------------------');
+      bytes += generator.text('----------------------------');
 
       // Items List
       final items = receiptData['itemsCollected'] ?? [];
@@ -198,9 +198,9 @@ class BluetoothReceiptPrinter {
           final name = (item['itemName']?.toString() ?? 'Unknown')
               .padRight(10)
               .substring(0, 10);
-          final priceVal = item['price'] ?? 0.0;
-          final qtyVal = item['totalQuantity'] ?? 0;
-          final totalVal = item['totalPrice'] ?? (priceVal * qtyVal);
+          final priceVal = (item['price'] is String) ? double.parse(item['price']) : (item['price'] ?? 0.0);
+          final qtyVal = (item['totalQuantity'] is String) ? double.parse(item['totalQuantity']) : (item['totalQuantity'] ?? 0);
+          final totalVal = (item['totalPrice'] is String) ? double.parse(item['totalPrice']) : (item['totalPrice'] ?? (priceVal * qtyVal));
 
           final price = priceVal.toStringAsFixed(2).padLeft(6);
           final qty = qtyVal.toString().padLeft(3);
