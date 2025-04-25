@@ -288,17 +288,12 @@ class BluetoothReceiptPrinter {
         ),
       );
 
-      if (receiptData.containsKey('declaration')) {
-        await PrintBluetoothThermal.writeString(
-          printText: PrintTextSize(text: "DECLARATION\n", size: 1),
-        );
-        await PrintBluetoothThermal.writeString(
-          printText: PrintTextSize(
-            text: "${receiptData['declaration']}\n",
-            size: 1,
-          ),
-        );
-      }
+      await PrintBluetoothThermal.writeString(
+        printText: PrintTextSize(
+          text: "Signature: ----------------------------\n",
+          size: 1,
+        ),
+      );
 
       await PrintBluetoothThermal.writeString(
         printText: PrintTextSize(
