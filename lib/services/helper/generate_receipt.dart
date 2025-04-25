@@ -175,34 +175,34 @@ class BluetoothReceiptPrinter {
         printText: PrintTextSize(text: "\n", size: 1),
       );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Customer: ${receiptData['customerDetails']['name'] ?? ''}\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "Customer: ${receiptData['customerDetails']['name'] ?? ''}\n",
+      //     size: 1,
+      //   ),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Phone: ${receiptData['customerDetails']['phoneNo'] ?? ''}\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "Phone: ${receiptData['customerDetails']['phoneNo'] ?? ''}\n",
+      //     size: 1,
+      //   ),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text:
-              "Address: ${receiptData['customerDetails']['location'] ?? ''}\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text:
+      //         "Address: ${receiptData['customerDetails']['location'] ?? ''}\n",
+      //     size: 1,
+      //   ),
+      // );
 
-      await PrintBluetoothThermal.writeString(
-        printText: PrintTextSize(
-          text: "Slot: ${receiptData['customerDetails']['slot'] ?? ''}\n",
-          size: 1,
-        ),
-      );
+      // await PrintBluetoothThermal.writeString(
+      //   printText: PrintTextSize(
+      //     text: "Slot: ${receiptData['customerDetails']['slot'] ?? ''}\n",
+      //     size: 1,
+      //   ),
+      // );
 
       await PrintBluetoothThermal.writeString(
         printText: PrintTextSize(

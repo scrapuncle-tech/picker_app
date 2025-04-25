@@ -5,13 +5,15 @@ import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 
 import '../../components/common/custom_snackbar.component.dart';
+import '../../models/picker.entity.dart';
 import '../../models/pickup.entity.dart';
+import '../../providers/auth.provider.dart';
 import 'generate_receipt.dart';
 import 'pdf_receipt_generator.dart';
 
 class ReceiptService {
   // Create receipt data from pickup information
-  Map<String, dynamic> _createReceiptData(Pickup pickup) {
+  Map<String, dynamic> _createReceiptData(Pickup pickup, Picker pickerData) {
     DateTime dateTime = DateTime.now(); // or your custom DateTime
     String formattedDate = DateFormat('MMM dd,yyyy hh:mm a').format(dateTime);
     return {
@@ -24,9 +26,9 @@ class ReceiptService {
       'date': formattedDate,
       'paymentType': 'cash',
       'pickerDetails': {
-        'name': 'Scrap Uncle Picker',
-        'id': 'PID-001',
-        'phoneNo': '123456789',
+        'name': pickerData.name,
+        'id': pickerData.id,
+        'phoneNo': pickerData.phoneNo,
       },
       'itemsCollected':
           pickup.itemsData
@@ -65,8 +67,10 @@ class ReceiptService {
     _showLoadingDialog(context, "Generating PDF receipt...");
 
     try {
+      final pickerData = ref.read(authProvider).pickerData;
+
       // Create receipt data
-      final receiptData = _createReceiptData(pickup);
+      final receiptData = _createReceiptData(pickup, pickerData!);
 
       // Generate PDF using the receiptData
       final pdfGeneratorResult = await PdfReceiptGenerator.generateReceipt(
@@ -168,8 +172,10 @@ class ReceiptService {
         width: width,
       );
 
+      final pickerData = ref.read(authProvider).pickerData;
+
       // Create receipt data
-      final receiptData = _createReceiptData(pickup);
+      final receiptData = _createReceiptData(pickup, pickerData!);
 
       // Print the receipt
       bool printSuccess =
