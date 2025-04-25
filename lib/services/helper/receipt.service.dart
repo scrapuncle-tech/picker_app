@@ -16,6 +16,8 @@ class ReceiptService {
   Map<String, dynamic> _createReceiptData(Pickup pickup, Picker pickerData) {
     DateTime dateTime = DateTime.now(); // or your custom DateTime
     String formattedDate = DateFormat('MMM dd,yyyy hh:mm a').format(dateTime);
+  
+    print("ITEMS DATA: ${pickup.itemsData}");
     return {
       'customerDetails': {
         'name': pickup.name,
