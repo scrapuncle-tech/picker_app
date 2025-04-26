@@ -70,7 +70,7 @@ class UpdatePickupPage extends ConsumerWidget {
               ),
             ),
             child: CustomText(
-              text: "Print receipt by TEXT",
+              text: "Print receipt",
               size: sizeData.superHeader,
               weight: FontWeight.w900,
             ),

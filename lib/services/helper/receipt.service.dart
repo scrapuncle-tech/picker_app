@@ -17,6 +17,7 @@ class ReceiptService {
     DateTime dateTime = DateTime.now(); // or your custom DateTime
     String formattedDate = DateFormat('MMM dd,yyyy hh:mm a').format(dateTime);
 
+    debugPrint("ITEMS DATA: ${pickup.itemsData}");
     return {
       'customerDetails': {
         'name': pickup.name,
@@ -39,13 +40,13 @@ class ReceiptService {
                   'price': item.customPrice ?? item.product.price,
                   'priceType': item.customPrice != null ? 'custom' : 'actual',
                   'totalQuantity':
-                      item.product.unit == 'weight'
+                      item.product.unit.toString().toLowerCase() == 'weight'
                           ? item.weight
                           : item.quantity,
                   'unit': item.product.unit,
                   'totalPrice':
                       (item.customPrice ?? double.parse(item.product.price)) *
-                      (item.product.unit == 'weight'
+                      (item.product.unit.toString().toLowerCase() == 'weight'
                           ? item.weight
                           : item.quantity),
                 },

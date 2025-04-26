@@ -125,6 +125,13 @@ class BluetoothReceiptPrinter {
     connectedDevice = null;
   }
 
+  double _parseDouble(dynamic value, [double fallback = 0.0]) {
+    if (value == null) return fallback;
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? fallback;
+    return fallback;
+  }
+
   Future<bool> printReceipt(Map<String, dynamic> receiptData) async {
     bool isConnected = await ensureConnection();
     if (!isConnected) {
@@ -198,9 +205,9 @@ class BluetoothReceiptPrinter {
           final name = (item['itemName']?.toString() ?? 'Unknown')
               .padRight(10)
               .substring(0, 10);
-          final priceVal = (item['price'] is String) ? double.parse(item['price']) : (item['price'] ?? 0.0);
-          final qtyVal = (item['totalQuantity'] is String) ? double.parse(item['totalQuantity']) : (item['totalQuantity'] ?? 0);
-          final totalVal = (item['totalPrice'] is String) ? double.parse(item['totalPrice']) : (item['totalPrice'] ?? (priceVal * qtyVal));
+          final priceVal = _parseDouble(item['price']);
+          final qtyVal = _parseDouble(item['totalQuantity']);
+          final totalVal = _parseDouble(item['totalPrice']);
 
           final price = priceVal.toStringAsFixed(2).padLeft(6);
           final qty = qtyVal.toString().padLeft(3);
