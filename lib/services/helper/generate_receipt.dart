@@ -190,10 +190,23 @@ class BluetoothReceiptPrinter {
         'ITEMS COLLECTED',
         styles: PosStyles(bold: true, underline: true),
       );
-      bytes += generator.text(
-        'Item        Price  Qty  Total',
-        styles: PosStyles(bold: true),
-      );
+      bytes += generator.row([
+        PosColumn(
+          text: 'Price',
+          width: 4,
+          styles: PosStyles(align: PosAlign.left, bold: true),
+        ),
+        PosColumn(
+          text: 'Qty',
+          width: 4,
+          styles: PosStyles(align: PosAlign.center, bold: true),
+        ),
+        PosColumn(
+          text: 'Total',
+          width: 4,
+          styles: PosStyles(align: PosAlign.right, bold: true),
+        ),
+      ]);
       bytes += generator.text('----------------------------');
 
       // Items List
@@ -202,20 +215,39 @@ class BluetoothReceiptPrinter {
 
       for (var item in items) {
         try {
-          final name = (item['itemName']?.toString() ?? 'Unknown')
-              .padRight(10)
-              .substring(0, 10);
+          final index = (items.indexOf(item) + 1).toString();
+          final name = '$index. ${item['itemName']?.toString() ?? 'Unknown'}';
           final priceVal = _parseDouble(item['price']);
           final qtyVal = _parseDouble(item['totalQuantity']);
           final totalVal = _parseDouble(item['totalPrice']);
 
-          final price = priceVal.toStringAsFixed(2).padLeft(6);
-          final qty = qtyVal.toString().padLeft(3);
-          final total = totalVal.toStringAsFixed(2).padLeft(6);
+          // First row: item name (can wrap to multiple lines if needed)
+          bytes += generator.row([
+            PosColumn(
+              text: name,
+              width: 12,
+              styles: PosStyles(align: PosAlign.left),
+            ),
+          ]);
 
-          grandTotal += totalVal;
-
-          bytes += generator.text('$name $price $qty $total');
+          // Second row: price | qty | total, aligned
+          bytes += generator.row([
+            PosColumn(
+              text: 'Rs.${priceVal.toStringAsFixed(2)}',
+              width: 4,
+              styles: PosStyles(align: PosAlign.left),
+            ),
+            PosColumn(
+              text: qtyVal.toString(),
+              width: 4,
+              styles: PosStyles(align: PosAlign.center),
+            ),
+            PosColumn(
+              text: 'Rs.${totalVal.toStringAsFixed(2)}',
+              width: 4,
+              styles: PosStyles(align: PosAlign.right),
+            ),
+          ]);
         } catch (e) {
           debugPrint("Error processing item: $e");
         }
