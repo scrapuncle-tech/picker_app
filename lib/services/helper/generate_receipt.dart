@@ -224,6 +224,8 @@ class BluetoothReceiptPrinter {
           final qtyVal = _parseDouble(item['totalQuantity']);
           final totalVal = _parseDouble(item['totalPrice']);
 
+          grandTotal += totalVal;
+
           // First row: item name (can wrap to multiple lines if needed)
           bytes += generator.row([
             PosColumn(
