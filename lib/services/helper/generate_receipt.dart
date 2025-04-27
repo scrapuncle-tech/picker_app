@@ -168,6 +168,9 @@ class BluetoothReceiptPrinter {
       bytes += generator.feed(1);
 
       // Date & Payment Type
+      bytes += generator.text(
+        'Pickup ID: ${receiptData['pickupId'] ?? ''}',
+      );
       bytes += generator.text('Date: ${receiptData['date'] ?? ''}');
       bytes += generator.text(
         'Payment Type: ${receiptData['paymentType'] ?? ''}',
@@ -180,7 +183,7 @@ class BluetoothReceiptPrinter {
         'Picker: ${receiptData['pickerDetails']['name'] ?? ''}',
       );
       bytes += generator.text(
-        'ID: ${receiptData['pickerDetails']['id'] ?? ''}',
+        'Phone no: ${receiptData['pickerDetails']['phoneNo'] ?? ''}',
       );
 
       bytes += generator.feed(1);
