@@ -156,7 +156,7 @@ class BluetoothReceiptPrinter {
 
       // Header
       bytes += generator.text(
-        'SCRAP UNCLE RECEIPT',
+        'SCRAP UNCLE PICKUP RECEIPT',
         styles: PosStyles(
           align: PosAlign.center,
           bold: true,
@@ -164,6 +164,7 @@ class BluetoothReceiptPrinter {
           width: PosTextSize.size1,
         ),
       );
+      bytes += generator.text('-------------------------------');
 
       bytes += generator.feed(1);
 
@@ -176,15 +177,13 @@ class BluetoothReceiptPrinter {
         'Payment Type: ${receiptData['paymentType'] ?? ''}',
       );
 
-      bytes += generator.feed(1);
-
       // Picker Info
       bytes += generator.text(
         'Picker: ${receiptData['pickerDetails']['name'] ?? ''}',
       );
-      bytes += generator.text(
-        'Phone no: ${receiptData['pickerDetails']['phoneNo'] ?? ''}',
-      );
+      // bytes += generator.text(
+      //   'Phone no: ${receiptData['pickerDetails']['phoneNo'] ?? ''}',
+      // );
 
       bytes += generator.feed(1);
 
@@ -193,6 +192,7 @@ class BluetoothReceiptPrinter {
         'ITEMS COLLECTED',
         styles: PosStyles(bold: true, underline: true),
       );
+      bytes += generator.text('-------------------------------');
       bytes += generator.row([
         PosColumn(
           text: 'Price',
@@ -210,7 +210,7 @@ class BluetoothReceiptPrinter {
           styles: PosStyles(align: PosAlign.right, bold: true),
         ),
       ]);
-      bytes += generator.text('----------------------------');
+      bytes += generator.text('-------------------------------');
 
       // Items List
       final items = receiptData['itemsCollected'] ?? [];
@@ -259,17 +259,22 @@ class BluetoothReceiptPrinter {
       }
 
       bytes += generator.text('-------------------------------');
-      bytes += generator.text(
-        'GRAND TOTAL: Rs.${grandTotal.toStringAsFixed(2)}',
-        styles: PosStyles(
-          bold: true,
-          height: PosTextSize.size1,
-          width: PosTextSize.size1,
+      bytes += generator.row([
+        PosColumn(
+          text: 'Grand total',
+          width: 6,
+          styles: PosStyles(align: PosAlign.left),
         ),
-      );
+        PosColumn(
+          text: 'Rs.${grandTotal.toStringAsFixed(2)}',
+          width: 6,
+          styles: PosStyles(align: PosAlign.right),
+        ),
+      ]);
+      bytes += generator.text('-------------------------------');
 
       bytes += generator.feed(1);
-      bytes += generator.text('Signature: _______________________');
+      bytes += generator.text('Signature: __________________');
       bytes += generator.feed(2);
       bytes += generator.text(
         'Thank you for your business!',
