@@ -116,4 +116,24 @@ class Picker {
       assignedVehicleName: assignedVehicleName ?? this.assignedVehicleName,
     );
   }
+
+  @override
+  String toString() {
+    return '''
+      'id': $id,
+      'name': $name,
+      'email': $email,
+      'licenseNo': $licenseNo,
+      'phoneNo': $phoneNo,
+      'isAvailable': $isAvailable,
+      'isDriver': $isDriver,
+      'isHelper': $isHelper,
+      'isOnLeave': $isOnLeave,
+      'isPicker': $isPicker,
+      'isWorking': $isWorking,
+      'routeName': $routeName,
+      'assignedVehicleId': $assignedVehicleId,
+      'assignedVehicleName': $assignedVehicleName,
+    ''';
+  }
 }
