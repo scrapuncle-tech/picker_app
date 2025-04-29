@@ -62,13 +62,14 @@ class ReadService {
     final docStream =
         FirebaseFirestore.instance
             .collection(FirebaseConstants.pickupCollection)
-            .doc(id)
+            .where('pickupId', isEqualTo: id)
             .snapshots();
 
-    await for (var snapshot in docStream) {
+    await for (var snapshots in docStream) {
       try {
-        if (snapshot.exists && snapshot.data() != null) {
-          final rawData = snapshot.data()!;
+        final snapshot = snapshots.docs.firstOrNull;
+        if (snapshot!=null && snapshot.exists) {
+          final rawData = snapshot.data();
 
           Pickup pickup = Pickup.fromFirebase({...rawData, 'id': snapshot.id});
 
