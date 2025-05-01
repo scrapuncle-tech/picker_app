@@ -54,7 +54,7 @@ class ReceiptService {
               .toList(),
       'totalAmount': pickup.totalPrice,
       'time': DateTime.now().toString().split(' ')[1].substring(0, 5),
-      'pickupId': pickup.id,
+      'pickupId': pickup.pickupId,
       'declaration': 'I confirm that the above items have been collected.',
     };
   }

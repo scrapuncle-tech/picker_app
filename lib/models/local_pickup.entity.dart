@@ -11,6 +11,7 @@ class LocalPickup {
 
   @Unique(onConflict: ConflictStrategy.replace)
   String id;
+  String pickupId;
   //
 
   int firebaseIndex;
@@ -62,6 +63,7 @@ class LocalPickup {
   LocalPickup({
     this.obxId = 0,
     required this.id,
+    required this.pickupId,
     required this.firebaseIndex,
     required this.name,
     required this.mobileNo,
@@ -98,6 +100,7 @@ class LocalPickup {
   LocalPickup copyWith({
     int? obxId,
     String? id,
+    String? pickupId,
     int? firebaseIndex,
     String? name,
     String? mobileNo,
@@ -134,6 +137,7 @@ class LocalPickup {
     LocalPickup pickup = LocalPickup(
       obxId: obxId ?? this.obxId,
       id: id ?? this.id,
+      pickupId:pickupId??this.pickupId,
       firebaseIndex: firebaseIndex ?? this.firebaseIndex,
       name: name ?? this.name,
       mobileNo: mobileNo ?? this.mobileNo,
@@ -174,6 +178,7 @@ class LocalPickup {
   static LocalPickup fromPickup(Pickup pickup) {
     LocalPickup localPickup = LocalPickup(
       id: pickup.id,
+      pickupId: pickup.pickupId,
       firebaseIndex: pickup.firebaseIndex,
       name: pickup.name,
       mobileNo: pickup.mobileNo,
@@ -211,6 +216,7 @@ class LocalPickup {
   Pickup toPickup() {
     Pickup pickup = Pickup(
       id: id,
+      pickupId:pickupId,
       firebaseIndex: firebaseIndex,
       name: name,
       mobileNo: mobileNo,
@@ -267,6 +273,7 @@ class LocalPickup {
 
     return LocalPickup(
       id: data['id'] ?? '',
+      pickupId: data['pickupId']??'',
       firebaseIndex:
           data['index'] != null ? int.parse(data['index'].toString()) : 0,
       name: data['name'] ?? '',
@@ -305,6 +312,7 @@ class LocalPickup {
   Map<String, dynamic> toFirebase({required List<String> itemIds}) {
     return {
       'id': id,
+      'pickupId':pickupId,
       'name': name,
       'mobileNo': mobileNo,
       'address': address,
@@ -346,6 +354,7 @@ class LocalPickup {
     return 'LocalPickup('
         'obxId: $obxId, '
         'id: $id, '
+        'pickupId: $pickupId, '
         'firebaseIndex: $firebaseIndex, '
         'name: $name, '
         'item: ${itemsData.map((item) => item.id).toList()}, '

@@ -150,6 +150,7 @@ class UpdatePickupPage extends ConsumerWidget {
     bool isLocalCompleted = currentPickupProviderState.$2;
     bool isGlobalCompleted = currentPickupState.isCompleted;
     bool isCompleted = isLocalCompleted || isGlobalCompleted;
+    debugPrint("currentPickupState: ${currentPickupState}");
 
     return PopScope(
       canPop: true,

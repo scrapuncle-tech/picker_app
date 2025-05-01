@@ -138,6 +138,7 @@ class BluetoothReceiptPrinter {
       debugPrint("Failed to connect to printer");
       return false;
     }
+    debugPrint("receiptData['pickupId'] "+receiptData['pickupId']);
 
     try {
       final profile = await CapabilityProfile.load();

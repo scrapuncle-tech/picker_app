@@ -38,6 +38,7 @@ class Pickup {
   bool isLocked;
   String lockedBy;
   String pickerId;
+  String pickupId;
   String pickerPhoneNo;
   String helperId;
   String helperPhoneNo;
@@ -79,6 +80,7 @@ class Pickup {
     required this.isLocked,
     required this.lockedBy,
     required this.pickerId,
+    required this.pickupId,
     required this.pickerPhoneNo,
     required this.helperId,
     required this.helperPhoneNo,
@@ -115,6 +117,7 @@ class Pickup {
     bool? isLocked,
     String? lockedBy,
     String? pickerId,
+    String? pickupId,
     String? pickerPhoneNo,
     String? helperId,
     String? helperPhoneNo,
@@ -151,6 +154,7 @@ class Pickup {
       isLocked: isLocked ?? this.isLocked,
       lockedBy: lockedBy ?? this.lockedBy,
       pickerId: pickerId ?? this.pickerId,
+      pickupId: pickupId ?? this.pickupId,
       pickerPhoneNo: pickerPhoneNo ?? this.pickerPhoneNo,
       helperId: helperId ?? this.helperId,
       helperPhoneNo: helperPhoneNo ?? this.helperPhoneNo,
@@ -192,6 +196,7 @@ class Pickup {
 
     return Pickup(
       id: data['id'] ?? '',
+      pickupId: data['pickupId'] ?? '',
       firebaseIndex:
           data['index'] != null
               ? int.tryParse(data['index'].toString()) ?? 0
@@ -232,6 +237,7 @@ class Pickup {
   Map<String, dynamic> toFirebase({required List<String> itemIds}) {
     return {
       'id': id,
+      'pickupId':pickupId,
       'name': name,
       'mobileNo': mobileNo,
       'address': address,
@@ -273,6 +279,7 @@ class Pickup {
     return 'Pickup('
         'obxId: $obxId, '
         'id: $id, '
+        'pickupId: $pickupId, '
         'firebaseIndex: $firebaseIndex, '
         'name: $name, '
         'item: ${itemsData.map((item) => item.id).toList()}, '

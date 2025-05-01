@@ -290,7 +290,12 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(34, 5382661057277960126),
             name: 'completedAt',
             type: 12,
-            flags: 0)
+            flags: 0),
+      obx_int.ModelProperty(
+          id: const obx_int.IdUid(35, 1234567890123456789), // New unique ID
+          name: 'pickupId',
+          type: 9,
+          flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[
@@ -868,218 +873,222 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.localPickup.attach(store);
           return object;
         }),
-    LocalPickup: obx_int.EntityDefinition<LocalPickup>(
-        model: _entities[1],
-        toOneRelations: (LocalPickup object) => [object.routeModel],
-        toManyRelations: (LocalPickup object) => {
-              obx_int.RelInfo<Item>.toOneBacklink(5, object.obxId,
-                  (Item srcObject) => srcObject.localPickup): object.itemsData
+        LocalPickup: obx_int.EntityDefinition<LocalPickup>(
+            model: _entities[1],
+            toOneRelations: (LocalPickup object) => [object.routeModel],
+            toManyRelations: (LocalPickup object) => {
+                  obx_int.RelInfo<Item>.toOneBacklink(5, object.obxId,
+                          (Item srcObject) => srcObject.localPickup): object.itemsData
             },
-        getId: (LocalPickup object) => object.obxId,
-        setId: (LocalPickup object, int id) {
-          object.obxId = id;
-        },
-        objectToFB: (LocalPickup object, fb.Builder fbb) {
-          final idOffset = fbb.writeString(object.id);
-          final nameOffset = fbb.writeString(object.name);
-          final mobileNoOffset = fbb.writeString(object.mobileNo);
-          final addressOffset = fbb.writeString(object.address);
-          final areaOffset = fbb.writeString(object.area);
-          final pincodeOffset = fbb.writeString(object.pincode);
-          final aovOffset = fbb.writeString(object.aov);
-          final descriptionOffset = fbb.writeString(object.description);
-          final expectedWeightOffset = fbb.writeString(object.expectedWeight);
-          final itemsOffset = fbb.writeList(
-              object.items.map(fbb.writeString).toList(growable: false));
-          final slotOffset = fbb.writeString(object.slot);
-          final finalSlotOffset = fbb.writeString(object.finalSlot);
-          final statusOffset = fbb.writeString(object.status);
-          final subStatusOffset = fbb.writeString(object.subStatus);
-          final lockedByOffset = fbb.writeString(object.lockedBy);
-          final pickerIdOffset = fbb.writeString(object.pickerId);
-          final pickerPhoneNoOffset = fbb.writeString(object.pickerPhoneNo);
-          final helperIdOffset = fbb.writeString(object.helperId);
-          final helperPhoneNoOffset = fbb.writeString(object.helperPhoneNo);
-          final routeIdOffset = fbb.writeString(object.routeId);
-          final mapLinkOffset = fbb.writeString(object.mapLink);
-          final coordinatesOffset = fbb.writeList(
-              object.coordinates.map(fbb.writeString).toList(growable: false));
-          fbb.startTable(35);
-          fbb.addInt64(0, object.obxId);
-          fbb.addOffset(1, idOffset);
-          fbb.addInt64(2, object.firebaseIndex);
-          fbb.addOffset(3, nameOffset);
-          fbb.addOffset(4, mobileNoOffset);
-          fbb.addOffset(5, addressOffset);
-          fbb.addOffset(6, areaOffset);
-          fbb.addOffset(7, pincodeOffset);
-          fbb.addOffset(8, aovOffset);
-          fbb.addOffset(9, descriptionOffset);
-          fbb.addOffset(10, expectedWeightOffset);
-          fbb.addOffset(11, itemsOffset);
-          fbb.addInt64(12, object.routeModel.targetId);
-          fbb.addOffset(13, slotOffset);
-          fbb.addOffset(14, finalSlotOffset);
-          fbb.addOffset(15, statusOffset);
-          fbb.addOffset(16, subStatusOffset);
-          fbb.addBool(17, object.isCompleted);
-          fbb.addBool(18, object.isLocked);
-          fbb.addOffset(19, lockedByOffset);
-          fbb.addOffset(20, pickerIdOffset);
-          fbb.addOffset(21, pickerPhoneNoOffset);
-          fbb.addOffset(22, helperIdOffset);
-          fbb.addOffset(23, helperPhoneNoOffset);
-          fbb.addOffset(24, routeIdOffset);
-          fbb.addOffset(25, mapLinkOffset);
-          fbb.addOffset(26, coordinatesOffset);
-          fbb.addFloat64(27, object.totalPrice);
-          fbb.addFloat64(28, object.totalWeightQuantity);
-          fbb.addInt64(29, object.createdAt.millisecondsSinceEpoch);
-          fbb.addInt64(30, object.date.millisecondsSinceEpoch);
-          fbb.addInt64(31, object.finalDate.millisecondsSinceEpoch);
-          fbb.addInt64(
-              32,
-              object.updatedAt == null
-                  ? null
-                  : object.updatedAt!.microsecondsSinceEpoch * 1000);
-          fbb.addInt64(
-              33,
-              object.completedAt == null
-                  ? null
-                  : object.completedAt!.microsecondsSinceEpoch * 1000);
-          fbb.finish(fbb.endTable());
-          return object.obxId;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final updatedAtValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 68);
-          final completedAtValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 70);
-          final obxIdParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final idParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 6, '');
-          final firebaseIndexParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
-          final nameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 10, '');
-          final mobileNoParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 12, '');
-          final addressParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 14, '');
-          final areaParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 16, '');
-          final pincodeParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 18, '');
-          final aovParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 20, '');
-          final descriptionParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 22, '');
-          final expectedWeightParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 24, '');
-          final itemsParam = const fb.ListReader<String>(
-                  fb.StringReader(asciiOptimization: true),
-                  lazy: false)
-              .vTableGet(buffer, rootOffset, 26, []);
-          final slotParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 30, '');
-          final finalSlotParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 32, '');
-          final statusParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 34, '');
-          final subStatusParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 36, '');
-          final isCompletedParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 38, false);
-          final isLockedParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 40, false);
-          final lockedByParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 42, '');
-          final pickerIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 44, '');
-          final pickerPhoneNoParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 46, '');
-          final helperIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 48, '');
-          final helperPhoneNoParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 50, '');
-          final routeIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 52, '');
-          final mapLinkParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 54, '');
-          final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 62, 0));
-          final dateParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 64, 0));
-          final finalDateParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 66, 0));
-          final updatedAtParam = updatedAtValue == null
-              ? null
-              : DateTime.fromMicrosecondsSinceEpoch(
-                  (updatedAtValue / 1000).round());
-          final coordinatesParam = const fb.ListReader<String>(
-                  fb.StringReader(asciiOptimization: true),
-                  lazy: false)
-              .vTableGet(buffer, rootOffset, 56, []);
-          final totalPriceParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 58, 0);
-          final totalWeightQuantityParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 60, 0);
-          final completedAtParam = completedAtValue == null
-              ? null
-              : DateTime.fromMicrosecondsSinceEpoch(
-                  (completedAtValue / 1000).round());
-          final object = LocalPickup(
-              obxId: obxIdParam,
-              id: idParam,
-              firebaseIndex: firebaseIndexParam,
-              name: nameParam,
-              mobileNo: mobileNoParam,
-              address: addressParam,
-              area: areaParam,
-              pincode: pincodeParam,
-              aov: aovParam,
-              description: descriptionParam,
-              expectedWeight: expectedWeightParam,
-              items: itemsParam,
-              slot: slotParam,
-              finalSlot: finalSlotParam,
-              status: statusParam,
-              subStatus: subStatusParam,
-              isCompleted: isCompletedParam,
-              isLocked: isLockedParam,
-              lockedBy: lockedByParam,
-              pickerId: pickerIdParam,
-              pickerPhoneNo: pickerPhoneNoParam,
-              helperId: helperIdParam,
-              helperPhoneNo: helperPhoneNoParam,
-              routeId: routeIdParam,
-              mapLink: mapLinkParam,
-              createdAt: createdAtParam,
-              date: dateParam,
-              finalDate: finalDateParam,
-              updatedAt: updatedAtParam,
-              coordinates: coordinatesParam,
-              totalPrice: totalPriceParam,
-              totalWeightQuantity: totalWeightQuantityParam,
-              completedAt: completedAtParam);
-          object.routeModel.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
-          object.routeModel.attach(store);
-          obx_int.InternalToManyAccess.setRelInfo<LocalPickup>(
-              object.itemsData,
-              store,
-              obx_int.RelInfo<Item>.toOneBacklink(
-                  5, object.obxId, (Item srcObject) => srcObject.localPickup));
-          return object;
-        }),
-    Picker: obx_int.EntityDefinition<Picker>(
+            getId: (LocalPickup object) => object.obxId,
+            setId: (LocalPickup object, int id) {
+                  object.obxId = id;
+            },
+            objectToFB: (LocalPickup object, fb.Builder fbb) {
+                  final idOffset = fbb.writeString(object.id);
+                  final nameOffset = fbb.writeString(object.name);
+                  final mobileNoOffset = fbb.writeString(object.mobileNo);
+                  final addressOffset = fbb.writeString(object.address);
+                  final areaOffset = fbb.writeString(object.area);
+                  final pincodeOffset = fbb.writeString(object.pincode);
+                  final aovOffset = fbb.writeString(object.aov);
+                  final descriptionOffset = fbb.writeString(object.description);
+                  final expectedWeightOffset = fbb.writeString(object.expectedWeight);
+                  final itemsOffset = fbb.writeList(
+                      object.items.map(fbb.writeString).toList(growable: false));
+                  final slotOffset = fbb.writeString(object.slot);
+                  final finalSlotOffset = fbb.writeString(object.finalSlot);
+                  final statusOffset = fbb.writeString(object.status);
+                  final subStatusOffset = fbb.writeString(object.subStatus);
+                  final lockedByOffset = fbb.writeString(object.lockedBy);
+                  final pickerIdOffset = fbb.writeString(object.pickerId);
+                  final pickerPhoneNoOffset = fbb.writeString(object.pickerPhoneNo);
+                  final helperIdOffset = fbb.writeString(object.helperId);
+                  final helperPhoneNoOffset = fbb.writeString(object.helperPhoneNo);
+                  final routeIdOffset = fbb.writeString(object.routeId);
+                  final mapLinkOffset = fbb.writeString(object.mapLink);
+                  final coordinatesOffset = fbb.writeList(
+                      object.coordinates.map(fbb.writeString).toList(growable: false));
+                  final pickupIdOffset = fbb.writeString(object.pickupId); // New field
+                  fbb.startTable(36); // Increased table size
+                  fbb.addInt64(0, object.obxId);
+                  fbb.addOffset(1, idOffset);
+                  fbb.addInt64(2, object.firebaseIndex);
+                  fbb.addOffset(3, nameOffset);
+                  fbb.addOffset(4, mobileNoOffset);
+                  fbb.addOffset(5, addressOffset);
+                  fbb.addOffset(6, areaOffset);
+                  fbb.addOffset(7, pincodeOffset);
+                  fbb.addOffset(8, aovOffset);
+                  fbb.addOffset(9, descriptionOffset);
+                  fbb.addOffset(10, expectedWeightOffset);
+                  fbb.addOffset(11, itemsOffset);
+                  fbb.addInt64(12, object.routeModel.targetId);
+                  fbb.addOffset(13, slotOffset);
+                  fbb.addOffset(14, finalSlotOffset);
+                  fbb.addOffset(15, statusOffset);
+                  fbb.addOffset(16, subStatusOffset);
+                  fbb.addBool(17, object.isCompleted);
+                  fbb.addBool(18, object.isLocked);
+                  fbb.addOffset(19, lockedByOffset);
+                  fbb.addOffset(20, pickerIdOffset);
+                  fbb.addOffset(21, pickerPhoneNoOffset);
+                  fbb.addOffset(22, helperIdOffset);
+                  fbb.addOffset(23, helperPhoneNoOffset);
+                  fbb.addOffset(24, routeIdOffset);
+                  fbb.addOffset(25, mapLinkOffset);
+                  fbb.addOffset(26, coordinatesOffset);
+                  fbb.addFloat64(27, object.totalPrice);
+                  fbb.addFloat64(28, object.totalWeightQuantity);
+                  fbb.addInt64(29, object.createdAt.millisecondsSinceEpoch);
+                  fbb.addInt64(30, object.date.millisecondsSinceEpoch);
+                  fbb.addInt64(31, object.finalDate.millisecondsSinceEpoch);
+                  fbb.addInt64(
+                      32,
+                      object.updatedAt == null
+                          ? null
+                          : object.updatedAt!.microsecondsSinceEpoch * 1000);
+                  fbb.addInt64(
+                      33,
+                      object.completedAt == null
+                          ? null
+                          : object.completedAt!.microsecondsSinceEpoch * 1000);
+                  fbb.addOffset(34, pickupIdOffset); // New field
+                  fbb.finish(fbb.endTable());
+                  return object.obxId;
+            },
+            objectFromFB: (obx.Store store, ByteData fbData) {
+                  final buffer = fb.BufferContext(fbData);
+                  final rootOffset = buffer.derefObject(0);
+                  final updatedAtValue =
+                  const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 68);
+                  final completedAtValue =
+                  const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 70);
+                  final obxIdParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+                  final idParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 6, '');
+                  final firebaseIndexParam =
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+                  final nameParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 10, '');
+                  final mobileNoParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 12, '');
+                  final addressParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 14, '');
+                  final areaParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 16, '');
+                  final pincodeParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 18, '');
+                  final aovParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 20, '');
+                  final descriptionParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 22, '');
+                  final expectedWeightParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 24, '');
+                  final itemsParam = const fb.ListReader<String>(
+                      fb.StringReader(asciiOptimization: true),
+                      lazy: false)
+                      .vTableGet(buffer, rootOffset, 26, []);
+                  final slotParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 30, '');
+                  final finalSlotParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 32, '');
+                  final statusParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 34, '');
+                  final subStatusParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 36, '');
+                  final isCompletedParam =
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 38, false);
+                  final isLockedParam =
+                  const fb.BoolReader().vTableGet(buffer, rootOffset, 40, false);
+                  final lockedByParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 42, '');
+                  final pickerIdParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 44, '');
+                  final pickerPhoneNoParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 46, '');
+                  final helperIdParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 48, '');
+                  final helperPhoneNoParam =
+                  const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 50, '');
+                  final routeIdParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 52, '');
+                  final mapLinkParam = const fb.StringReader(asciiOptimization: true)
+                      .vTableGet(buffer, rootOffset, 54, '');
+                  final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
+                      const fb.Int64Reader().vTableGet(buffer, rootOffset, 62, 0));
+                  final dateParam = DateTime.fromMillisecondsSinceEpoch(
+                      const fb.Int64Reader().vTableGet(buffer, rootOffset, 64, 0));
+                  final finalDateParam = DateTime.fromMillisecondsSinceEpoch(
+                      const fb.Int64Reader().vTableGet(buffer, rootOffset, 66, 0));
+                  final updatedAtParam = updatedAtValue == null
+                      ? null
+                      : DateTime.fromMicrosecondsSinceEpoch(
+                      (updatedAtValue / 1000).round());
+                  final coordinatesParam = const fb.ListReader<String>(
+                      fb.StringReader(asciiOptimization: true),
+                      lazy: false)
+                      .vTableGet(buffer, rootOffset, 56, []);
+                  final totalPriceParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 58, 0);
+                  final totalWeightQuantityParam =
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 60, 0);
+                  final completedAtParam = completedAtValue == null
+                      ? null
+                      : DateTime.fromMicrosecondsSinceEpoch(
+                      (completedAtValue / 1000).round());
+                  final pickupIdParam = const fb.StringReader(asciiOptimization: true) // New field
+                      .vTableGet(buffer, rootOffset, 72, '');
+                  final object = LocalPickup(
+                      obxId: obxIdParam,
+                      id: idParam,
+                      firebaseIndex: firebaseIndexParam,
+                      name: nameParam,
+                      mobileNo: mobileNoParam,
+                      address: addressParam,
+                      area: areaParam,
+                      pincode: pincodeParam,
+                      aov: aovParam,
+                      description: descriptionParam,
+                      expectedWeight: expectedWeightParam,
+                      items: itemsParam,
+                      slot: slotParam,
+                      finalSlot: finalSlotParam,
+                      status: statusParam,
+                      subStatus: subStatusParam,
+                      isCompleted: isCompletedParam,
+                      isLocked: isLockedParam,
+                      lockedBy: lockedByParam,
+                      pickerId: pickerIdParam,
+                      pickerPhoneNo: pickerPhoneNoParam,
+                      helperId: helperIdParam,
+                      helperPhoneNo: helperPhoneNoParam,
+                      routeId: routeIdParam,
+                      mapLink: mapLinkParam,
+                      createdAt: createdAtParam,
+                      date: dateParam,
+                      finalDate: finalDateParam,
+                      updatedAt: updatedAtParam,
+                      coordinates: coordinatesParam,
+                      totalPrice: totalPriceParam,
+                      totalWeightQuantity: totalWeightQuantityParam,
+                      completedAt: completedAtParam,
+                      pickupId: pickupIdParam); // New field
+                  object.routeModel.targetId =
+                      const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
+                  object.routeModel.attach(store);
+                  obx_int.InternalToManyAccess.setRelInfo<LocalPickup>(
+                      object.itemsData,
+                      store,
+                      obx_int.RelInfo<Item>.toOneBacklink(
+                          5, object.obxId, (Item srcObject) => srcObject.localPickup));
+                  return object;
+            }),
+        Picker: obx_int.EntityDefinition<Picker>(
         model: _entities[2],
         toOneRelations: (Picker object) => [],
         toManyRelations: (Picker object) => {},
@@ -1185,6 +1194,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (Pickup object, fb.Builder fbb) {
           final idOffset = fbb.writeString(object.id);
+          final pickupIdOffset = fbb.writeString(object.pickupId);
           final nameOffset = fbb.writeString(object.name);
           final mobileNoOffset = fbb.writeString(object.mobileNo);
           final addressOffset = fbb.writeString(object.address);
@@ -1251,6 +1261,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               object.completedAt == null
                   ? null
                   : object.completedAt!.microsecondsSinceEpoch * 1000);
+          fbb.addOffset(34, pickupIdOffset);
           fbb.finish(fbb.endTable());
           return object.obxId;
         },
@@ -1265,6 +1276,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final idParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
+          final pickupIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 72, '');
           final firebaseIndexParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           final nameParam = const fb.StringReader(asciiOptimization: true)
@@ -1342,6 +1355,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final object = Pickup(
               obxId: obxIdParam,
               id: idParam,
+              pickupId: pickupIdParam,
               firebaseIndex: firebaseIndexParam,
               name: nameParam,
               mobileNo: mobileNoParam,
@@ -1651,145 +1665,150 @@ class Item_ {
 }
 
 /// [LocalPickup] entity fields to define ObjectBox queries.
+/// [LocalPickup] entity fields to define ObjectBox queries.
 class LocalPickup_ {
-  /// See [LocalPickup.obxId].
-  static final obxId =
+      /// See [LocalPickup.obxId].
+      static final obxId =
       obx.QueryIntegerProperty<LocalPickup>(_entities[1].properties[0]);
 
-  /// See [LocalPickup.id].
-  static final id =
+      /// See [LocalPickup.id].
+      static final id =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[1]);
 
-  /// See [LocalPickup.firebaseIndex].
-  static final firebaseIndex =
+      /// See [LocalPickup.firebaseIndex].
+      static final firebaseIndex =
       obx.QueryIntegerProperty<LocalPickup>(_entities[1].properties[2]);
 
-  /// See [LocalPickup.name].
-  static final name =
+      /// See [LocalPickup.name].
+      static final name =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[3]);
 
-  /// See [LocalPickup.mobileNo].
-  static final mobileNo =
+      /// See [LocalPickup.mobileNo].
+      static final mobileNo =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[4]);
 
-  /// See [LocalPickup.address].
-  static final address =
+      /// See [LocalPickup.address].
+      static final address =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[5]);
 
-  /// See [LocalPickup.area].
-  static final area =
+      /// See [LocalPickup.area].
+      static final area =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[6]);
 
-  /// See [LocalPickup.pincode].
-  static final pincode =
+      /// See [LocalPickup.pincode].
+      static final pincode =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[7]);
 
-  /// See [LocalPickup.aov].
-  static final aov =
+      /// See [LocalPickup.aov].
+      static final aov =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[8]);
 
-  /// See [LocalPickup.description].
-  static final description =
+      /// See [LocalPickup.description].
+      static final description =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[9]);
 
-  /// See [LocalPickup.expectedWeight].
-  static final expectedWeight =
+      /// See [LocalPickup.expectedWeight].
+      static final expectedWeight =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[10]);
 
-  /// See [LocalPickup.items].
-  static final items =
+      /// See [LocalPickup.items].
+      static final items =
       obx.QueryStringVectorProperty<LocalPickup>(_entities[1].properties[11]);
 
-  /// See [LocalPickup.routeModel].
-  static final routeModel = obx.QueryRelationToOne<LocalPickup, RouteModel>(
-      _entities[1].properties[12]);
+      /// See [LocalPickup.routeModel].
+      static final routeModel = obx.QueryRelationToOne<LocalPickup, RouteModel>(
+          _entities[1].properties[12]);
 
-  /// See [LocalPickup.slot].
-  static final slot =
+      /// See [LocalPickup.slot].
+      static final slot =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[13]);
 
-  /// See [LocalPickup.finalSlot].
-  static final finalSlot =
+      /// See [LocalPickup.finalSlot].
+      static final finalSlot =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[14]);
 
-  /// See [LocalPickup.status].
-  static final status =
+      /// See [LocalPickup.status].
+      static final status =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[15]);
 
-  /// See [LocalPickup.subStatus].
-  static final subStatus =
+      /// See [LocalPickup.subStatus].
+      static final subStatus =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[16]);
 
-  /// See [LocalPickup.isCompleted].
-  static final isCompleted =
+      /// See [LocalPickup.isCompleted].
+      static final isCompleted =
       obx.QueryBooleanProperty<LocalPickup>(_entities[1].properties[17]);
 
-  /// See [LocalPickup.isLocked].
-  static final isLocked =
+      /// See [LocalPickup.isLocked].
+      static final isLocked =
       obx.QueryBooleanProperty<LocalPickup>(_entities[1].properties[18]);
 
-  /// See [LocalPickup.lockedBy].
-  static final lockedBy =
+      /// See [LocalPickup.lockedBy].
+      static final lockedBy =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[19]);
 
-  /// See [LocalPickup.pickerId].
-  static final pickerId =
+      /// See [LocalPickup.pickerId].
+      static final pickerId =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[20]);
 
-  /// See [LocalPickup.pickerPhoneNo].
-  static final pickerPhoneNo =
+      /// See [LocalPickup.pickerPhoneNo].
+      static final pickerPhoneNo =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[21]);
 
-  /// See [LocalPickup.helperId].
-  static final helperId =
+      /// See [LocalPickup.helperId].
+      static final helperId =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[22]);
 
-  /// See [LocalPickup.helperPhoneNo].
-  static final helperPhoneNo =
+      /// See [LocalPickup.helperPhoneNo].
+      static final helperPhoneNo =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[23]);
 
-  /// See [LocalPickup.routeId].
-  static final routeId =
+      /// See [LocalPickup.routeId].
+      static final routeId =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[24]);
 
-  /// See [LocalPickup.mapLink].
-  static final mapLink =
+      /// See [LocalPickup.mapLink].
+      static final mapLink =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[25]);
 
-  /// See [LocalPickup.coordinates].
-  static final coordinates =
+      /// See [LocalPickup.coordinates].
+      static final coordinates =
       obx.QueryStringVectorProperty<LocalPickup>(_entities[1].properties[26]);
 
-  /// See [LocalPickup.totalPrice].
-  static final totalPrice =
+      /// See [LocalPickup.totalPrice].
+      static final totalPrice =
       obx.QueryDoubleProperty<LocalPickup>(_entities[1].properties[27]);
 
-  /// See [LocalPickup.totalWeightQuantity].
-  static final totalWeightQuantity =
+      /// See [LocalPickup.totalWeightQuantity].
+      static final totalWeightQuantity =
       obx.QueryDoubleProperty<LocalPickup>(_entities[1].properties[28]);
 
-  /// See [LocalPickup.createdAt].
-  static final createdAt =
+      /// See [LocalPickup.createdAt].
+      static final createdAt =
       obx.QueryDateProperty<LocalPickup>(_entities[1].properties[29]);
 
-  /// See [LocalPickup.date].
-  static final date =
+      /// See [LocalPickup.date].
+      static final date =
       obx.QueryDateProperty<LocalPickup>(_entities[1].properties[30]);
 
-  /// See [LocalPickup.finalDate].
-  static final finalDate =
+      /// See [LocalPickup.finalDate].
+      static final finalDate =
       obx.QueryDateProperty<LocalPickup>(_entities[1].properties[31]);
 
-  /// See [LocalPickup.updatedAt].
-  static final updatedAt =
+      /// See [LocalPickup.updatedAt].
+      static final updatedAt =
       obx.QueryDateNanoProperty<LocalPickup>(_entities[1].properties[32]);
 
-  /// See [LocalPickup.completedAt].
-  static final completedAt =
+      /// See [LocalPickup.completedAt].
+      static final completedAt =
       obx.QueryDateNanoProperty<LocalPickup>(_entities[1].properties[33]);
 
-  /// see [LocalPickup.itemsData]
-  static final itemsData =
+      /// See [LocalPickup.pickupId].
+      static final pickupId = // New field
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[34]);
+
+      /// see [LocalPickup.itemsData]
+      static final itemsData =
       obx.QueryBacklinkToMany<Item, LocalPickup>(Item_.localPickup);
 }
 
