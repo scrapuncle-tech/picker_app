@@ -88,6 +88,9 @@ class PhoneCallButton extends ConsumerWidget {
       'From': formattedFromNumber,
       'To': formattedToNumber,
       'CallerId': callerId,
+      'CallType': 'trans',
+      'Record': 'true',
+      'RecordingChannels': 'dual',
     };
 
     try {
