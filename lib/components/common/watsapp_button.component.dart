@@ -65,7 +65,7 @@ class WhatsAppButton extends ConsumerWidget {
                 ),
                 child: Row(children: [
                   CustomText(
-                    text: "Whatsapp =>",
+                    text: "Whatsapp",
                     size: sizeData.subHeader,
                     weight: FontWeight.w900,
                   ),

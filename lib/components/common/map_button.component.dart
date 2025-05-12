@@ -81,7 +81,7 @@ class MapButton extends ConsumerWidget {
                   child: Row(
                     children: [
                       CustomText(
-                        text: "Google Map =>",
+                        text: "Google Map",
                         size: sizeData.subHeader,
                         weight: FontWeight.w900,
                       ),

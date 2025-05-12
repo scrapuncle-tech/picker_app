@@ -163,7 +163,7 @@ class PhoneCallButton extends ConsumerWidget {
                   child: Row(
                     children: [
                       CustomText(
-                        text: "Phone call =>",
+                        text: "Phone call",
                         size: sizeData.subHeader,
                         weight: FontWeight.w900,
                       ),
