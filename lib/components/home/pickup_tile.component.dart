@@ -90,7 +90,7 @@ class PickupTile extends ConsumerWidget {
                                 ),
                               ),
                               child: CustomText(
-                                text: pickup.firebaseIndex.toString(),
+                                text: (pickup.firebaseIndex + 1).toString(),
                                 weight: FontWeight.w900,
                                 color: colorData.fontColor(1),
                                 size: sizeData.superHeader,

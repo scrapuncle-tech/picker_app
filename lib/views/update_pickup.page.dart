@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -134,6 +135,10 @@ class UpdatePickupPage extends ConsumerWidget {
     );
   }
 
+  void copyToClipboard(String text)async{
+    await FlutterClipboard.copy(text);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     CustomColorData colorData = CustomColorData.from(ref);
@@ -266,9 +271,12 @@ class UpdatePickupPage extends ConsumerWidget {
                           //   hintText: "Expected Weight: ",
                           //   text: currentPickupState.expectedWeight,
                           // ),
-                          PickupInfoTile(
-                            hintText: "Address: ",
-                            text: currentPickupState.address,
+                          GestureDetector(
+                            onTap: () => copyToClipboard( currentPickupState.address),
+                            child: PickupInfoTile(
+                              hintText: "Address: ",
+                              text: currentPickupState.address,
+                            ),
                           ),
                           PickupInfoTile(
                             hintText: "Area: ",

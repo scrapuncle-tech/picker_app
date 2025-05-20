@@ -274,7 +274,7 @@ class _LoginSignupPageState extends ConsumerState<LoginSignupPage> {
                   AuthTextField(
                     controller: passwordController,
                     hintText: "Password",
-                    needValidation: !isLogin,
+                    needValidation: false,
                     isLast: true,
                   ),
                   SizedBox(height: height * .02),
