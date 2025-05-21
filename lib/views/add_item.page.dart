@@ -162,8 +162,7 @@ class _AddItemPageState extends ConsumerState<AddItemPage> {
         (selectedProduct != null ||
             (productNameCtr.text.isNotEmpty &&
                 customPriceCtr.text.isNotEmpty)) &&
-        quantityCtr.text.isNotEmpty &&
-        selectedImages.isNotEmpty;
+        quantityCtr.text.isNotEmpty;
 
     double totalPrice =
         quantityCtr.text.isNotEmpty &&
