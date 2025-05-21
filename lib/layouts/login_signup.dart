@@ -274,7 +274,7 @@ class _LoginSignupPageState extends ConsumerState<LoginSignupPage> {
                   AuthTextField(
                     controller: passwordController,
                     hintText: "Password",
-                    needValidation: false,
+                    needValidation: !isLogin,
                     isLast: true,
                   ),
                   SizedBox(height: height * .02),
@@ -392,20 +392,20 @@ class _AuthTextFieldState extends ConsumerState<AuthTextField> {
 
     String getPasswordValidationMessage() {
       String message = '';
-      if (!RegExp(r'^(?=.*[a-z])').hasMatch(widget.controller.text)) {
-        message += '1 lowercase letter, ';
-      }
-      if (!RegExp(r'^(?=.*[A-Z])').hasMatch(widget.controller.text)) {
-        message += '1 uppercase letter, ';
-      }
-      if (!RegExp(r'^(?=.*\d)').hasMatch(widget.controller.text)) {
-        message += '1 number, ';
-      }
-      if (!RegExp(r'^(?=.*[@$!%*?&])').hasMatch(widget.controller.text)) {
-        message += '1 special character, ';
-      }
+      // if (!RegExp(r'^(?=.*[a-z])').hasMatch(widget.controller.text)) {
+      //   message += '1 lowercase letter, ';
+      // }
+      // if (!RegExp(r'^(?=.*[A-Z])').hasMatch(widget.controller.text)) {
+      //   message += '1 uppercase letter, ';
+      // }
+      // if (!RegExp(r'^(?=.*\d)').hasMatch(widget.controller.text)) {
+      //   message += '1 number, ';
+      // }
+      // if (!RegExp(r'^(?=.*[@$!%*?&])').hasMatch(widget.controller.text)) {
+      //   message += '1 special character, ';
+      // }
       if (widget.controller.text.length < 8) {
-        message += 'minimum 8 characters, ';
+        message += 'minimum 6 characters, ';
       }
       return message.isNotEmpty
           ? 'Password needs: ${message.substring(0, message.length - 2)}'

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/common/custom_back_button.component.dart';
 import '../components/common/custom_inkwell.component.dart';
+import '../components/common/custom_snackbar.component.dart';
 import '../components/common/gradient_button.component.dart';
 import '../components/common/map_button.component.dart';
 import '../components/common/text.component.dart';
@@ -135,7 +136,11 @@ class UpdatePickupPage extends ConsumerWidget {
     );
   }
 
-  void copyToClipboard(String text)async{
+  void copyToClipboard(String text) async {
+    CustomSnackBar.log(
+      status: SnackBarType.success,
+      message: "Copied to clipboard",
+    );
     await FlutterClipboard.copy(text);
   }
 
@@ -272,7 +277,9 @@ class UpdatePickupPage extends ConsumerWidget {
                           //   text: currentPickupState.expectedWeight,
                           // ),
                           GestureDetector(
-                            onTap: () => copyToClipboard( currentPickupState.address),
+                            onTap:
+                                () =>
+                                    copyToClipboard(currentPickupState.address),
                             child: PickupInfoTile(
                               hintText: "Address: ",
                               text: currentPickupState.address,

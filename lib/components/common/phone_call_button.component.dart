@@ -75,6 +75,10 @@ class PhoneCallButton extends ConsumerWidget {
     required String pickerPhoneNo,
     required WidgetRef ref,
   }) async {
+    CustomSnackBar.log(
+      status: SnackBarType.casual,
+      message: "Initiating call...",
+    );
     final Uri url = Uri.parse(
       'https://$exotelApiKey:$exotelApiToken@api.exotel.com/v1/Accounts/$exotelSid/Calls/connect',
     );
