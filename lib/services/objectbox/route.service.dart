@@ -191,9 +191,9 @@ class OBRouteService {
 
   /// Sync completed pickups with Firebase
   /// this checks for the completed pickups in the local state and syncs them with Firebase
-  void syncCompletedPickup() {
+  void syncLocalPickup() {
     final subscription = objectbox.localStatePickupBox
-        .query(LocalPickup_.isCompleted.equals(true))
+        .query(LocalPickup_.isUpdated.equals(true))
         .watch(triggerImmediately: true)
         .listen((query) async {
           /// helps to remove the unwanted pickups from the local state

@@ -11,6 +11,7 @@ class LocalPickup {
 
   @Unique(onConflict: ConflictStrategy.replace)
   String id;
+  String pickupId;
   //
 
   int firebaseIndex;
@@ -59,9 +60,12 @@ class LocalPickup {
   @Property(type: PropertyType.dateNano)
   DateTime? completedAt;
 
+  bool isUpdated;
+
   LocalPickup({
     this.obxId = 0,
     required this.id,
+    required this.pickupId,
     required this.firebaseIndex,
     required this.name,
     required this.mobileNo,
@@ -93,11 +97,13 @@ class LocalPickup {
     this.totalPrice = 0,
     this.totalWeightQuantity = 0,
     this.completedAt,
+    this.isUpdated = false,
   });
 
   LocalPickup copyWith({
     int? obxId,
     String? id,
+    String? pickupId,
     int? firebaseIndex,
     String? name,
     String? mobileNo,
@@ -130,10 +136,12 @@ class LocalPickup {
     DateTime? updatedAt,
     DateTime? completedAt,
     List<Item>? itemsData,
+    bool? isUpdated,
   }) {
     LocalPickup pickup = LocalPickup(
       obxId: obxId ?? this.obxId,
       id: id ?? this.id,
+      pickupId: pickupId ?? this.pickupId,
       firebaseIndex: firebaseIndex ?? this.firebaseIndex,
       name: name ?? this.name,
       mobileNo: mobileNo ?? this.mobileNo,
@@ -165,6 +173,7 @@ class LocalPickup {
       finalDate: finalDate ?? this.finalDate,
       updatedAt: updatedAt ?? this.updatedAt,
       completedAt: completedAt ?? this.completedAt,
+      isUpdated: isUpdated ?? this.isUpdated,
     );
 
     pickup.itemsData.addAll(itemsData ?? this.itemsData);
@@ -174,6 +183,7 @@ class LocalPickup {
   static LocalPickup fromPickup(Pickup pickup) {
     LocalPickup localPickup = LocalPickup(
       id: pickup.id,
+      pickupId: pickup.pickupId,
       firebaseIndex: pickup.firebaseIndex,
       name: pickup.name,
       mobileNo: pickup.mobileNo,
@@ -202,6 +212,7 @@ class LocalPickup {
       finalDate: pickup.finalDate,
       updatedAt: pickup.updatedAt,
       coordinates: pickup.coordinates,
+      isUpdated: pickup.isUpdated,
     );
 
     localPickup.itemsData.addAll(pickup.itemsData);
@@ -211,6 +222,7 @@ class LocalPickup {
   Pickup toPickup() {
     Pickup pickup = Pickup(
       id: id,
+      pickupId: pickupId,
       firebaseIndex: firebaseIndex,
       name: name,
       mobileNo: mobileNo,
@@ -239,6 +251,7 @@ class LocalPickup {
       finalDate: finalDate,
       updatedAt: updatedAt,
       coordinates: coordinates,
+      isUpdated: isUpdated,
     );
 
     pickup.itemsData.addAll(itemsData);
@@ -267,6 +280,7 @@ class LocalPickup {
 
     return LocalPickup(
       id: data['id'] ?? '',
+      pickupId: data['pickupId'] ?? '',
       firebaseIndex:
           data['index'] != null ? int.parse(data['index'].toString()) : 0,
       name: data['name'] ?? '',
@@ -346,6 +360,7 @@ class LocalPickup {
     return 'LocalPickup('
         'obxId: $obxId, '
         'id: $id, '
+        'pickupId: $pickupId, '
         'firebaseIndex: $firebaseIndex, '
         'name: $name, '
         'item: ${itemsData.map((item) => item.id).toList()}, '

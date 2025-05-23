@@ -71,7 +71,7 @@ class SyncService {
 
     obAuthService.syncPicker();
     obRouteService.syncRoute();
-    obRouteService.syncCompletedPickup();
+    obRouteService.syncLocalPickup();
     productService.syncProducts();
   }
 

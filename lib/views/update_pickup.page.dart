@@ -13,6 +13,7 @@ import '../components/common/phone_call_button.component.dart';
 import '../components/update_pickup/item_display_card.componenet.dart';
 // import '../components/update_pickup/location_map_button.component.dart';
 import '../components/update_pickup/pickupinfo_tile.component.dart';
+import '../components/update_pickup/sub_status_dropdown.component.dart';
 import '../models/item.entity.dart';
 import '../models/pickup.entity.dart';
 import '../providers/current_pickup.provider.dart';
@@ -20,6 +21,7 @@ import '../services/helper/receipt.service.dart';
 import '../utilities/theme/color_data.dart';
 import '../utilities/theme/size_data.dart';
 import 'add_item.page.dart';
+import 'payment.page.dart';
 
 class UpdatePickupPage extends ConsumerWidget {
   final ReceiptService _receiptService = ReceiptService();
@@ -76,6 +78,66 @@ class UpdatePickupPage extends ConsumerWidget {
               size: sizeData.superHeader,
               weight: FontWeight.w900,
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Build payment button
+  Widget _buildPaymentButton(
+    BuildContext context,
+    WidgetRef ref,
+    Pickup pickup,
+    CustomColorData colorData,
+    CustomSizeData sizeData,
+    double height,
+    double width,
+    double aspectRatio,
+  ) {
+    return Center(
+      child: CustomInkWell(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PaymentPage(pickup: pickup),
+            ),
+          );
+        },
+        borderRadius: 50,
+        splashColor: colorData.fontColor(.5),
+        margin: EdgeInsets.only(bottom: height * 0.02, top: height * .03),
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            vertical: aspectRatio * 24,
+            horizontal: aspectRatio * 36,
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(color: colorData.fontColor(.1), width: 1.5),
+            borderRadius: BorderRadius.circular(50),
+            gradient: LinearGradient(
+              colors: [
+                Colors.green.withOpacity(0.4),
+                Colors.green,
+              ],
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.payment,
+                color: Colors.white,
+                size: sizeData.medium * 1.2,
+              ),
+              SizedBox(width: width * 0.02),
+              CustomText(
+                text: "Process Payment",
+                size: sizeData.superHeader,
+                weight: FontWeight.w900,
+              ),
+            ],
           ),
         ),
       ),
@@ -204,6 +266,17 @@ class UpdatePickupPage extends ConsumerWidget {
                                         .read(currentPickupProvider.notifier)
                                         .close()
                                 : null,
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: SizedBox(
+                        width: width * 0.45,
+                        child: SubStatusDropdown(
+                          pickup: currentPickupState,
+                          isDisabled: isCompleted,
+                        ),
                       ),
                     ),
                   ],
@@ -416,8 +489,18 @@ class UpdatePickupPage extends ConsumerWidget {
                           ],
                         ),
 
-                      // Print receipt or Complete pickup button
-                      if (isCompleted)
+                      // Print receipt, Payment or Complete pickup button
+                      if (isCompleted) ...[
+                        _buildPaymentButton(
+                          context,
+                          ref,
+                          currentPickupState,
+                          colorData,
+                          sizeData,
+                          height,
+                          width,
+                          aspectRatio,
+                        ),
                         _buildPrintReceiptButton(
                           context,
                           ref,
@@ -428,6 +511,7 @@ class UpdatePickupPage extends ConsumerWidget {
                           width,
                           aspectRatio,
                         ),
+                      ],
 
                       if (!isCompleted)
                         _buildCompletePickupButton(

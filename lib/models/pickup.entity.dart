@@ -10,6 +10,7 @@ class Pickup {
 
   @Unique(onConflict: ConflictStrategy.replace)
   String id;
+  String pickupId;
   //
 
   int firebaseIndex;
@@ -58,9 +59,12 @@ class Pickup {
   @Property(type: PropertyType.dateNano)
   DateTime? completedAt;
 
+  bool isUpdated;
+
   Pickup({
     this.obxId = 0,
     required this.id,
+    required this.pickupId,
     required this.firebaseIndex,
     required this.name,
     required this.mobileNo,
@@ -92,11 +96,13 @@ class Pickup {
     this.totalPrice = 0,
     this.totalWeightQuantity = 0,
     this.completedAt,
+    this.isUpdated = false,
   });
 
   Pickup copyWith({
     int? obxId,
     String? id,
+    String? pickupId,
     int? firebaseIndex,
     String? name,
     String? mobileNo,
@@ -129,10 +135,12 @@ class Pickup {
     DateTime? updatedAt,
     DateTime? completedAt,
     List<Item>? itemsData,
+    bool? isUpdated,
   }) {
     Pickup pickup = Pickup(
       obxId: obxId ?? this.obxId,
       id: id ?? this.id,
+      pickupId: pickupId ?? this.pickupId,
       firebaseIndex: firebaseIndex ?? this.firebaseIndex,
       name: name ?? this.name,
       mobileNo: mobileNo ?? this.mobileNo,
@@ -164,6 +172,7 @@ class Pickup {
       finalDate: finalDate ?? this.finalDate,
       updatedAt: updatedAt ?? this.updatedAt,
       completedAt: completedAt ?? this.completedAt,
+      isUpdated: isUpdated ?? this.isUpdated,
     );
 
     pickup.itemsData.addAll(itemsData ?? this.itemsData);
@@ -192,6 +201,7 @@ class Pickup {
 
     return Pickup(
       id: data['id'] ?? '',
+      pickupId: data['pickupId'] ?? '',
       firebaseIndex:
           data['index'] != null
               ? int.tryParse(data['index'].toString()) ?? 0
@@ -226,6 +236,7 @@ class Pickup {
       finalDate: parseDate(data['finalDate']) ?? DateTime.now(),
       updatedAt: parseDate(data['updatedAt']),
       completedAt: parseDate(data['completedAt']),
+      isUpdated: false,
     );
   }
 
@@ -268,11 +279,50 @@ class Pickup {
     };
   }
 
+  static Pickup createEmptyPickup() {
+    return Pickup(
+      id: '',
+      pickupId: '',
+      firebaseIndex: 0,
+      name: '',
+      mobileNo: '',
+      address: '',
+      area: '',
+      pincode: '',
+      aov: '',
+      description: '',
+      expectedWeight: '',
+      items: [],
+      slot: '',
+      finalSlot: '',
+      status: '',
+      subStatus: '',
+      isCompleted: false,
+      isLocked: false,
+      lockedBy: '',
+      pickerId: '',
+      pickerPhoneNo: '',
+      helperId: '',
+      helperPhoneNo: '',
+      routeId: '',
+      mapLink: '',
+      coordinates: [],
+      totalPrice: 0.0,
+      totalWeightQuantity: 0.0,
+      createdAt: DateTime.now(),
+      date: DateTime.now(),
+      finalDate: DateTime.now(),
+      updatedAt: null,
+      completedAt: null,
+    );
+  }
+
   @override
   String toString() {
     return 'Pickup('
         'obxId: $obxId, '
         'id: $id, '
+        'pickupId: $pickupId, '
         'firebaseIndex: $firebaseIndex, '
         'name: $name, '
         'item: ${itemsData.map((item) => item.id).toList()}, '

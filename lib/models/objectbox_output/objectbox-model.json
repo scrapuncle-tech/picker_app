@@ -95,7 +95,7 @@
     },
     {
       "id": "2:2259179546281631519",
-      "lastPropertyId": "34:5382661057277960126",
+      "lastPropertyId": "36:4472208621637809223",
       "name": "LocalPickup",
       "properties": [
         {
@@ -273,6 +273,16 @@
           "id": "34:5382661057277960126",
           "name": "completedAt",
           "type": 12
+        },
+        {
+          "id": "35:561271511981766271",
+          "name": "pickupId",
+          "type": 9
+        },
+        {
+          "id": "36:4472208621637809223",
+          "name": "isUpdated",
+          "type": 1
         }
       ],
       "relations": []
@@ -365,7 +375,7 @@
     },
     {
       "id": "4:6670025252378099623",
-      "lastPropertyId": "34:1009958903730517609",
+      "lastPropertyId": "36:5492012565155697890",
       "name": "Pickup",
       "properties": [
         {
@@ -543,6 +553,16 @@
           "id": "34:1009958903730517609",
           "name": "completedAt",
           "type": 12
+        },
+        {
+          "id": "35:1244631002374829472",
+          "name": "pickupId",
+          "type": 9
+        },
+        {
+          "id": "36:5492012565155697890",
+          "name": "isUpdated",
+          "type": 1
         }
       ],
       "relations": []

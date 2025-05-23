@@ -115,7 +115,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(2, 2259179546281631519),
       name: 'LocalPickup',
-      lastPropertyId: const obx_int.IdUid(34, 5382661057277960126),
+      lastPropertyId: const obx_int.IdUid(36, 4472208621637809223),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -290,6 +290,16 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(34, 5382661057277960126),
             name: 'completedAt',
             type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(35, 561271511981766271),
+            name: 'pickupId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(36, 4472208621637809223),
+            name: 'isUpdated',
+            type: 1,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -385,7 +395,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(4, 6670025252378099623),
       name: 'Pickup',
-      lastPropertyId: const obx_int.IdUid(34, 1009958903730517609),
+      lastPropertyId: const obx_int.IdUid(36, 5492012565155697890),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -560,6 +570,16 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(34, 1009958903730517609),
             name: 'completedAt',
             type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(35, 1244631002374829472),
+            name: 'pickupId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(36, 5492012565155697890),
+            name: 'isUpdated',
+            type: 1,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -904,7 +924,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final mapLinkOffset = fbb.writeString(object.mapLink);
           final coordinatesOffset = fbb.writeList(
               object.coordinates.map(fbb.writeString).toList(growable: false));
-          fbb.startTable(35);
+          final pickupIdOffset = fbb.writeString(object.pickupId);
+          fbb.startTable(37);
           fbb.addInt64(0, object.obxId);
           fbb.addOffset(1, idOffset);
           fbb.addInt64(2, object.firebaseIndex);
@@ -947,6 +968,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               object.completedAt == null
                   ? null
                   : object.completedAt!.microsecondsSinceEpoch * 1000);
+          fbb.addOffset(34, pickupIdOffset);
+          fbb.addBool(35, object.isUpdated);
           fbb.finish(fbb.endTable());
           return object.obxId;
         },
@@ -961,6 +984,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final idParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
+          final pickupIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 72, '');
           final firebaseIndexParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           final nameParam = const fb.StringReader(asciiOptimization: true)
@@ -1035,9 +1060,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
               ? null
               : DateTime.fromMicrosecondsSinceEpoch(
                   (completedAtValue / 1000).round());
+          final isUpdatedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 74, false);
           final object = LocalPickup(
               obxId: obxIdParam,
               id: idParam,
+              pickupId: pickupIdParam,
               firebaseIndex: firebaseIndexParam,
               name: nameParam,
               mobileNo: mobileNoParam,
@@ -1068,7 +1096,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               coordinates: coordinatesParam,
               totalPrice: totalPriceParam,
               totalWeightQuantity: totalWeightQuantityParam,
-              completedAt: completedAtParam);
+              completedAt: completedAtParam,
+              isUpdated: isUpdatedParam);
           object.routeModel.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
           object.routeModel.attach(store);
@@ -1208,7 +1237,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final mapLinkOffset = fbb.writeString(object.mapLink);
           final coordinatesOffset = fbb.writeList(
               object.coordinates.map(fbb.writeString).toList(growable: false));
-          fbb.startTable(35);
+          final pickupIdOffset = fbb.writeString(object.pickupId);
+          fbb.startTable(37);
           fbb.addInt64(0, object.obxId);
           fbb.addOffset(1, idOffset);
           fbb.addInt64(2, object.firebaseIndex);
@@ -1251,6 +1281,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               object.completedAt == null
                   ? null
                   : object.completedAt!.microsecondsSinceEpoch * 1000);
+          fbb.addOffset(34, pickupIdOffset);
+          fbb.addBool(35, object.isUpdated);
           fbb.finish(fbb.endTable());
           return object.obxId;
         },
@@ -1265,6 +1297,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final idParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
+          final pickupIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 72, '');
           final firebaseIndexParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           final nameParam = const fb.StringReader(asciiOptimization: true)
@@ -1339,9 +1373,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
               ? null
               : DateTime.fromMicrosecondsSinceEpoch(
                   (completedAtValue / 1000).round());
+          final isUpdatedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 74, false);
           final object = Pickup(
               obxId: obxIdParam,
               id: idParam,
+              pickupId: pickupIdParam,
               firebaseIndex: firebaseIndexParam,
               name: nameParam,
               mobileNo: mobileNoParam,
@@ -1372,7 +1409,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               coordinates: coordinatesParam,
               totalPrice: totalPriceParam,
               totalWeightQuantity: totalWeightQuantityParam,
-              completedAt: completedAtParam);
+              completedAt: completedAtParam,
+              isUpdated: isUpdatedParam);
           object.routeModel.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
           object.routeModel.attach(store);
@@ -1788,6 +1826,14 @@ class LocalPickup_ {
   static final completedAt =
       obx.QueryDateNanoProperty<LocalPickup>(_entities[1].properties[33]);
 
+  /// See [LocalPickup.pickupId].
+  static final pickupId =
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[34]);
+
+  /// See [LocalPickup.isUpdated].
+  static final isUpdated =
+      obx.QueryBooleanProperty<LocalPickup>(_entities[1].properties[35]);
+
   /// see [LocalPickup.itemsData]
   static final itemsData =
       obx.QueryBacklinkToMany<Item, LocalPickup>(Item_.localPickup);
@@ -1991,6 +2037,14 @@ class Pickup_ {
   /// See [Pickup.completedAt].
   static final completedAt =
       obx.QueryDateNanoProperty<Pickup>(_entities[3].properties[33]);
+
+  /// See [Pickup.pickupId].
+  static final pickupId =
+      obx.QueryStringProperty<Pickup>(_entities[3].properties[34]);
+
+  /// See [Pickup.isUpdated].
+  static final isUpdated =
+      obx.QueryBooleanProperty<Pickup>(_entities[3].properties[35]);
 
   /// see [Pickup.itemsData]
   static final itemsData = obx.QueryBacklinkToMany<Item, Pickup>(Item_.pickup);
