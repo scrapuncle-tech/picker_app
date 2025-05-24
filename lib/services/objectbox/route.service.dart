@@ -191,6 +191,7 @@ class OBRouteService {
 
   /// Sync completed pickups with Firebase
   /// this checks for the completed pickups in the local state and syncs them with Firebase
+  /// Only removes local data after successful upload to Firebase
   void syncLocalPickup() {
     final subscription = objectbox.localStatePickupBox
         .query(LocalPickup_.isUpdated.equals(true))
@@ -202,8 +203,30 @@ class OBRouteService {
           debugPrint("Trying to sync the local pickups to firebase");
 
           for (final pickup in query.find()) {
-            await WriteService().putPickup(pickup: pickup.toPickup());
-            objectbox.localStatePickupBox.remove(pickup.obxId);
+            bool uploadSuccessful = false;
+
+            // Listen to the stream and wait for completion or failure
+            await for (final status in WriteService().putPickup(
+              pickup: pickup.toPickup(),
+            )) {
+              debugPrint("Firebase upload status: $status");
+
+              if (status == 'completed') {
+                uploadSuccessful = true;
+              } else if (status.startsWith('failed:')) {
+                debugPrint("Failed to upload pickup to Firebase: $status");
+                uploadSuccessful = false;
+                break;
+              }
+            }
+
+            // Only remove local data if upload was successful
+            if (uploadSuccessful) {
+              debugPrint("Upload successful, removing local pickup data");
+              objectbox.localStatePickupBox.remove(pickup.obxId);
+            } else {
+              debugPrint("Upload failed, keeping local pickup data for retry");
+            }
           }
         });
 

@@ -12,30 +12,44 @@ import '../../utilities/firebase_constants.dart';
 
 class WriteService {
   /// Uploads item images and saves both items and pickup to Firestore.
-  Future<void> putPickup({required Pickup pickup}) async {
+  /// Returns a Stream<String> that emits status updates:
+  /// - 'started': When the upload process begins
+  /// - 'uploading_images': When image upload is in progress
+  /// - 'saving_items': When saving items to Firestore
+  /// - 'saving_pickup': When saving pickup to Firestore
+  /// - 'completed': When the entire process is successfully completed
+  /// - 'failed: {error message}': If any step fails
+  Stream<String> putPickup({required Pickup pickup}) async* {
     try {
-      print("NEED to push to firebase : $pickup");
+      yield 'started';
+      debugPrint("NEED to push to firebase : $pickup");
+
       // Step 1: Upload all item images and get download URLs
+      yield 'uploading_images';
       Map<String, List<String>> itemImageUrls = await _uploadItemImages(
         pickup.itemsData,
       );
 
       // Step 2: Save all items to Firestore with uploaded image URLs
+      yield 'saving_items';
       List<String> itemIds = await _saveItemsToFirestore(
         pickup.itemsData,
         itemImageUrls,
       );
 
-      print("Item IDS: $itemIds ");
+      debugPrint("Item IDS: $itemIds ");
 
       // Step 3: Save the pickup entry to Firestore with reference to item IDs
+      yield 'saving_pickup';
       await FirebaseFirestore.instance
           .collection(FirebaseConstants.pickupCollection)
           .doc(pickup.id)
           .set(pickup.toFirebase(itemIds: itemIds), SetOptions(merge: true));
+
+      yield 'completed';
     } catch (e) {
-      // Optional: handle errors or rethrow
-      rethrow;
+      debugPrint("Error pushing to firebase: $e");
+      yield 'failed: ${e.toString()}';
     } finally {
       debugPrint("Done pushing to firebase");
     }
