@@ -117,10 +117,7 @@ class UpdatePickupPage extends ConsumerWidget {
             border: Border.all(color: colorData.fontColor(.1), width: 1.5),
             borderRadius: BorderRadius.circular(50),
             gradient: LinearGradient(
-              colors: [
-                Colors.green.withOpacity(0.4),
-                Colors.green,
-              ],
+              colors: [Colors.green.withOpacity(0.4), Colors.green],
             ),
           ),
           child: Row(
@@ -268,15 +265,17 @@ class UpdatePickupPage extends ConsumerWidget {
                                 : null,
                       ),
                     ),
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      child: SizedBox(
-                        width: width * 0.45,
-                        child: SubStatusDropdown(
-                          pickup: currentPickupState,
-                          isDisabled: isCompleted,
-                        ),
+                  ],
+                ),
+                SizedBox(height: height * 0.03),
+                Row(
+                  children: [
+                    CustomText(text: "Sub Status : ", weight: FontWeight.w900),
+                    SizedBox(width: width * .03),
+                    Expanded(
+                      child: SubStatusDropdown(
+                        pickup: currentPickupState,
+                        isDisabled: isCompleted,
                       ),
                     ),
                   ],

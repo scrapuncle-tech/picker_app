@@ -11,6 +11,7 @@ import '../common/custom_inkwell.component.dart';
 import '../common/map_button.component.dart';
 import '../common/text.component.dart';
 import '../common/phone_call_button.component.dart';
+import '../update_pickup/sub_status_dropdown.component.dart';
 // import '../common/watsapp_button.component.dart';
 
 class PickupTile extends ConsumerWidget {
@@ -187,6 +188,19 @@ class PickupTile extends ConsumerWidget {
                                 ),
                               ),
                             ),
+                          ],
+                        ),
+                        SizedBox(height: aspectRatio * 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: SubStatusDropdown(
+                                pickup: pickup,
+                                isDisabled:
+                                    isGlobalCompleted || localCompletionState,
+                              ),
+                            ),
+                            SizedBox(width: width * .1),
                           ],
                         ),
                         // Row(

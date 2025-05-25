@@ -17,7 +17,7 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
   void close() {
     final pickup = state.$1;
     if (pickup != null) {
-      _updateTime(pickup);
+      _updateTime(pickup.copyWith(isUpdated: true));
     }
     // Don't clear state here to avoid widget errors on dispose
   }
@@ -74,15 +74,16 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
   }
 
   void _updateTime(Pickup pickup) {
-    final updatedPickup = pickup.copyWith(
-      updatedAt: DateTime.now(),
-      isUpdated: true,
-    );
+    final updatedPickup = pickup.copyWith(updatedAt: DateTime.now());
     final updatedPickupWithTotalPrice = _calculateTotalPrice(updatedPickup);
     if (updatedPickupWithTotalPrice != null) {
       state = (updatedPickupWithTotalPrice, state.$2);
       _routeService.updatePickup(pickup: updatedPickupWithTotalPrice);
     }
+  }
+
+  void updatePickup(Pickup pickup) {
+    _routeService.updatePickup(pickup: pickup);
   }
 }
 
