@@ -1,4 +1,8 @@
+
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
+
+import '../../components/common/custom_snackbar.component.dart';
 
 Color getStatusColor(String status) {
   switch (status.toLowerCase()) {
@@ -37,4 +41,12 @@ String formatTimeAgo(DateTime time) {
     final days = difference.inDays;
     return '$days day${days > 1 ? 's' : ''} ago';
   }
+}
+
+void copyToClipboard(String text) async {
+  CustomSnackBar.log(
+    status: SnackBarType.success,
+    message: "Copied to clipboard",
+  );
+  await FlutterClipboard.copy(text);
 }

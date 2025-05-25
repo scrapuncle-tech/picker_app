@@ -12,7 +12,6 @@ import '../common/map_button.component.dart';
 import '../common/text.component.dart';
 import '../common/phone_call_button.component.dart';
 import '../update_pickup/sub_status_dropdown.component.dart';
-// import '../common/watsapp_button.component.dart';
 
 class PickupTile extends ConsumerWidget {
   const PickupTile({
@@ -143,26 +142,6 @@ class PickupTile extends ConsumerWidget {
                           ],
                         ),
                         SizedBox(height: aspectRatio * 16),
-                        // Row(
-                        //   crossAxisAlignment: CrossAxisAlignment.end,
-                        //   children: [
-                        //     CustomText(
-                        //       text: "Expected Weight: ",
-                        //       size: sizeData.small,
-                        //       color: colorData.fontColor(.5),
-                        //       weight: FontWeight.bold,
-                        //     ),
-                        //     SizedBox(width: width * .01),
-                        //     Expanded(
-                        //       child: CustomText(
-                        //         text: pickup.expectedWeight,
-                        //         size: sizeData.medium,
-                        //         weight: FontWeight.bold,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        SizedBox(height: aspectRatio * 16),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -191,6 +170,30 @@ class PickupTile extends ConsumerWidget {
                           ],
                         ),
                         SizedBox(height: aspectRatio * 16),
+                        GestureDetector(
+                          onTap: () => copyToClipboard(pickup.address),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: "Address:",
+                                size: sizeData.small,
+                                color: colorData.fontColor(.6),
+                                weight: FontWeight.w700,
+                              ),
+                              SizedBox(width: width * .01),
+                              Expanded(
+                                child: CustomText(
+                                  text: pickup.address,
+                                  color: colorData.fontColor(.7),
+                                  weight: FontWeight.w800,
+                                  maxLine: 3,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: aspectRatio * 16),
                         Row(
                           children: [
                             Expanded(
@@ -203,26 +206,6 @@ class PickupTile extends ConsumerWidget {
                             SizedBox(width: width * .1),
                           ],
                         ),
-                        // Row(
-                        //   crossAxisAlignment: CrossAxisAlignment.center,
-                        //   children: [
-                        //     CustomText(
-                        //       text: "Address: ",
-                        //       size: sizeData.small,
-                        //       color: colorData.fontColor(.6),
-                        //       weight: FontWeight.bold,
-                        //     ),
-                        //     SizedBox(width: width * .01),
-                        //     Expanded(
-                        //       child: CustomText(
-                        //         text:
-                        //             "${pickup.address}, ${pickup.area}, Pincode: ${pickup.pincode}",
-                        //         maxLine: 3,
-                        //         height: 1.5,
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
                       ],
                     ),
                   ),

@@ -1,22 +1,19 @@
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/common/custom_back_button.component.dart';
 import '../components/common/custom_inkwell.component.dart';
-import '../components/common/custom_snackbar.component.dart';
 import '../components/common/gradient_button.component.dart';
 import '../components/common/map_button.component.dart';
 import '../components/common/text.component.dart';
 import '../components/common/phone_call_button.component.dart';
-// import '../components/common/watsapp_button.component.dart';
 import '../components/update_pickup/item_display_card.componenet.dart';
-// import '../components/update_pickup/location_map_button.component.dart';
 import '../components/update_pickup/pickupinfo_tile.component.dart';
 import '../components/update_pickup/sub_status_dropdown.component.dart';
 import '../models/item.entity.dart';
 import '../models/pickup.entity.dart';
 import '../providers/current_pickup.provider.dart';
+import '../services/helper/basic.service.dart';
 import '../services/helper/receipt.service.dart';
 import '../utilities/theme/color_data.dart';
 import '../utilities/theme/size_data.dart';
@@ -195,14 +192,6 @@ class UpdatePickupPage extends ConsumerWidget {
     );
   }
 
-  void copyToClipboard(String text) async {
-    CustomSnackBar.log(
-      status: SnackBarType.success,
-      message: "Copied to clipboard",
-    );
-    await FlutterClipboard.copy(text);
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     CustomColorData colorData = CustomColorData.from(ref);
@@ -362,35 +351,6 @@ class UpdatePickupPage extends ConsumerWidget {
                             text:
                                 "${currentPickupState.area}, pin: ${currentPickupState.pincode}",
                           ),
-                          // PickupInfoTile(
-                          //   hintText: "Description: ",
-                          //   text: currentPickupState.description,
-                          // ),
-                          // Row(
-                          //   children: [
-                          //     CustomText(
-                          //       text: "Location :",
-                          //       color: colorData.fontColor(.6),
-                          //       weight: FontWeight.w700,
-                          //     ),
-                          //     LocationMapButton(
-                          //       latitude:
-                          //           double.tryParse(
-                          //             currentPickupState.coordinates.isNotEmpty
-                          //                 ? currentPickupState.coordinates[0]
-                          //                 : '0',
-                          //           ) ??
-                          //           0.0,
-                          //       longitude:
-                          //           double.tryParse(
-                          //             currentPickupState.coordinates.length > 1
-                          //                 ? currentPickupState.coordinates[1]
-                          //                 : '0',
-                          //           ) ??
-                          //           0.0,
-                          //     ),
-                          //   ],
-                          // ),
                         ],
                       ),
 
