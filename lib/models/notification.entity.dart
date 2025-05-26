@@ -8,7 +8,7 @@ class NotificationEntity {
   @Unique(onConflict: ConflictStrategy.replace)
   String id;
 
-  String details;
+  List<String> details;
   String? imageUrl;
   bool isRead;  
   String message;
@@ -40,7 +40,7 @@ class NotificationEntity {
   NotificationEntity copyWith({
     int? obxId,
     String? id,
-    String? details,
+    List<String>? details,
     String? imageUrl,
     bool? isRead,
     String? message,
@@ -68,7 +68,7 @@ class NotificationEntity {
   static NotificationEntity fromFirebase(Map<String, dynamic> data) {
     return NotificationEntity(
       id: data['id'] ?? '',
-      details: data['details'] ?? '',
+      details: data['details'] != null ? List<String>.from(data['details']) : [],
       imageUrl: data['imageUrl'],
       isRead: data['isRead'] ?? false,
       message: data['message'] ?? '',
@@ -97,7 +97,7 @@ class NotificationEntity {
   static NotificationEntity createEmptyNotification() {
     return NotificationEntity(
       id: '',
-      details: '',
+      details: [],
       imageUrl: null,
       isRead: false,
       message: '',

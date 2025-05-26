@@ -67,8 +67,12 @@ class OBNotificationService {
       title: 'Pickup Status Updated',
       message:
           'Pickup $pickupId status changed from $previousStatus to $newStatus',
-      details:
+      details: [
           'Picker $pickerName has updated the status of pickup $pickupId from $previousStatus to $newStatus',
+          'Status change time: ${DateTime.now().toString()}',
+          'Previous status: $previousStatus',
+          'New status: $newStatus'
+      ],
       targetSupervisor: targetSupervisor,
       timestamp: DateTime.now(),
       isSynced: false,
@@ -89,8 +93,11 @@ class OBNotificationService {
       id: const Uuid().v4(),
       title: 'Exotel API Error',
       message: 'Error calling customer for pickup $pickupId',
-      details:
+      details: [
           'Picker $pickerName encountered an error while calling customer for pickup $pickupId: $errorMessage',
+          'Error time: ${DateTime.now().toString()}',
+          'Error details: $errorMessage'
+      ],
       targetSupervisor: targetSupervisor,
       timestamp: DateTime.now(),
       isSynced: false,

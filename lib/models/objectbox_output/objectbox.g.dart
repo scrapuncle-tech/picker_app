@@ -774,7 +774,7 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(3, 6489721459973418746),
             name: 'details',
-            type: 9,
+            type: 30,
             flags: 0),
         obx_int.ModelProperty(
             id: const obx_int.IdUid(4, 8892722572044293577),
@@ -1725,7 +1725,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (NotificationEntity object, fb.Builder fbb) {
           final idOffset = fbb.writeString(object.id);
-          final detailsOffset = fbb.writeString(object.details);
+          final detailsOffset = fbb.writeList(
+              object.details.map(fbb.writeString).toList(growable: false));
           final imageUrlOffset = object.imageUrl == null
               ? null
               : fbb.writeString(object.imageUrl!);
@@ -1758,8 +1759,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final idParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
-          final detailsParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 8, '');
+          final detailsParam = const fb.ListReader<String>(
+                  fb.StringReader(asciiOptimization: true),
+                  lazy: false)
+              .vTableGet(buffer, rootOffset, 8, []);
           final imageUrlParam = const fb.StringReader(asciiOptimization: true)
               .vTableGetNullable(buffer, rootOffset, 10);
           final isReadParam =
@@ -2347,8 +2350,8 @@ class NotificationEntity_ {
       obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[1]);
 
   /// See [NotificationEntity.details].
-  static final details =
-      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[2]);
+  static final details = obx.QueryStringVectorProperty<NotificationEntity>(
+      _entities[8].properties[2]);
 
   /// See [NotificationEntity.imageUrl].
   static final imageUrl =
