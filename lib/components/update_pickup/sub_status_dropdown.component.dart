@@ -21,6 +21,7 @@ class SubStatusDropdown extends ConsumerWidget {
   static const List<String> subStatusOptions = [
     'Call not connected',
     'DNP',
+    'DND',
     'customer asked to cancel',
     'customer asked to reschedule',
   ];
