@@ -10,6 +10,7 @@ import 'object_box.dart';
 class OBNotificationService {
   final ObjectBox objectbox;
   final WriteService _writeService = WriteService();
+  StreamSubscription? _notificationSubscription;
   final Function? onSynced;
 
   OBNotificationService({required this.objectbox, this.onSynced});
@@ -17,35 +18,40 @@ class OBNotificationService {
   /// Syncs all pending notifications to Firebase
   /// Private implementation
   Future<void> _syncPendingNotifications() async {
-    final query =
-        objectbox.notificationBox
-            .query(NotificationEntity_.isSynced.equals(false))
-            .build();
-    final pendingNotifications = query.find();
+    _notificationSubscription = objectbox.notificationBox
+        .query(NotificationEntity_.isSynced.equals(false))
+        .watch(triggerImmediately: true)
+        .listen((query) async {
+          final pendingNotifications = query.find();
 
-    if (pendingNotifications.isEmpty) {
-      debugPrint('No pending notifications to sync');
-      return;
-    }
+          if (pendingNotifications.isEmpty) {
+            debugPrint('No pending notifications to sync');
+            return;
+          }
 
-    debugPrint('Syncing ${pendingNotifications.length} pending notifications');
+          debugPrint(
+            'Syncing ${pendingNotifications.length} pending notifications',
+          );
 
-    for (var notification in pendingNotifications) {
-      final success = await _writeService.putNotification(
-        notification: notification,
-      );
-      if (success) {
-        notification.isSynced = true;
-        objectbox.notificationBox.put(notification);
-        debugPrint('Successfully synced notification: ${notification.id}');
-      } else {
-        debugPrint('Failed to sync notification: ${notification.id}');
-      }
-    }
+          for (var notification in pendingNotifications) {
+            final success = await _writeService.putNotification(
+              notification: notification,
+            );
+            if (success) {
+              // Remove notification from local database after successful sync to Firebase
+              objectbox.notificationBox.remove(notification.obxId);
+              debugPrint(
+                'Successfully synced and removed notification: ${notification.id}',
+              );
+            } else {
+              debugPrint('Failed to sync notification: ${notification.id}');
+            }
+          }
 
-    if (onSynced != null) {
-      onSynced!();
-    }
+          if (onSynced != null) {
+            onSynced!();
+          }
+        });
   }
 
   /// Creates a notification when subStatus is modified
@@ -98,5 +104,9 @@ class OBNotificationService {
   /// Called from SyncService
   Future<void> syncNotifications() async {
     return _syncPendingNotifications();
+  }
+
+  void dispose() {
+    _notificationSubscription?.cancel();
   }
 }

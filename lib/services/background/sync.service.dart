@@ -70,12 +70,16 @@ class SyncService {
       onSynced: updateStatus,
     );
 
+    OBNotificationService notificationService = OBNotificationService(
+      objectbox: objectbox,
+      onSynced: updateStatus,
+    );
+
     obAuthService.syncPicker();
     obRouteService.syncRoute();
     obRouteService.syncLocalPickup();
     productService.syncProducts();
-    // Sync pending notifications to Firebase
-    OBNotificationService(objectbox: objectbox, onSynced: updateStatus).syncNotifications();
+    notificationService.syncNotifications();
   }
 
   void stopSync() {
@@ -83,12 +87,14 @@ class SyncService {
     OBAuthService obAuthService = OBAuthService(objectbox: objectbox);
     OBRouteService obRouteService = OBRouteService(objectbox: objectbox);
     OBProductService productService = OBProductService(objectbox: objectbox);
-    // OBNotificationService notificationService = OBNotificationService(objectbox: objectbox);
+    OBNotificationService notificationService = OBNotificationService(
+      objectbox: objectbox,
+    );
 
     obAuthService.dispose();
     obRouteService.dispose();
     productService.dispose();
-    // notificationService.dispose();
+    notificationService.dispose();
   }
 
   void clearBox() {
