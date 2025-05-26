@@ -18,6 +18,7 @@ import '../../models/app_sync_status.entity.dart';
 import '../../models/item.entity.dart';
 import '../../models/local_pickup.entity.dart';
 import '../../models/logger.entity.dart';
+import '../../models/notification.entity.dart';
 import '../../models/picker.entity.dart';
 import '../../models/pickup.entity.dart';
 import '../../models/product.entity.dart';
@@ -625,7 +626,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(6, 8073611703555323437),
       name: 'RouteModel',
-      lastPropertyId: const obx_int.IdUid(11, 1220623603961281677),
+      lastPropertyId: const obx_int.IdUid(13, 4235808848093803740),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -683,6 +684,16 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(11, 1220623603961281677),
             name: 'updatedAt',
             type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 5627689721282804884),
+            name: 'morningSupervisor',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 4235808848093803740),
+            name: 'eveningSupervisor',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -742,6 +753,71 @@ final _entities = <obx_int.ModelEntity>[
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(9, 6391862380746215777),
+      name: 'NotificationEntity',
+      lastPropertyId: const obx_int.IdUid(11, 7977535129732190523),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 7059696272117256292),
+            name: 'obxId',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1933665446307545684),
+            name: 'id',
+            type: 9,
+            flags: 34848,
+            indexId: const obx_int.IdUid(12, 1714128979908039523)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 6489721459973418746),
+            name: 'details',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8892722572044293577),
+            name: 'imageUrl',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2548002104327356512),
+            name: 'isRead',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4586587346858699111),
+            name: 'message',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8874137162356468011),
+            name: 'targetSupervisor',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 8833735617220986111),
+            name: 'targetScreen',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 3254424762678843309),
+            name: 'timestamp',
+            type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 1418366937291710480),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 7977535129732190523),
+            name: 'isSynced',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -780,8 +856,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(8, 6808545179855262196),
-      lastIndexId: const obx_int.IdUid(11, 8041517500316570220),
+      lastEntityId: const obx_int.IdUid(9, 6391862380746215777),
+      lastIndexId: const obx_int.IdUid(12, 1714128979908039523),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
@@ -1490,7 +1566,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final helperIdOffset = fbb.writeString(object.helperId);
           final pickupIdsOffset = fbb.writeList(
               object.pickupIds.map(fbb.writeString).toList(growable: false));
-          fbb.startTable(12);
+          final morningSupervisorOffset =
+              fbb.writeString(object.morningSupervisor);
+          final eveningSupervisorOffset =
+              fbb.writeString(object.eveningSupervisor);
+          fbb.startTable(14);
           fbb.addInt64(0, object.obxId);
           fbb.addOffset(1, idOffset);
           fbb.addOffset(2, nameOffset);
@@ -1502,6 +1582,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(8, pickupIdsOffset);
           fbb.addInt64(9, object.scheduledDate.millisecondsSinceEpoch);
           fbb.addInt64(10, object.updatedAt.microsecondsSinceEpoch * 1000);
+          fbb.addOffset(11, morningSupervisorOffset);
+          fbb.addOffset(12, eveningSupervisorOffset);
           fbb.finish(fbb.endTable());
           return object.obxId;
         },
@@ -1520,6 +1602,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final eveningAssetCheckParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 14, '');
+          final morningSupervisorParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 26, '');
+          final eveningSupervisorParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 28, '');
           final pickerFirebaseIdParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, '');
@@ -1543,6 +1631,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               name: nameParam,
               morningAssetCheck: morningAssetCheckParam,
               eveningAssetCheck: eveningAssetCheckParam,
+              morningSupervisor: morningSupervisorParam,
+              eveningSupervisor: eveningSupervisorParam,
               pickerFirebaseId: pickerFirebaseIdParam,
               helperId: helperIdParam,
               pickupIds: pickupIdsParam,
@@ -1622,6 +1712,86 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final object = Logger(id: idParam, message: messageParam)
             ..statusIndex = const fb.Int64Reader()
                 .vTableGetNullable(buffer, rootOffset, 10);
+
+          return object;
+        }),
+    NotificationEntity: obx_int.EntityDefinition<NotificationEntity>(
+        model: _entities[8],
+        toOneRelations: (NotificationEntity object) => [],
+        toManyRelations: (NotificationEntity object) => {},
+        getId: (NotificationEntity object) => object.obxId,
+        setId: (NotificationEntity object, int id) {
+          object.obxId = id;
+        },
+        objectToFB: (NotificationEntity object, fb.Builder fbb) {
+          final idOffset = fbb.writeString(object.id);
+          final detailsOffset = fbb.writeString(object.details);
+          final imageUrlOffset = object.imageUrl == null
+              ? null
+              : fbb.writeString(object.imageUrl!);
+          final messageOffset = fbb.writeString(object.message);
+          final targetSupervisorOffset =
+              fbb.writeString(object.targetSupervisor);
+          final targetScreenOffset = object.targetScreen == null
+              ? null
+              : fbb.writeString(object.targetScreen!);
+          final titleOffset = fbb.writeString(object.title);
+          fbb.startTable(12);
+          fbb.addInt64(0, object.obxId);
+          fbb.addOffset(1, idOffset);
+          fbb.addOffset(2, detailsOffset);
+          fbb.addOffset(3, imageUrlOffset);
+          fbb.addBool(4, object.isRead);
+          fbb.addOffset(5, messageOffset);
+          fbb.addOffset(6, targetSupervisorOffset);
+          fbb.addOffset(7, targetScreenOffset);
+          fbb.addInt64(8, object.timestamp.microsecondsSinceEpoch * 1000);
+          fbb.addOffset(9, titleOffset);
+          fbb.addBool(10, object.isSynced);
+          fbb.finish(fbb.endTable());
+          return object.obxId;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final obxIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final idParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final detailsParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final imageUrlParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 10);
+          final isReadParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 12, false);
+          final messageParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final targetSupervisorParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, '');
+          final targetScreenParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 18);
+          final timestampParam = DateTime.fromMicrosecondsSinceEpoch(
+              (const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0) /
+                      1000)
+                  .round());
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 22, '');
+          final isSyncedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 24, false);
+          final object = NotificationEntity(
+              obxId: obxIdParam,
+              id: idParam,
+              details: detailsParam,
+              imageUrl: imageUrlParam,
+              isRead: isReadParam,
+              message: messageParam,
+              targetSupervisor: targetSupervisorParam,
+              targetScreen: targetScreenParam,
+              timestamp: timestampParam,
+              title: titleParam,
+              isSynced: isSyncedParam);
 
           return object;
         })
@@ -2119,6 +2289,14 @@ class RouteModel_ {
   static final updatedAt =
       obx.QueryDateNanoProperty<RouteModel>(_entities[5].properties[10]);
 
+  /// See [RouteModel.morningSupervisor].
+  static final morningSupervisor =
+      obx.QueryStringProperty<RouteModel>(_entities[5].properties[11]);
+
+  /// See [RouteModel.eveningSupervisor].
+  static final eveningSupervisor =
+      obx.QueryStringProperty<RouteModel>(_entities[5].properties[12]);
+
   /// see [RouteModel.pickupsData]
   static final pickupsData =
       obx.QueryBacklinkToMany<Pickup, RouteModel>(Pickup_.routeModel);
@@ -2156,4 +2334,51 @@ class Logger_ {
   /// See [Logger.statusIndex].
   static final statusIndex =
       obx.QueryIntegerProperty<Logger>(_entities[7].properties[2]);
+}
+
+/// [NotificationEntity] entity fields to define ObjectBox queries.
+class NotificationEntity_ {
+  /// See [NotificationEntity.obxId].
+  static final obxId =
+      obx.QueryIntegerProperty<NotificationEntity>(_entities[8].properties[0]);
+
+  /// See [NotificationEntity.id].
+  static final id =
+      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[1]);
+
+  /// See [NotificationEntity.details].
+  static final details =
+      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[2]);
+
+  /// See [NotificationEntity.imageUrl].
+  static final imageUrl =
+      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[3]);
+
+  /// See [NotificationEntity.isRead].
+  static final isRead =
+      obx.QueryBooleanProperty<NotificationEntity>(_entities[8].properties[4]);
+
+  /// See [NotificationEntity.message].
+  static final message =
+      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[5]);
+
+  /// See [NotificationEntity.targetSupervisor].
+  static final targetSupervisor =
+      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[6]);
+
+  /// See [NotificationEntity.targetScreen].
+  static final targetScreen =
+      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[7]);
+
+  /// See [NotificationEntity.timestamp].
+  static final timestamp =
+      obx.QueryDateNanoProperty<NotificationEntity>(_entities[8].properties[8]);
+
+  /// See [NotificationEntity.title].
+  static final title =
+      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[9]);
+
+  /// See [NotificationEntity.isSynced].
+  static final isSynced =
+      obx.QueryBooleanProperty<NotificationEntity>(_entities[8].properties[10]);
 }

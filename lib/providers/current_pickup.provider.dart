@@ -2,13 +2,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../main.dart';
 import '../models/item.entity.dart';
 import '../models/pickup.entity.dart';
+import '../services/objectbox/notification.service.dart';
 import '../services/objectbox/route.service.dart';
+import 'route.provider.dart';
 
 /// Provides the current pickup and whether it is local or from db.
 class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
+  final Ref ref;
   final OBRouteService _routeService = OBRouteService(objectbox: objectbox!);
+  final OBNotificationService _notificationService = OBNotificationService(
+    objectbox: objectbox!,
+  );
 
-  CurrentPickupNotifier() : super((null, false));
+  CurrentPickupNotifier(this.ref) : super((null, false));
 
   void init({required Pickup pickup, required bool isLocal}) {
     state = (_calculateTotalPrice(pickup), isLocal);
@@ -25,7 +31,24 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
   void updateSubStatus({required String subStatus}) {
     final pickup = state.$1;
     if (pickup == null) return;
+
+    final supervisorId = ref.read(routeInfoProvider).route?.morningSupervisor;
+
+    // Store the previous status for notification
+    final previousStatus = pickup.subStatus;
     final updatedPickup = pickup.copyWith(subStatus: subStatus);
+
+    // Create notification for status change
+    if (previousStatus != subStatus) {
+      _notificationService.createSubStatusNotification(
+        pickupId: pickup.pickupId,
+        previousStatus: previousStatus.isEmpty ? 'None' : previousStatus,
+        newStatus: subStatus,
+        pickerName: pickup.pickerId,
+        targetSupervisor: supervisorId ?? "none",
+      );
+    }
+
     _updateTime(updatedPickup);
   }
 
@@ -89,5 +112,5 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
 
 final currentPickupProvider =
     StateNotifierProvider<CurrentPickupNotifier, (Pickup?, bool)>(
-      (ref) => CurrentPickupNotifier(),
+      (ref) => CurrentPickupNotifier(ref),
     );

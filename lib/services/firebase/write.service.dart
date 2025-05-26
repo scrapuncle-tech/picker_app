@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/item.entity.dart';
+import '../../models/notification.entity.dart' hide Notification;
 import '../../models/pickup.entity.dart';
 import '../../utilities/firebase_constants.dart';
 
@@ -126,5 +127,33 @@ class WriteService {
     }
 
     return itemIds;
+  }
+
+  /// Saves a notification to Firestore.
+  /// Returns a Future<bool> indicating success or failure.
+  Future<bool> putNotification({required NotificationEntity notification}) async {
+    try {
+      debugPrint("Pushing notification to Firebase: ${notification.title}");
+      
+      // Generate a new document ID if not provided
+      String docId = notification.id.isNotEmpty ? notification.id : 
+          FirebaseFirestore.instance.collection(FirebaseConstants.notificationCollection).doc().id;
+      
+      // Update the notification with the new ID if it was generated
+      NotificationEntity updatedNotification = notification.id.isNotEmpty ? 
+          notification : notification.copyWith(id: docId);
+      
+      // Save to Firestore
+      await FirebaseFirestore.instance
+          .collection(FirebaseConstants.notificationCollection)
+          .doc(docId)
+          .set(updatedNotification.toFirebase(), SetOptions(merge: true));
+      
+      debugPrint("Successfully pushed notification to Firebase");
+      return true;
+    } catch (e) {
+      debugPrint("Error pushing notification to Firebase: $e");
+      return false;
+    }
   }
 }

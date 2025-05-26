@@ -17,6 +17,10 @@ class RouteModel {
   String morningAssetCheck;
   String eveningAssetCheck;
 
+  /// Reference to supervisors
+  String morningSupervisor;
+  String eveningSupervisor;
+
   String pickerFirebaseId;
   String helperId;
   List<String> pickupIds;
@@ -36,6 +40,8 @@ class RouteModel {
     required this.name,
     required this.morningAssetCheck,
     required this.eveningAssetCheck,
+    required this.morningSupervisor,
+    required this.eveningSupervisor,
     required this.pickerFirebaseId,
     required this.helperId,
     required this.pickupIds,
@@ -51,6 +57,8 @@ class RouteModel {
     String? mapLink,
     String? morningAssetCheck,
     String? eveningAssetCheck,
+    String? morningSupervisor,
+    String? eveningSupervisor,
     String? pickerFirebaseId,
     String? helperId,
     List<String>? pickupIds,
@@ -64,6 +72,8 @@ class RouteModel {
       name: name ?? this.name,
       morningAssetCheck: morningAssetCheck ?? this.morningAssetCheck,
       eveningAssetCheck: eveningAssetCheck ?? this.eveningAssetCheck,
+      morningSupervisor: morningSupervisor ?? this.morningSupervisor,
+      eveningSupervisor: eveningSupervisor ?? this.eveningSupervisor,
       pickerFirebaseId: pickerFirebaseId ?? this.pickerFirebaseId,
       pickupIds: pickupIds ?? this.pickupIds,
       helperId: helperId ?? this.helperId,
@@ -96,6 +106,8 @@ class RouteModel {
       mapLink: data['mapLink'] ?? '',
       morningAssetCheck: data['morningAssetCheck'] ?? '',
       eveningAssetCheck: data['eveningAssetCheck'] ?? '',
+      morningSupervisor: data['morningSupervisor'] ?? '',
+      eveningSupervisor: data['eveningSupervisor'] ?? '',
       pickerFirebaseId: data['picker'] ?? '',
       pickupIds: List<String>.from(data['pickups'] ?? []),
       helperId: data['helper'] ?? '',
@@ -113,6 +125,8 @@ class RouteModel {
       'mapLink': mapLink,
       'morningAssetCheck': morningAssetCheck,
       'eveningAssetCheck': eveningAssetCheck,
+      'morningSupervisor': morningSupervisor,
+      'eveningSupervisor': eveningSupervisor,
       'picker': pickerFirebaseId,
       'pickups': pickupIds,
       'helper': helperId,

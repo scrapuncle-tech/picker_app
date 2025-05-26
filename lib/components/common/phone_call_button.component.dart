@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
+import '../../main.dart';
 import '../../models/auth_state.model.dart';
 import '../../providers/auth.provider.dart';
+import '../../providers/current_pickup.provider.dart';
+import '../../providers/route.provider.dart';
+import '../../services/objectbox/notification.service.dart';
 import '../../utilities/static_data.dart';
 import '../../utilities/theme/color_data.dart';
 import '../../utilities/theme/size_data.dart';
@@ -17,12 +21,14 @@ class PhoneCallButton extends ConsumerWidget {
   final String customerNo;
   final bool needHintText;
   final bool disable;
+  final String? pickupId; // Optional pickup ID for error notifications
 
   const PhoneCallButton({
     super.key,
     required this.customerNo,
     this.needHintText = false,
     this.disable = false,
+    this.pickupId,
   });
 
   void _handleXmlResponse(String responseText, WidgetRef ref) {
@@ -33,10 +39,9 @@ class PhoneCallButton extends ConsumerWidget {
         status: SnackBarType.success,
       );
     } else if (responseText.contains('NDNC')) {
-      CustomSnackBar.log(
-        message: 'Number is on NDNC list.',
-        status: SnackBarType.error,
-      );
+      final errorMessage = 'Number is on NDNC list.';
+      CustomSnackBar.log(message: errorMessage, status: SnackBarType.error);
+      _createErrorNotification(errorMessage, ref);
     } else {
       final errorMessage =
           RegExp(
@@ -44,6 +49,7 @@ class PhoneCallButton extends ConsumerWidget {
           ).firstMatch(responseText)?.group(1) ??
           'Could not start call.';
       CustomSnackBar.log(message: errorMessage, status: SnackBarType.error);
+      _createErrorNotification(errorMessage, ref);
     }
   }
 
@@ -57,16 +63,14 @@ class PhoneCallButton extends ConsumerWidget {
           status: SnackBarType.success,
         );
       } else {
-        CustomSnackBar.log(
-          message: 'Call could not be started.',
-          status: SnackBarType.error,
-        );
+        final errorMessage = 'Call could not be started.';
+        CustomSnackBar.log(message: errorMessage, status: SnackBarType.error);
+        _createErrorNotification(errorMessage, ref);
       }
     } catch (_) {
-      CustomSnackBar.log(
-        message: 'Invalid call response.',
-        status: SnackBarType.error,
-      );
+      final errorMessage = 'Invalid call response.';
+      CustomSnackBar.log(message: errorMessage, status: SnackBarType.error);
+      _createErrorNotification(errorMessage, ref);
     }
   }
 
@@ -111,11 +115,14 @@ class PhoneCallButton extends ConsumerWidget {
       } else {
         _handleJsonResponse(response.body, ref);
       }
-    } catch (_) {
+    } catch (e) {
+      final errorMessage =
+          'Could not connect. Try again. Error: ${e.toString()}';
       CustomSnackBar.log(
         message: 'Could not connect. Try again.',
         status: SnackBarType.error,
       );
+      _createErrorNotification(errorMessage, ref);
     }
   }
 
@@ -199,5 +206,33 @@ class PhoneCallButton extends ConsumerWidget {
                 ),
               ),
     );
+  }
+
+  /// Creates a notification for Exotel API errors
+  void _createErrorNotification(String errorMessage, WidgetRef ref) {
+    // Get the current pickup ID if not provided
+    String actualPickupId = pickupId ?? '';
+    if (actualPickupId.isEmpty) {
+      final currentPickup = ref.read(currentPickupProvider).$1;
+      if (currentPickup != null) {
+        actualPickupId = currentPickup.pickupId;
+      }
+    }
+
+    // Get picker name
+    final authState = ref.read(authProvider);
+    final supervisorId = ref.read(routeInfoProvider).route?.morningSupervisor;
+    final pickerName = authState.pickerData?.name ?? 'Unknown';
+
+    // Only create notification if we have a pickup ID
+    if (actualPickupId.isNotEmpty) {
+      final notificationService = OBNotificationService(objectbox: objectbox!);
+      notificationService.createExotelErrorNotification(
+        pickupId: actualPickupId,
+        errorMessage: errorMessage,
+        pickerName: pickerName,
+        targetSupervisor: supervisorId ?? "none",
+      );
+    }
   }
 }

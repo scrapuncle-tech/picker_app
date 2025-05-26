@@ -4,4 +4,5 @@ class FirebaseConstants {
   static String routeCollection = 'Rroutes';
   static String productCollection = 'Pproducts';
   static String itemsCollection = 'items';
+  static String notificationCollection = 'warehouseNotification';
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/app_sync_status.entity.dart';
 import '../objectbox/auth.service.dart';
+import '../objectbox/notification.service.dart';
 import '../objectbox/object_box.dart';
 import '../objectbox/product.service.dart';
 import '../objectbox/route.service.dart';
@@ -73,6 +74,8 @@ class SyncService {
     obRouteService.syncRoute();
     obRouteService.syncLocalPickup();
     productService.syncProducts();
+    // Sync pending notifications to Firebase
+    OBNotificationService(objectbox: objectbox, onSynced: updateStatus).syncNotifications();
   }
 
   void stopSync() {
@@ -80,10 +83,12 @@ class SyncService {
     OBAuthService obAuthService = OBAuthService(objectbox: objectbox);
     OBRouteService obRouteService = OBRouteService(objectbox: objectbox);
     OBProductService productService = OBProductService(objectbox: objectbox);
+    // OBNotificationService notificationService = OBNotificationService(objectbox: objectbox);
 
     obAuthService.dispose();
     obRouteService.dispose();
     productService.dispose();
+    // notificationService.dispose();
   }
 
   void clearBox() {
@@ -95,5 +100,6 @@ class SyncService {
     objectbox.itemBox.removeAll();
     objectbox.productBox.removeAll();
     objectbox.localStatePickupBox.removeAll();
+    objectbox.notificationBox.removeAll();
   }
 }

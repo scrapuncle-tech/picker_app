@@ -605,7 +605,7 @@
     },
     {
       "id": "6:8073611703555323437",
-      "lastPropertyId": "11:1220623603961281677",
+      "lastPropertyId": "13:4235808848093803740",
       "name": "RouteModel",
       "properties": [
         {
@@ -665,6 +665,16 @@
           "id": "11:1220623603961281677",
           "name": "updatedAt",
           "type": 12
+        },
+        {
+          "id": "12:5627689721282804884",
+          "name": "morningSupervisor",
+          "type": 9
+        },
+        {
+          "id": "13:4235808848093803740",
+          "name": "eveningSupervisor",
+          "type": 9
         }
       ],
       "relations": []
@@ -721,10 +731,76 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "9:6391862380746215777",
+      "lastPropertyId": "11:7977535129732190523",
+      "name": "NotificationEntity",
+      "properties": [
+        {
+          "id": "1:7059696272117256292",
+          "name": "obxId",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1933665446307545684",
+          "name": "id",
+          "type": 9,
+          "flags": 34848,
+          "indexId": "12:1714128979908039523"
+        },
+        {
+          "id": "3:6489721459973418746",
+          "name": "details",
+          "type": 9
+        },
+        {
+          "id": "4:8892722572044293577",
+          "name": "imageUrl",
+          "type": 9
+        },
+        {
+          "id": "5:2548002104327356512",
+          "name": "isRead",
+          "type": 1
+        },
+        {
+          "id": "6:4586587346858699111",
+          "name": "message",
+          "type": 9
+        },
+        {
+          "id": "7:8874137162356468011",
+          "name": "targetSupervisor",
+          "type": 9
+        },
+        {
+          "id": "8:8833735617220986111",
+          "name": "targetScreen",
+          "type": 9
+        },
+        {
+          "id": "9:3254424762678843309",
+          "name": "timestamp",
+          "type": 12
+        },
+        {
+          "id": "10:1418366937291710480",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "11:7977535129732190523",
+          "name": "isSynced",
+          "type": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "8:6808545179855262196",
-  "lastIndexId": "11:8041517500316570220",
+  "lastEntityId": "9:6391862380746215777",
+  "lastIndexId": "12:1714128979908039523",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
