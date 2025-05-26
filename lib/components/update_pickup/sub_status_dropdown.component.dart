@@ -35,7 +35,9 @@ class SubStatusDropdown extends ConsumerWidget {
 
     // If empty, show a placeholder
     String displayText =
-        currentSubStatus.isEmpty ? 'Select status' : currentSubStatus;
+        currentSubStatus.isEmpty || !subStatusOptions.contains(currentSubStatus)
+            ? 'Select status'
+            : currentSubStatus;
 
     return Container(
       decoration: BoxDecoration(
