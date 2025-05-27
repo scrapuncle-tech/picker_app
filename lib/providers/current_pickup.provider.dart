@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../components/common/custom_snackbar.component.dart';
 import '../main.dart';
 import '../models/item.entity.dart';
 import '../models/pickup.entity.dart';
@@ -101,8 +102,11 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
       updatedAt: DateTime.now(),
       status: 'completed',
     );
-
-    _routeService.updatePickup(pickup: updatedPickup);
+    _updateTime(updatedPickup);
+    CustomSnackBar.log(
+      message: "Successfully completed the pickup of customer ${pickup.name}",
+      status: SnackBarType.success,
+    );
   }
 
   void _updateTime(Pickup pickup) {

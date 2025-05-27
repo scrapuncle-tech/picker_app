@@ -245,26 +245,4 @@ class ReceiptService {
           ),
     );
   }
-
-  // Method to handle completing the pickup
-  void completePickup(
-    BuildContext context,
-    WidgetRef ref,
-    Pickup currentPickupState,
-    Pickup pickup,
-    Function setCompleted,
-  ) {
-    if (currentPickupState.itemsData.isEmpty) {
-      return;
-    }
-
-    setCompleted();
-
-    CustomSnackBar.log(
-      message: "Successfully completed the pickup of customer ${pickup.name}",
-      status: SnackBarType.success,
-    );
-
-    Navigator.pop(context);
-  }
 }

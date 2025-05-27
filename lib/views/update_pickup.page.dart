@@ -152,14 +152,10 @@ class UpdatePickupPage extends ConsumerWidget {
       child: Opacity(
         opacity: pickup.itemsData.isEmpty ? .5 : 1,
         child: CustomInkWell(
-          onPressed:
-              () => _receiptService.completePickup(
-                context,
-                ref,
-                pickup,
-                pickup,
-                () => ref.read(currentPickupProvider.notifier).setCompleted(),
-              ),
+          onPressed: () {
+            ref.read(currentPickupProvider.notifier).setCompleted();
+            Navigator.pop(context);
+          },
           borderRadius: 50,
           splashColor:
               pickup.itemsData.isEmpty

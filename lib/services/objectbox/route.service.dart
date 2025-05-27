@@ -171,24 +171,38 @@ class OBRouteService {
 
   /// Update a pickup in the local state and sync it with Firebase if and only if the pickup is completed.
   void updatePickup({required Pickup pickup}) {
-    final existing =
+    LocalPickup? existing =
         objectbox.localStatePickupBox
-            .query(LocalPickup_.id.equals(pickup.id))
+            .query(LocalPickup_.pickupId.equals(pickup.pickupId))
             .build()
             .findFirst();
 
+    final updatedLocalPickup = LocalPickup.fromPickup(
+      pickup,
+    ).copyWith(obxId: existing?.obxId ?? 0);
+
+    // If existing, preserve relations properly
     if (existing != null) {
-      // Clear the existing relation
-      existing.itemsData.clear();
-      objectbox.localStatePickupBox.put(existing); // Save the cleared relation
+      // Replace other fields
+      existing = existing.copyWith(
+        totalPrice: updatedLocalPickup.totalPrice,
+        subStatus: updatedLocalPickup.subStatus,
+        itemsData: updatedLocalPickup.itemsData,
+        totalWeightQuantity: updatedLocalPickup.totalWeightQuantity,
+        status: updatedLocalPickup.status,
+        isCompleted: updatedLocalPickup.isCompleted,
+        completedAt: updatedLocalPickup.completedAt,
+      );
+
+      objectbox.localStatePickupBox.put(existing);
+    } else {
+      objectbox.localStatePickupBox.put(updatedLocalPickup);
     }
 
-    // Preserve obxId
-    final finalPickup = pickup.copyWith(obxId: existing?.obxId);
-    final localPickup = LocalPickup.fromPickup(finalPickup);
-    debugPrint("from UPDATE PICKUP (local): ${localPickup.itemsData}");
-
-    objectbox.localStatePickupBox.put(localPickup);
+    debugPrint(
+      "from UPDATE PICKUP (local): ${pickup.pickupId} "
+      "Status: ${pickup.status}==${pickup.isCompleted}",
+    );
   }
 
   void syncLocalPickup() {
@@ -207,7 +221,7 @@ class OBRouteService {
           for (final pickup in pickupsToSync) {
             bool uploadSuccessful = false;
 
-            /// set the isUpdated flag to false 
+            /// set the isUpdated flag to false
             objectbox.localStatePickupBox.put(
               pickup.copyWith(isUpdated: false),
             );

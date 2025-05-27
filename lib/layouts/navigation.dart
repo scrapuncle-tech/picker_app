@@ -82,15 +82,13 @@ class _NavigationState extends ConsumerState<Navigation> {
     ref.read(navigationProvider.notifier).setIndex(index);
   }
 
-  List<Widget> pages = [
-    HomePage(),
-    Container(color: Colors.blueAccent),
-    PickupsPage(),
-  ];
+  List<Widget> pages = [HomePage(), PickupsPage()];
   List<NavBarItem> navBarItems = [
     NavBarItem(icon: Symbols.home_filled_rounded, title: "Home"),
-    NavBarItem(icon: Symbols.schedule_rounded, title: "Schedule"),
-    NavBarItem(icon: Symbols.hail_rounded, title: "Pickups"),
+    NavBarItem(
+      icon: Symbols.check_circle_filled_rounded,
+      title: "Completed Pickups",
+    ),
   ];
 
   @override
@@ -124,7 +122,7 @@ class _NavigationState extends ConsumerState<Navigation> {
                 return GestureDetector(
                   onTap: () => setIndex(navBarItems.indexOf(item)),
                   child: Container(
-                    width: sizeData.width * 0.225,
+                    width: sizeData.width * 0.45,
                     color: Colors.transparent,
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 500),
