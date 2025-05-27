@@ -400,7 +400,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(5, 2286385200778026665),
       name: 'Picker',
-      lastPropertyId: const obx_int.IdUid(15, 6884300873839586080),
+      lastPropertyId: const obx_int.IdUid(16, 5102642555274305050),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -477,6 +477,11 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelProperty(
             id: const obx_int.IdUid(15, 6884300873839586080),
             name: 'assignedVehicleName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(16, 5102642555274305050),
+            name: 'password',
             type: 9,
             flags: 0)
       ],
@@ -1317,7 +1322,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               fbb.writeString(object.assignedVehicleId);
           final assignedVehicleNameOffset =
               fbb.writeString(object.assignedVehicleName);
-          fbb.startTable(16);
+          final passwordOffset = fbb.writeString(object.password);
+          fbb.startTable(17);
           fbb.addInt64(0, object.obxId);
           fbb.addOffset(1, idOffset);
           fbb.addOffset(2, nameOffset);
@@ -1333,6 +1339,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(12, routeNameOffset);
           fbb.addOffset(13, assignedVehicleIdOffset);
           fbb.addOffset(14, assignedVehicleNameOffset);
+          fbb.addOffset(15, passwordOffset);
           fbb.finish(fbb.endTable());
           return object.obxId;
         },
@@ -1347,6 +1354,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 8, '');
           final emailParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
+          final passwordParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 34, '');
           final licenseNoParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 12, '');
           final phoneNoParam = const fb.StringReader(asciiOptimization: true)
@@ -1376,6 +1385,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               id: idParam,
               name: nameParam,
               email: emailParam,
+              password: passwordParam,
               licenseNo: licenseNoParam,
               phoneNo: phoneNoParam,
               isAvailable: isAvailableParam,
@@ -2134,6 +2144,10 @@ class Picker_ {
   /// See [Picker.assignedVehicleName].
   static final assignedVehicleName =
       obx.QueryStringProperty<Picker>(_entities[4].properties[14]);
+
+  /// See [Picker.password].
+  static final password =
+      obx.QueryStringProperty<Picker>(_entities[4].properties[15]);
 }
 
 /// [Pickup] entity fields to define ObjectBox queries.

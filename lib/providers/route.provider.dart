@@ -58,7 +58,9 @@ class RouteInfoNotifier extends StateNotifier<RouteInfo> {
   /// and also remove the pickups that are not there in the uncompleted pickups list
   void mergeLocalPickupChanges() async {
     _routeService.getLocalPickups().listen((List<Pickup> localPickups) {
-      debugPrint("LOCAL PICKUPS : $localPickups");
+      debugPrint(
+        "LOCAL PICKUPS to MERGE : ${localPickups.map((e) => [e.id, e.itemsData]).toList()}",
+      );
       if (state.pickups.isNotEmpty) {
         List<Pickup> notCompletedPickups = state.pickups;
 

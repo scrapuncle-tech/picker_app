@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../main.dart';
 import '../models/item.entity.dart';
@@ -23,9 +24,12 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
   void close() {
     final pickup = state.$1;
     if (pickup != null) {
-      _updateTime(pickup.copyWith(isUpdated: true));
+      if (pickup.isUpdated) {
+        _routeService.updatePickup(pickup: pickup);
+      } else {
+        debugPrint("Pickup no need to be updated");
+      }
     }
-    // Don't clear state here to avoid widget errors on dispose
   }
 
   void updateSubStatus({required String subStatus}) {
@@ -36,7 +40,10 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
 
     // Store the previous status for notification
     final previousStatus = pickup.subStatus;
-    final updatedPickup = pickup.copyWith(subStatus: subStatus);
+    final updatedPickup = pickup.copyWith(
+      subStatus: subStatus,
+      isUpdated: true,
+    );
 
     // Create notification for status change
     if (previousStatus != subStatus) {
@@ -48,7 +55,6 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
         targetSupervisor: supervisorId ?? "none",
       );
     }
-
     _updateTime(updatedPickup);
   }
 
@@ -57,7 +63,10 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
     if (pickup == null) return;
 
     final updatedItems = [...pickup.itemsData, item];
-    final updatedPickup = pickup.copyWith(itemsData: updatedItems);
+    final updatedPickup = pickup.copyWith(
+      itemsData: updatedItems,
+      isUpdated: true,
+    );
     _updateTime(updatedPickup);
   }
 
@@ -66,14 +75,14 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
     if (pickup == null) return;
     final updatedItems =
         pickup.itemsData.where((i) => i.id != item.id).toList();
-    final updatedPickup = pickup.copyWith(itemsData: updatedItems);
-
+    final updatedPickup = pickup.copyWith(
+      itemsData: updatedItems,
+      isUpdated: true,
+    );
     _updateTime(updatedPickup);
   }
 
-  Pickup? _calculateTotalPrice(Pickup? pickup) {
-    if (pickup == null) return null;
-
+  Pickup _calculateTotalPrice(Pickup pickup) {
     double total = 0;
     for (final item in pickup.itemsData) {
       total += item.totalPrice;
@@ -85,27 +94,24 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
   void setCompleted() {
     final pickup = state.$1;
     if (pickup == null) return;
-
     final updatedPickup = pickup.copyWith(
       isCompleted: true,
+      isUpdated: true,
       completedAt: DateTime.now(),
       updatedAt: DateTime.now(),
       status: 'completed',
     );
 
-    _updateTime(updatedPickup);
+    _routeService.updatePickup(pickup: updatedPickup);
   }
 
   void _updateTime(Pickup pickup) {
     final updatedPickup = pickup.copyWith(updatedAt: DateTime.now());
     final updatedPickupWithTotalPrice = _calculateTotalPrice(updatedPickup);
-    if (updatedPickupWithTotalPrice != null) {
-      state = (updatedPickupWithTotalPrice, state.$2);
-      _routeService.updatePickup(pickup: updatedPickupWithTotalPrice);
-    }
+    state = (updatedPickupWithTotalPrice, state.$2);
   }
 
-  void updatePickup(Pickup pickup) {
+  void updatePickup({required Pickup pickup}) {
     _routeService.updatePickup(pickup: pickup);
   }
 }

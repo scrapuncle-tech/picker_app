@@ -36,17 +36,18 @@ class ReceiptService {
           pickup.itemsData
               .map(
                 (item) => {
-                  'itemName': item.product.name,
-                  'price': item.customPrice ?? item.product.price,
+                  'itemName': item.product?.name,
+                  'price': item.customPrice ?? item.product?.price,
                   'priceType': item.customPrice != null ? 'custom' : 'actual',
                   'totalQuantity':
-                      item.product.unit.toString().toLowerCase() == 'weight'
+                      item.product?.unit.toString().toLowerCase() == 'weight'
                           ? item.weight
                           : item.quantity,
-                  'unit': item.product.unit,
+                  'unit': item.product?.unit,
                   'totalPrice':
-                      (item.customPrice ?? double.parse(item.product.price)) *
-                      (item.product.unit.toString().toLowerCase() == 'weight'
+                      (item.customPrice ??
+                          double.parse(item.product?.price ?? '0')) *
+                      (item.product?.unit.toString().toLowerCase() == 'weight'
                           ? item.weight
                           : item.quantity),
                 },

@@ -379,7 +379,7 @@
     },
     {
       "id": "5:2286385200778026665",
-      "lastPropertyId": "15:6884300873839586080",
+      "lastPropertyId": "16:5102642555274305050",
       "name": "Picker",
       "properties": [
         {
@@ -458,6 +458,11 @@
         {
           "id": "15:6884300873839586080",
           "name": "assignedVehicleName",
+          "type": 9
+        },
+        {
+          "id": "16:5102642555274305050",
+          "name": "password",
           "type": 9
         }
       ],

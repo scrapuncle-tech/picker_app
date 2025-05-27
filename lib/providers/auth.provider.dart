@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../components/common/custom_snackbar.component.dart';
 import '../main.dart';
@@ -17,7 +18,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   void _listenToAuthChanges() {
     _obAuthService.getPicker().listen((picker) {
-      print("picker: $picker");
+      debugPrint("picker: $picker");
       if (picker != null) {
         state = state.copyWith(
           pickerData: picker,

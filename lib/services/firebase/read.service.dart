@@ -58,7 +58,7 @@ class ReadService {
         });
   }
 
-  Stream<Pickup> getPickup({required String id}) async* {
+  Stream<Pickup?> getPickup({required String id}) async* {
     final docStream =
         FirebaseFirestore.instance
             .collection(FirebaseConstants.pickupCollection)
@@ -68,7 +68,7 @@ class ReadService {
     await for (var snapshots in docStream) {
       try {
         final snapshot = snapshots.docs.firstOrNull;
-        if (snapshot!=null && snapshot.exists) {
+        if (snapshot != null && snapshot.exists) {
           final rawData = snapshot.data();
 
           Pickup pickup = Pickup.fromFirebase({...rawData, 'id': snapshot.id});
@@ -79,12 +79,15 @@ class ReadService {
 
           pickup.itemsData.addAll(items.whereType<Item>());
           yield pickup;
+        } else {
+          yield null;
         }
       } catch (e) {
         CustomSnackBar.log(
           message: "Failed to get pickup $id: $e",
           status: SnackBarType.error,
         );
+        yield null;
       }
     }
   }
@@ -126,5 +129,22 @@ class ReadService {
             status: SnackBarType.error,
           );
         });
+  }
+
+  Future<Pickup?> getPickupAsync({required String pickupId}) async {
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance
+            .collection(FirebaseConstants.pickupCollection)
+            .where('pickupId', isEqualTo: pickupId)
+            .get();
+
+    if (snapshot.docs.isNotEmpty && snapshot.docs[0].exists) {
+      return Pickup.fromFirebase({
+        ...snapshot.docs[0].data(),
+        'id': snapshot.docs[0].id,
+      });
+    } else {
+      return null;
+    }
   }
 }

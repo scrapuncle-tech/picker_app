@@ -18,6 +18,7 @@ class OBRouteService {
   final Set<String> _activeRouteListeners = {};
   final Set<String> _activePickupListeners = {};
   final List<StreamSubscription> _subscriptions = [];
+  bool _isSyncingLocalPickups = false;
 
   StreamSubscription? _pickerSubscription;
 
@@ -65,13 +66,13 @@ class OBRouteService {
             existingRoute?.pickupsData.toList() ?? [];
         final obsoletePickups =
             existingPickupsInRoute
-                .where((pickup) => !latestPickupIds.contains(pickup.id))
+                .where((pickup) => !latestPickupIds.contains(pickup.pickupId))
                 .toList();
 
         // Remove obsolete pickups from box and relation
         if (obsoletePickups.isNotEmpty) {
           debugPrint(
-            "Removing obsolete pickups: ${obsoletePickups.map((p) => p.id).toList()}",
+            "Removing obsolete pickups: ${obsoletePickups.map((p) => p.pickupId).toList()}",
           );
 
           // Remove from pickupBox
@@ -90,8 +91,6 @@ class OBRouteService {
 
         // Now sync and attach updated pickups
         Set<Pickup> newPickups = {};
-        int totalPickups = updatedRoute.pickupIds.length;
-        int fetchedCount = 0;
 
         _replaceRouteWithPickups(updatedRoute, {});
 
@@ -100,24 +99,25 @@ class OBRouteService {
           final pickupSubscription = ReadService()
               .getPickup(id: pickupId)
               .listen((pickup) {
-                onSynced?.call();
-                final existingPickup =
-                    objectbox.pickupBox
-                        .query(Pickup_.id.equals(pickup.id))
-                        .build()
-                        .findFirst();
+                if (pickup != null) {
+                  onSynced?.call();
+                  final existingPickup =
+                      objectbox.pickupBox
+                          .query(Pickup_.id.equals(pickup.id))
+                          .build()
+                          .findFirst();
 
-                pickup = pickup.copyWith(
-                  obxId: existingPickup?.obxId,
-                  firebaseIndex: updatedRoute.pickupIds.indexOf(pickupId),
-                );
+                  pickup = pickup.copyWith(
+                    obxId: existingPickup?.obxId,
+                    firebaseIndex: updatedRoute.pickupIds.indexOf(pickupId),
+                  );
 
-                objectbox.pickupBox.put(pickup);
-                newPickups.add(pickup);
+                  objectbox.pickupBox.put(pickup);
+                  newPickups.add(pickup);
 
-                fetchedCount++;
-                if (fetchedCount >= totalPickups) {
                   _replaceRouteWithPickups(updatedRoute, newPickups);
+                } else {
+                  debugPrint("PICKUP NOT FOUND : pickupId:  $pickupId");
                 }
               });
 
@@ -185,27 +185,33 @@ class OBRouteService {
 
     // Preserve obxId
     final finalPickup = pickup.copyWith(obxId: existing?.obxId);
+    final localPickup = LocalPickup.fromPickup(finalPickup);
+    debugPrint("from UPDATE PICKUP (local): ${localPickup.itemsData}");
 
-    objectbox.localStatePickupBox.put(LocalPickup.fromPickup(finalPickup));
+    objectbox.localStatePickupBox.put(localPickup);
   }
 
-  /// Sync completed pickups with Firebase
-  /// this checks for the completed pickups in the local state and syncs them with Firebase
-  /// Only removes local data after successful upload to Firebase
   void syncLocalPickup() {
     final subscription = objectbox.localStatePickupBox
         .query(LocalPickup_.isUpdated.equals(true))
         .watch(triggerImmediately: true)
         .listen((query) async {
-          /// helps to remove the unwanted pickups from the local state
-          // removeInvalidLocalPickups(localPickups: query.find());
+          // Prevent re-entry if already syncing
+          if (_isSyncingLocalPickups) return;
 
-          debugPrint("Trying to sync the local pickups to firebase");
+          _isSyncingLocalPickups = true;
+          debugPrint("Trying to sync the local pickups to Firebase");
 
-          for (final pickup in query.find()) {
+          final pickupsToSync = query.find();
+
+          for (final pickup in pickupsToSync) {
             bool uploadSuccessful = false;
 
-            // Listen to the stream and wait for completion or failure
+            /// set the isUpdated flag to false 
+            objectbox.localStatePickupBox.put(
+              pickup.copyWith(isUpdated: false),
+            );
+
             await for (final status in WriteService().putPickup(
               pickup: pickup.toPickup(),
             )) {
@@ -215,12 +221,10 @@ class OBRouteService {
                 uploadSuccessful = true;
               } else if (status.startsWith('failed:')) {
                 debugPrint("Failed to upload pickup to Firebase: $status");
-                uploadSuccessful = false;
                 break;
               }
             }
 
-            // Only remove local data if upload was successful
             if (uploadSuccessful) {
               debugPrint("Upload successful, removing local pickup data");
               objectbox.localStatePickupBox.remove(pickup.obxId);
@@ -228,6 +232,8 @@ class OBRouteService {
               debugPrint("Upload failed, keeping local pickup data for retry");
             }
           }
+
+          _isSyncingLocalPickups = false;
         });
 
     _subscriptions.add(subscription);

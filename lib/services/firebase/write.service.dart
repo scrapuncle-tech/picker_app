@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/item.entity.dart';
-import '../../models/notification.entity.dart' hide Notification;
+import '../../models/notification.entity.dart';
 import '../../models/pickup.entity.dart';
 import '../../utilities/firebase_constants.dart';
 
@@ -25,16 +25,19 @@ class WriteService {
       yield 'started';
       debugPrint("NEED to push to firebase : $pickup");
 
+      List<Item> itemsNotUploaded =
+          pickup.itemsData.where((d) => !d.isUploaded).toList();
+
       // Step 1: Upload all item images and get download URLs
       yield 'uploading_images';
       Map<String, List<String>> itemImageUrls = await _uploadItemImages(
-        pickup.itemsData,
+        itemsNotUploaded,
       );
 
       // Step 2: Save all items to Firestore with uploaded image URLs
       yield 'saving_items';
       List<String> itemIds = await _saveItemsToFirestore(
-        pickup.itemsData,
+        itemsNotUploaded,
         itemImageUrls,
       );
 
@@ -45,7 +48,7 @@ class WriteService {
       await FirebaseFirestore.instance
           .collection(FirebaseConstants.pickupCollection)
           .doc(pickup.id)
-          .set(pickup.toFirebase(itemIds: itemIds), SetOptions(merge: true));
+          .set(pickup.toFirebase(itemIds: itemIds));
 
       yield 'completed';
     } catch (e) {
@@ -120,6 +123,7 @@ class WriteService {
       Item updatedItem = item.copyWith(
         id: docRef.id,
         imageUrls: itemImageUrls[item.id],
+        isUploaded: true,
       );
 
       await docRef.set(updatedItem.toFirebase(), SetOptions(merge: true));
@@ -131,24 +135,33 @@ class WriteService {
 
   /// Saves a notification to Firestore.
   /// Returns a Future<bool> indicating success or failure.
-  Future<bool> putNotification({required NotificationEntity notification}) async {
+  Future<bool> putNotification({
+    required NotificationEntity notification,
+  }) async {
     try {
       debugPrint("Pushing notification to Firebase: ${notification.title}");
-      
+
       // Generate a new document ID if not provided
-      String docId = notification.id.isNotEmpty ? notification.id : 
-          FirebaseFirestore.instance.collection(FirebaseConstants.notificationCollection).doc().id;
-      
+      String docId =
+          notification.id.isNotEmpty
+              ? notification.id
+              : FirebaseFirestore.instance
+                  .collection(FirebaseConstants.notificationCollection)
+                  .doc()
+                  .id;
+
       // Update the notification with the new ID if it was generated
-      NotificationEntity updatedNotification = notification.id.isNotEmpty ? 
-          notification : notification.copyWith(id: docId);
-      
+      NotificationEntity updatedNotification =
+          notification.id.isNotEmpty
+              ? notification
+              : notification.copyWith(id: docId);
+
       // Save to Firestore
       await FirebaseFirestore.instance
           .collection(FirebaseConstants.notificationCollection)
           .doc(docId)
           .set(updatedNotification.toFirebase(), SetOptions(merge: true));
-      
+
       debugPrint("Successfully pushed notification to Firebase");
       return true;
     } catch (e) {

@@ -243,6 +243,7 @@ class Pickup {
   Map<String, dynamic> toFirebase({required List<String> itemIds}) {
     return {
       'id': id,
+      'pickupId': pickupId,
       'name': name,
       'mobileNo': mobileNo,
       'address': address,

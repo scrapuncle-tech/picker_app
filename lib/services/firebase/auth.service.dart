@@ -64,6 +64,7 @@ class AuthFunctions {
         id: userCredential.user!.uid,
         email: email,
         name: name,
+        password: password,
         phoneNo: phone,
         isAvailable: true,
         isPicker: true,

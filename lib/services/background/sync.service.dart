@@ -103,9 +103,9 @@ class SyncService {
     objectbox.pickerBox.removeAll();
     objectbox.routeBox.removeAll();
     objectbox.pickupBox.removeAll();
-    objectbox.itemBox.removeAll();
+    // objectbox.itemBox.removeAll();
     objectbox.productBox.removeAll();
-    objectbox.localStatePickupBox.removeAll();
-    objectbox.notificationBox.removeAll();
+    // objectbox.localStatePickupBox.removeAll();
+    // objectbox.notificationBox.removeAll();
   }
 }

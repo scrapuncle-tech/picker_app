@@ -11,6 +11,7 @@ import '../components/common/update_dialog.dart';
 import '../providers/navigation.provider.dart';
 import '../services/helper/generate_receipt.dart';
 import '../views/home.page.dart';
+import '../views/pickups.page.dart';
 // import '../views/home.page.dart';
 
 class Navigation extends ConsumerStatefulWidget {
@@ -84,7 +85,7 @@ class _NavigationState extends ConsumerState<Navigation> {
   List<Widget> pages = [
     HomePage(),
     Container(color: Colors.blueAccent),
-    Container(color: Colors.yellowAccent),
+    PickupsPage(),
   ];
   List<NavBarItem> navBarItems = [
     NavBarItem(icon: Symbols.home_filled_rounded, title: "Home"),

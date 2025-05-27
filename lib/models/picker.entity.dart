@@ -10,6 +10,7 @@ class Picker {
   //
   String name;
   String email;
+  String password;
   String licenseNo;
   String phoneNo;
   // status fields
@@ -30,6 +31,7 @@ class Picker {
     required this.id,
     required this.name,
     required this.email,
+    required this.password,
     required this.licenseNo,
     required this.phoneNo,
     required this.isAvailable,
@@ -48,6 +50,7 @@ class Picker {
       id: data['id'] ?? '',
       name: data['name'] ?? '',
       email: data['email'] ?? '',
+      password: data['password'] ?? '',
       licenseNo: data['licenseNo'] ?? '',
       phoneNo: data['phoneNo'] ?? '',
       isAvailable: data['isAvailable'] ?? false,
@@ -67,6 +70,7 @@ class Picker {
       'id': id,
       'name': name,
       'email': email,
+      'password': password,
       'licenseNo': licenseNo,
       'phoneNo': phoneNo,
       'isAvailable': isAvailable,
@@ -86,6 +90,7 @@ class Picker {
     String? id,
     String? name,
     String? email,
+    String? password,
     String? licenseNo,
     String? phoneNo,
     bool? isAvailable,
@@ -103,6 +108,7 @@ class Picker {
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
+      password: password ?? this.password,
       licenseNo: licenseNo ?? this.licenseNo,
       phoneNo: phoneNo ?? this.phoneNo,
       isAvailable: isAvailable ?? this.isAvailable,
@@ -123,6 +129,7 @@ class Picker {
       'id': $id,
       'name': $name,
       'email': $email,
+      'password': $password,
       'licenseNo': $licenseNo,
       'phoneNo': $phoneNo,
       'isAvailable': $isAvailable,

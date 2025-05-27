@@ -48,4 +48,15 @@ class Product {
   Map<String, dynamic> toFirebase() {
     return {'id': id, 'name': name, 'price': price, 'unit': unit};
   }
+
+  @override
+  String toString() {
+    return 'Product('
+        'obxId: $obxId, '
+        'id: $id, '
+        'name: $name, '
+        'price: $price, '
+        'unit: $unit'
+        ')';
+  }
 }

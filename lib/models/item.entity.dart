@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:objectbox/objectbox.dart';
 import 'local_pickup.entity.dart';
 import 'pickup.entity.dart';
@@ -22,10 +23,10 @@ class Item {
   final localPickup = ToOne<LocalPickup>(); // For offline/local pickup
 
   // Getter for product that uses either the transient field or relation
-  Product get product => _product ?? productRef.target!;
+  Product? get product => _product ?? productRef.target;
 
   // Setter for product that updates both the transient field and relation
-  set product(Product p) {
+  set product(Product? p) {
     _product = p;
     productRef.target = p;
   }
@@ -127,12 +128,14 @@ class Item {
   }
 
   Map<String, dynamic> toFirebase() {
+    debugPrint("====== product: $product");
+
     return {
       'id': id,
       'createdAt': createdAt.toIso8601String(),
       'customPrice': customPrice,
       'isUploaded': isUploaded,
-      'product': product.toFirebase(),
+      'product': product?.toFirebase() ?? {},
       'imageUrls': imageUrls,
       'localImagePaths': localImagePaths,
       'totalPrice': totalPrice,
@@ -147,6 +150,7 @@ class Item {
     return 'Item('
         'obxId: $obxId, '
         'id: $id, '
+        'product: $product, '
         'createdAt: ${createdAt.toIso8601String()}, '
         'customPrice: $customPrice, '
         'isUploaded: $isUploaded, '

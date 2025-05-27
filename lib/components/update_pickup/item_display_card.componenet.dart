@@ -73,7 +73,7 @@ class ItemDisplayCard extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      text: item.product.name,
+                      text: item.product?.name ?? '',
                       size: sizeData.header,
                       weight: FontWeight.w900,
                     ),
@@ -89,7 +89,8 @@ class ItemDisplayCard extends ConsumerWidget {
                         CustomText(
                           text:
                               item.customPrice?.toString() ??
-                              item.product.price.toString(),
+                              item.product?.price.toString() ??
+                              '',
                           size: sizeData.regular,
                           weight: FontWeight.w800,
                           color: colorData.fontColor(.8),

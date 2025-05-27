@@ -75,7 +75,9 @@ class SubStatusDropdown extends ConsumerWidget {
                       } else {
                         ref
                             .read(currentPickupProvider.notifier)
-                            .updatePickup(pickup.copyWith(subStatus: newValue));
+                            .updatePickup(
+                              pickup: pickup.copyWith(subStatus: newValue),
+                            );
                       }
                     }
                   },
