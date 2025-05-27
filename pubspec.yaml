@@ -45,7 +45,7 @@ dependencies:
   # Local Storage & Preferences
   shared_preferences: ^2.5.2 # Persistent local storage
   path_provider: ^2.1.5 # Access device file system paths
-  objectbox: ^4.1.0 # ObjectBox database
+  objectbox: ^4.2.0 # ObjectBox database
   objectbox_flutter_libs: any # ObjectBox Flutter SDK
 
   # Utility Packages

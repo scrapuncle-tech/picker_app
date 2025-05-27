@@ -10,16 +10,16 @@ class NotificationEntity {
 
   List<String> details;
   String? imageUrl;
-  bool isRead;  
+  bool isRead;
   String message;
   String targetSupervisor;
   String? targetScreen;
-  
+
   @Property(type: PropertyType.dateNano)
   DateTime timestamp;
-  
+
   String title;
-  
+
   // Flag to track if notification has been synced to Firebase
   bool isSynced;
 
@@ -68,13 +68,16 @@ class NotificationEntity {
   static NotificationEntity fromFirebase(Map<String, dynamic> data) {
     return NotificationEntity(
       id: data['id'] ?? '',
-      details: data['details'] != null ? List<String>.from(data['details']) : [],
+      details:
+          data['details'] != null ? List<String>.from(data['details']) : [],
       imageUrl: data['imageUrl'],
       isRead: data['isRead'] ?? false,
       message: data['message'] ?? '',
       targetSupervisor: data['targetSupervisor'] ?? '',
       targetScreen: data['targetScreen'],
-      timestamp: DateTime.parse(data['timestamp'] ?? DateTime.now().toIso8601String()),
+      timestamp: DateTime.parse(
+        data['timestamp'] ?? DateTime.now().toIso8601String(),
+      ),
       title: data['title'] ?? '',
       isSynced: true,
     );

@@ -28,85 +28,85 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(1, 2892694312627733662),
+      id: const obx_int.IdUid(1, 4570125580093388145),
       name: 'Item',
-      lastPropertyId: const obx_int.IdUid(14, 3118052622726273536),
+      lastPropertyId: const obx_int.IdUid(14, 5482854290382446053),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 8281291000300427634),
+            id: const obx_int.IdUid(1, 4834199348074821852),
             name: 'obxId',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 6450421699602947035),
+            id: const obx_int.IdUid(2, 4564182539173056426),
             name: 'id',
             type: 9,
             flags: 34848,
-            indexId: const obx_int.IdUid(1, 7652727620994979051)),
+            indexId: const obx_int.IdUid(1, 858828403047650560)),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 4561937356288213873),
+            id: const obx_int.IdUid(3, 6823215686690661785),
             name: 'productRefId',
             type: 11,
             flags: 520,
-            indexId: const obx_int.IdUid(2, 3744390774442319213),
+            indexId: const obx_int.IdUid(2, 7217016809067976196),
             relationTarget: 'Product'),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 785758624746126861),
+            id: const obx_int.IdUid(4, 5019967749574540972),
             name: 'pickupId',
             type: 11,
             flags: 520,
-            indexId: const obx_int.IdUid(3, 1468513446345717209),
+            indexId: const obx_int.IdUid(3, 7291981338556090316),
             relationTarget: 'Pickup'),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 6764005507020442016),
+            id: const obx_int.IdUid(5, 1891436775849858800),
             name: 'localPickupId',
             type: 11,
             flags: 520,
-            indexId: const obx_int.IdUid(4, 9116649743889983634),
+            indexId: const obx_int.IdUid(4, 2372636426224627525),
             relationTarget: 'LocalPickup'),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 3992463476314405834),
+            id: const obx_int.IdUid(6, 2706675219946025974),
             name: 'createdAt',
             type: 10,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 7288521528224534689),
+            id: const obx_int.IdUid(7, 6780602745878228254),
             name: 'localImagePaths',
             type: 30,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 249564328773630134),
+            id: const obx_int.IdUid(8, 5545702011399909067),
             name: 'imageUrls',
             type: 30,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 8137745448981913355),
+            id: const obx_int.IdUid(9, 5336466497187886845),
             name: 'isUploaded',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 9221835923212998352),
+            id: const obx_int.IdUid(10, 9112865603754840831),
             name: 'totalPrice',
             type: 8,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(11, 7652172412990241707),
+            id: const obx_int.IdUid(11, 1825480867891276484),
             name: 'customPrice',
             type: 8,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(12, 8534238352513844246),
+            id: const obx_int.IdUid(12, 1732561672431532138),
             name: 'weight',
             type: 8,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(13, 2052763851468778456),
+            id: const obx_int.IdUid(13, 6031420256134307790),
             name: 'quantity',
             type: 8,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(14, 3118052622726273536),
+            id: const obx_int.IdUid(14, 5482854290382446053),
             name: 'coordinates',
             type: 30,
             flags: 0)
@@ -114,191 +114,191 @@ final _entities = <obx_int.ModelEntity>[
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(2, 2259179546281631519),
+      id: const obx_int.IdUid(2, 8278728251566371963),
       name: 'LocalPickup',
-      lastPropertyId: const obx_int.IdUid(36, 4472208621637809223),
+      lastPropertyId: const obx_int.IdUid(36, 6406768489324350763),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 8783355729276708604),
+            id: const obx_int.IdUid(1, 639153100716282040),
             name: 'obxId',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 6384614594321207223),
+            id: const obx_int.IdUid(2, 5605810412354680849),
             name: 'id',
             type: 9,
             flags: 34848,
-            indexId: const obx_int.IdUid(5, 2808068144629744225)),
+            indexId: const obx_int.IdUid(5, 6674570477959139874)),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 2184444578829988560),
-            name: 'firebaseIndex',
-            type: 6,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 745968288656314131),
-            name: 'name',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 2591854143544141325),
-            name: 'mobileNo',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 8655824043768739565),
-            name: 'address',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 9083185314144569029),
-            name: 'area',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 7849855185090063316),
-            name: 'pincode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 2090564834500427589),
-            name: 'aov',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 5321696953049637454),
-            name: 'description',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(11, 4761673820310392978),
-            name: 'expectedWeight',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(12, 1331756183587722603),
-            name: 'items',
-            type: 30,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(13, 674833982845258178),
-            name: 'routeModelId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(6, 2285441942102746437),
-            relationTarget: 'RouteModel'),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(14, 158017561043954489),
-            name: 'slot',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(15, 4768984981855664570),
-            name: 'finalSlot',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(16, 3943838472380968133),
-            name: 'status',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(17, 3026966751877270622),
-            name: 'subStatus',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(18, 7053064408875204487),
-            name: 'isCompleted',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(19, 8091574559814883895),
-            name: 'isLocked',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(20, 8378684316050008941),
-            name: 'lockedBy',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(21, 1630889928313002376),
-            name: 'pickerId',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(22, 4135931064269330739),
-            name: 'pickerPhoneNo',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(23, 8746514949101556306),
-            name: 'helperId',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(24, 5819098812736797195),
-            name: 'helperPhoneNo',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(25, 7606169977292092401),
-            name: 'routeId',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(26, 4059576419613325112),
-            name: 'mapLink',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(27, 388685276467259849),
-            name: 'coordinates',
-            type: 30,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(28, 4217587766520971917),
-            name: 'totalPrice',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(29, 3537460842060216876),
-            name: 'totalWeightQuantity',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(30, 1330601434852329620),
-            name: 'createdAt',
-            type: 10,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(31, 3462822208263464855),
-            name: 'date',
-            type: 10,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(32, 6708471529525946116),
-            name: 'finalDate',
-            type: 10,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(33, 4801095565335255974),
-            name: 'updatedAt',
-            type: 12,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(34, 5382661057277960126),
-            name: 'completedAt',
-            type: 12,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(35, 561271511981766271),
+            id: const obx_int.IdUid(3, 673856346182473478),
             name: 'pickupId',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(36, 4472208621637809223),
+            id: const obx_int.IdUid(4, 3123770857282149900),
+            name: 'firebaseIndex',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 7037702546428772951),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 7578789988771824439),
+            name: 'mobileNo',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2154523629049975595),
+            name: 'address',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 7577068974342583893),
+            name: 'area',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 6568421061610677126),
+            name: 'pincode',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 2154568649775736151),
+            name: 'aov',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 8962928734596156289),
+            name: 'description',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 4962412626599831301),
+            name: 'expectedWeight',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 1906156159326090720),
+            name: 'items',
+            type: 30,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 573587864740681288),
+            name: 'routeModelId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(6, 6662427134248727471),
+            relationTarget: 'RouteModel'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 2770898252548539620),
+            name: 'slot',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(16, 460678811902555147),
+            name: 'finalSlot',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(17, 5222919819700187275),
+            name: 'status',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(18, 407138152193367695),
+            name: 'subStatus',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(19, 1391639757692302566),
+            name: 'isCompleted',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(20, 3180039156844432085),
+            name: 'isLocked',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(21, 5003532615938606435),
+            name: 'lockedBy',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(22, 61653976438182543),
+            name: 'pickerId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(23, 9171708579237362091),
+            name: 'pickerPhoneNo',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(24, 1805969411797838477),
+            name: 'helperId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(25, 2378490298216815334),
+            name: 'helperPhoneNo',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(26, 814622934394026570),
+            name: 'routeId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(27, 6146830235871570563),
+            name: 'mapLink',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(28, 1325613312146484900),
+            name: 'coordinates',
+            type: 30,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(29, 5886608083693935788),
+            name: 'totalPrice',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(30, 6354674900464728140),
+            name: 'totalWeightQuantity',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(31, 7714598288336763789),
+            name: 'createdAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(32, 8139488103309243131),
+            name: 'date',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(33, 3203653128900693434),
+            name: 'finalDate',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(34, 2224325611477737702),
+            name: 'updatedAt',
+            type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(35, 7391822544537818726),
+            name: 'completedAt',
+            type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(36, 6406768489324350763),
             name: 'isUpdated',
             type: 1,
             flags: 0)
@@ -309,84 +309,173 @@ final _entities = <obx_int.ModelEntity>[
             name: 'itemsData', srcEntity: 'Item', srcField: 'localPickup')
       ]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(3, 8885974152482155854),
-      name: 'Picker',
-      lastPropertyId: const obx_int.IdUid(15, 5963386493565960250),
+      id: const obx_int.IdUid(3, 245794945070651209),
+      name: 'Logger',
+      lastPropertyId: const obx_int.IdUid(3, 3538088023400599376),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 2424806240244649802),
+            id: const obx_int.IdUid(1, 1467376957846181251),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4563261196093730606),
+            name: 'statusIndex',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 3538088023400599376),
+            name: 'message',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(4, 7185711272601369911),
+      name: 'NotificationEntity',
+      lastPropertyId: const obx_int.IdUid(11, 9190327027869719851),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8511536302152174553),
             name: 'obxId',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 3695883233931707577),
+            id: const obx_int.IdUid(2, 8564675643183226633),
             name: 'id',
             type: 9,
             flags: 34848,
-            indexId: const obx_int.IdUid(7, 7088413069404175079)),
+            indexId: const obx_int.IdUid(7, 4399592989695103154)),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 6056323917989779998),
+            id: const obx_int.IdUid(3, 869784222299754292),
+            name: 'details',
+            type: 30,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 4519922515597730571),
+            name: 'imageUrl',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 4546314991490019631),
+            name: 'isRead',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 8288018244907698279),
+            name: 'message',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8076046467390447599),
+            name: 'targetSupervisor',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 7381140364850668730),
+            name: 'targetScreen',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 1818152113158038552),
+            name: 'timestamp',
+            type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 7172571562816118763),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 9190327027869719851),
+            name: 'isSynced',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(5, 2286385200778026665),
+      name: 'Picker',
+      lastPropertyId: const obx_int.IdUid(15, 6884300873839586080),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8481283761780326653),
+            name: 'obxId',
+            type: 6,
+            flags: 1),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 219893483048537019),
+            name: 'id',
+            type: 9,
+            flags: 34848,
+            indexId: const obx_int.IdUid(8, 7047963669355875221)),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 8499344321296571772),
             name: 'name',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 6466228950419861747),
+            id: const obx_int.IdUid(4, 2831552494493979926),
             name: 'email',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 5191873463013853950),
+            id: const obx_int.IdUid(5, 5792891305970151584),
             name: 'licenseNo',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 4158030915777049174),
+            id: const obx_int.IdUid(6, 610823317505797503),
             name: 'phoneNo',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 5194395289889527996),
+            id: const obx_int.IdUid(7, 8612832000305199579),
             name: 'isAvailable',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 6233494087483855370),
+            id: const obx_int.IdUid(8, 3471659786547040586),
             name: 'isDriver',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 8193682702277738720),
+            id: const obx_int.IdUid(9, 1698004293518117881),
             name: 'isHelper',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 35936166349963815),
+            id: const obx_int.IdUid(10, 8345018379543432961),
             name: 'isOnLeave',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(11, 2774104009563573399),
+            id: const obx_int.IdUid(11, 5000398293594305630),
             name: 'isPicker',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(12, 7712304269431099597),
+            id: const obx_int.IdUid(12, 298427234040051455),
             name: 'isWorking',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(13, 2487369252439839596),
+            id: const obx_int.IdUid(13, 8495408253103368792),
             name: 'routeName',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(14, 3270803315850931606),
+            id: const obx_int.IdUid(14, 7744231757494224080),
             name: 'assignedVehicleId',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(15, 5963386493565960250),
+            id: const obx_int.IdUid(15, 6884300873839586080),
             name: 'assignedVehicleName',
             type: 9,
             flags: 0)
@@ -394,191 +483,191 @@ final _entities = <obx_int.ModelEntity>[
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(4, 6670025252378099623),
+      id: const obx_int.IdUid(6, 3636317275695244773),
       name: 'Pickup',
-      lastPropertyId: const obx_int.IdUid(36, 5492012565155697890),
+      lastPropertyId: const obx_int.IdUid(36, 6885916690713571538),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 4332979414173533802),
+            id: const obx_int.IdUid(1, 6774251426387476695),
             name: 'obxId',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 1317743678134736991),
+            id: const obx_int.IdUid(2, 4706910950792823308),
             name: 'id',
             type: 9,
             flags: 34848,
-            indexId: const obx_int.IdUid(8, 2964335981769883219)),
+            indexId: const obx_int.IdUid(9, 553401588463732829)),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 5008704463479634757),
-            name: 'firebaseIndex',
-            type: 6,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 6502091251722641713),
-            name: 'name',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 1699814988884329484),
-            name: 'mobileNo',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 6454688516147976429),
-            name: 'address',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 2841706986874420126),
-            name: 'area',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 7322695831244890915),
-            name: 'pincode',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 283758677816325132),
-            name: 'aov',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 2740036028451907000),
-            name: 'description',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(11, 3387843817019219399),
-            name: 'expectedWeight',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(12, 6264224547226836978),
-            name: 'items',
-            type: 30,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(13, 4482802268004522321),
-            name: 'routeModelId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(9, 3707642148256201351),
-            relationTarget: 'RouteModel'),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(14, 7732297257307542893),
-            name: 'slot',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(15, 2285843572485602558),
-            name: 'finalSlot',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(16, 4422175367955001744),
-            name: 'status',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(17, 1765199523123870474),
-            name: 'subStatus',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(18, 1502641820857091922),
-            name: 'isCompleted',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(19, 756903910410441621),
-            name: 'isLocked',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(20, 6266641707391504455),
-            name: 'lockedBy',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(21, 5132864664319345654),
-            name: 'pickerId',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(22, 1347522867725463646),
-            name: 'pickerPhoneNo',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(23, 2052172727899066528),
-            name: 'helperId',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(24, 3049598567302234858),
-            name: 'helperPhoneNo',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(25, 3078448966598652539),
-            name: 'routeId',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(26, 2973654735215749074),
-            name: 'mapLink',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(27, 3327293340465807979),
-            name: 'coordinates',
-            type: 30,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(28, 8872228817890319492),
-            name: 'totalPrice',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(29, 6376228648086872319),
-            name: 'totalWeightQuantity',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(30, 1921495534429533333),
-            name: 'createdAt',
-            type: 10,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(31, 6709355200260848034),
-            name: 'date',
-            type: 10,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(32, 447068025337140094),
-            name: 'finalDate',
-            type: 10,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(33, 2246731700895392513),
-            name: 'updatedAt',
-            type: 12,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(34, 1009958903730517609),
-            name: 'completedAt',
-            type: 12,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(35, 1244631002374829472),
+            id: const obx_int.IdUid(3, 7890732527210805322),
             name: 'pickupId',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(36, 5492012565155697890),
+            id: const obx_int.IdUid(4, 8628487567031505362),
+            name: 'firebaseIndex',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2077777550365535166),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 4632129665655079052),
+            name: 'mobileNo',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 6307487326172200793),
+            name: 'address',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 2124450885027597110),
+            name: 'area',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 8350871104036042150),
+            name: 'pincode',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 7236685695225780589),
+            name: 'aov',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 1132663818123599662),
+            name: 'description',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 8266031301981044136),
+            name: 'expectedWeight',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 22524853031778029),
+            name: 'items',
+            type: 30,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 4134672250002766596),
+            name: 'routeModelId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(10, 1639169525124813003),
+            relationTarget: 'RouteModel'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 2312650116269329669),
+            name: 'slot',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(16, 347789101169566628),
+            name: 'finalSlot',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(17, 9046560858109147330),
+            name: 'status',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(18, 5653355063128493662),
+            name: 'subStatus',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(19, 748902514691012253),
+            name: 'isCompleted',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(20, 5227608053150353660),
+            name: 'isLocked',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(21, 3454815354567498025),
+            name: 'lockedBy',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(22, 1138820949378598577),
+            name: 'pickerId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(23, 7878644358336731385),
+            name: 'pickerPhoneNo',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(24, 5205568749213566442),
+            name: 'helperId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(25, 2895634025091682215),
+            name: 'helperPhoneNo',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(26, 7935496734322712771),
+            name: 'routeId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(27, 8740223956194784776),
+            name: 'mapLink',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(28, 4700443181729594693),
+            name: 'coordinates',
+            type: 30,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(29, 2284563105889996118),
+            name: 'totalPrice',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(30, 8645479782962184251),
+            name: 'totalWeightQuantity',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(31, 2663161740271689920),
+            name: 'createdAt',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(32, 802077682151662055),
+            name: 'date',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(33, 3195548902650714587),
+            name: 'finalDate',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(34, 5145160857876423851),
+            name: 'updatedAt',
+            type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(35, 7885451645521006250),
+            name: 'completedAt',
+            type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(36, 6885916690713571538),
             name: 'isUpdated',
             type: 1,
             flags: 0)
@@ -589,34 +678,34 @@ final _entities = <obx_int.ModelEntity>[
             name: 'itemsData', srcEntity: 'Item', srcField: 'pickup')
       ]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(5, 4860080170278471024),
+      id: const obx_int.IdUid(7, 5397539288945813056),
       name: 'Product',
-      lastPropertyId: const obx_int.IdUid(5, 999773419094707138),
+      lastPropertyId: const obx_int.IdUid(5, 1777589497184299008),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 7270069184252732605),
+            id: const obx_int.IdUid(1, 578055660357675746),
             name: 'obxId',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 2404280963921346818),
+            id: const obx_int.IdUid(2, 5784124736549796965),
             name: 'id',
             type: 9,
             flags: 34848,
-            indexId: const obx_int.IdUid(10, 5252306171792335364)),
+            indexId: const obx_int.IdUid(11, 6255871686306209661)),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 7965494680780283580),
+            id: const obx_int.IdUid(3, 6898227914384071946),
             name: 'name',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 6322852187543473211),
+            id: const obx_int.IdUid(4, 3150055134699471862),
             name: 'price',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 999773419094707138),
+            id: const obx_int.IdUid(5, 1777589497184299008),
             name: 'unit',
             type: 9,
             flags: 0)
@@ -624,76 +713,76 @@ final _entities = <obx_int.ModelEntity>[
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(6, 8073611703555323437),
+      id: const obx_int.IdUid(8, 2870844657184697681),
       name: 'RouteModel',
-      lastPropertyId: const obx_int.IdUid(13, 4235808848093803740),
+      lastPropertyId: const obx_int.IdUid(13, 9092539818997472554),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 3334377093562378568),
+            id: const obx_int.IdUid(1, 7628284383995718552),
             name: 'obxId',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 2756584931905612438),
+            id: const obx_int.IdUid(2, 1281995091067215548),
             name: 'id',
             type: 9,
             flags: 34848,
-            indexId: const obx_int.IdUid(11, 8041517500316570220)),
+            indexId: const obx_int.IdUid(12, 5187941493426763591)),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 1195454793561849806),
+            id: const obx_int.IdUid(3, 4894881017416493561),
             name: 'name',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 2691841179463917858),
+            id: const obx_int.IdUid(4, 9132827523426852229),
             name: 'mapLink',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 6897983937680313356),
+            id: const obx_int.IdUid(5, 5265298510665739909),
             name: 'morningAssetCheck',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 460142844141700694),
+            id: const obx_int.IdUid(6, 98122623039804478),
             name: 'eveningAssetCheck',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 3755429132606876980),
-            name: 'pickerFirebaseId',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 7754930512809748932),
-            name: 'helperId',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 5861323840197789478),
-            name: 'pickupIds',
-            type: 30,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 3559863320656583968),
-            name: 'scheduledDate',
-            type: 10,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(11, 1220623603961281677),
-            name: 'updatedAt',
-            type: 12,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(12, 5627689721282804884),
+            id: const obx_int.IdUid(7, 1255928749349817567),
             name: 'morningSupervisor',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(13, 4235808848093803740),
+            id: const obx_int.IdUid(8, 1542255148966547316),
             name: 'eveningSupervisor',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 1479593647093228193),
+            name: 'pickerFirebaseId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 7754248657774544872),
+            name: 'helperId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 6042406823285640548),
+            name: 'pickupIds',
+            type: 30,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 6610857779757341074),
+            name: 'scheduledDate',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 9092539818997472554),
+            name: 'updatedAt',
+            type: 12,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -702,119 +791,30 @@ final _entities = <obx_int.ModelEntity>[
             name: 'pickupsData', srcEntity: 'Pickup', srcField: 'routeModel')
       ]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(7, 268734170302123877),
+      id: const obx_int.IdUid(9, 2108070671142245570),
       name: 'SyncStatus',
-      lastPropertyId: const obx_int.IdUid(5, 1717916722104076567),
+      lastPropertyId: const obx_int.IdUid(4, 7762082925506263645),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 3944528681064313609),
+            id: const obx_int.IdUid(1, 5201358638020778385),
             name: 'id',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 7801946328115112777),
+            id: const obx_int.IdUid(2, 7211350227843957283),
             name: 'isSyncing',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 7891867666782947022),
+            id: const obx_int.IdUid(3, 2484878458239000060),
             name: 'isSynced',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 7130673956283102337),
+            id: const obx_int.IdUid(4, 7762082925506263645),
             name: 'lastSyncTime',
             type: 12,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[]),
-  obx_int.ModelEntity(
-      id: const obx_int.IdUid(8, 6808545179855262196),
-      name: 'Logger',
-      lastPropertyId: const obx_int.IdUid(4, 7063670462603754317),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 2560201760939213397),
-            name: 'id',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 7689705237446431526),
-            name: 'message',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 7063670462603754317),
-            name: 'statusIndex',
-            type: 6,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[]),
-  obx_int.ModelEntity(
-      id: const obx_int.IdUid(9, 6391862380746215777),
-      name: 'NotificationEntity',
-      lastPropertyId: const obx_int.IdUid(11, 7977535129732190523),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 7059696272117256292),
-            name: 'obxId',
-            type: 6,
-            flags: 1),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 1933665446307545684),
-            name: 'id',
-            type: 9,
-            flags: 34848,
-            indexId: const obx_int.IdUid(12, 1714128979908039523)),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 6489721459973418746),
-            name: 'details',
-            type: 30,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 8892722572044293577),
-            name: 'imageUrl',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 2548002104327356512),
-            name: 'isRead',
-            type: 1,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 4586587346858699111),
-            name: 'message',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 8874137162356468011),
-            name: 'targetSupervisor',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 8833735617220986111),
-            name: 'targetScreen',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 3254424762678843309),
-            name: 'timestamp',
-            type: 12,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 1418366937291710480),
-            name: 'title',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(11, 7977535129732190523),
-            name: 'isSynced',
-            type: 1,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -856,13 +856,13 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(9, 6391862380746215777),
-      lastIndexId: const obx_int.IdUid(12, 1714128979908039523),
+      lastEntityId: const obx_int.IdUid(9, 2108070671142245570),
+      lastIndexId: const obx_int.IdUid(12, 5187941493426763591),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [1717916722104076567, 8856645923749986610],
+      retiredPropertyUids: const [],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -977,6 +977,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (LocalPickup object, fb.Builder fbb) {
           final idOffset = fbb.writeString(object.id);
+          final pickupIdOffset = fbb.writeString(object.pickupId);
           final nameOffset = fbb.writeString(object.name);
           final mobileNoOffset = fbb.writeString(object.mobileNo);
           final addressOffset = fbb.writeString(object.address);
@@ -1000,51 +1001,50 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final mapLinkOffset = fbb.writeString(object.mapLink);
           final coordinatesOffset = fbb.writeList(
               object.coordinates.map(fbb.writeString).toList(growable: false));
-          final pickupIdOffset = fbb.writeString(object.pickupId);
           fbb.startTable(37);
           fbb.addInt64(0, object.obxId);
           fbb.addOffset(1, idOffset);
-          fbb.addInt64(2, object.firebaseIndex);
-          fbb.addOffset(3, nameOffset);
-          fbb.addOffset(4, mobileNoOffset);
-          fbb.addOffset(5, addressOffset);
-          fbb.addOffset(6, areaOffset);
-          fbb.addOffset(7, pincodeOffset);
-          fbb.addOffset(8, aovOffset);
-          fbb.addOffset(9, descriptionOffset);
-          fbb.addOffset(10, expectedWeightOffset);
-          fbb.addOffset(11, itemsOffset);
-          fbb.addInt64(12, object.routeModel.targetId);
-          fbb.addOffset(13, slotOffset);
-          fbb.addOffset(14, finalSlotOffset);
-          fbb.addOffset(15, statusOffset);
-          fbb.addOffset(16, subStatusOffset);
-          fbb.addBool(17, object.isCompleted);
-          fbb.addBool(18, object.isLocked);
-          fbb.addOffset(19, lockedByOffset);
-          fbb.addOffset(20, pickerIdOffset);
-          fbb.addOffset(21, pickerPhoneNoOffset);
-          fbb.addOffset(22, helperIdOffset);
-          fbb.addOffset(23, helperPhoneNoOffset);
-          fbb.addOffset(24, routeIdOffset);
-          fbb.addOffset(25, mapLinkOffset);
-          fbb.addOffset(26, coordinatesOffset);
-          fbb.addFloat64(27, object.totalPrice);
-          fbb.addFloat64(28, object.totalWeightQuantity);
-          fbb.addInt64(29, object.createdAt.millisecondsSinceEpoch);
-          fbb.addInt64(30, object.date.millisecondsSinceEpoch);
-          fbb.addInt64(31, object.finalDate.millisecondsSinceEpoch);
+          fbb.addOffset(2, pickupIdOffset);
+          fbb.addInt64(3, object.firebaseIndex);
+          fbb.addOffset(4, nameOffset);
+          fbb.addOffset(5, mobileNoOffset);
+          fbb.addOffset(6, addressOffset);
+          fbb.addOffset(7, areaOffset);
+          fbb.addOffset(8, pincodeOffset);
+          fbb.addOffset(9, aovOffset);
+          fbb.addOffset(10, descriptionOffset);
+          fbb.addOffset(11, expectedWeightOffset);
+          fbb.addOffset(12, itemsOffset);
+          fbb.addInt64(13, object.routeModel.targetId);
+          fbb.addOffset(14, slotOffset);
+          fbb.addOffset(15, finalSlotOffset);
+          fbb.addOffset(16, statusOffset);
+          fbb.addOffset(17, subStatusOffset);
+          fbb.addBool(18, object.isCompleted);
+          fbb.addBool(19, object.isLocked);
+          fbb.addOffset(20, lockedByOffset);
+          fbb.addOffset(21, pickerIdOffset);
+          fbb.addOffset(22, pickerPhoneNoOffset);
+          fbb.addOffset(23, helperIdOffset);
+          fbb.addOffset(24, helperPhoneNoOffset);
+          fbb.addOffset(25, routeIdOffset);
+          fbb.addOffset(26, mapLinkOffset);
+          fbb.addOffset(27, coordinatesOffset);
+          fbb.addFloat64(28, object.totalPrice);
+          fbb.addFloat64(29, object.totalWeightQuantity);
+          fbb.addInt64(30, object.createdAt.millisecondsSinceEpoch);
+          fbb.addInt64(31, object.date.millisecondsSinceEpoch);
+          fbb.addInt64(32, object.finalDate.millisecondsSinceEpoch);
           fbb.addInt64(
-              32,
+              33,
               object.updatedAt == null
                   ? null
                   : object.updatedAt!.microsecondsSinceEpoch * 1000);
           fbb.addInt64(
-              33,
+              34,
               object.completedAt == null
                   ? null
                   : object.completedAt!.microsecondsSinceEpoch * 1000);
-          fbb.addOffset(34, pickupIdOffset);
           fbb.addBool(35, object.isUpdated);
           fbb.finish(fbb.endTable());
           return object.obxId;
@@ -1053,73 +1053,73 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
           final updatedAtValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 68);
-          final completedAtValue =
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 70);
+          final completedAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 72);
           final obxIdParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final idParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
           final pickupIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 72, '');
+              .vTableGet(buffer, rootOffset, 8, '');
           final firebaseIndexParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           final nameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 10, '');
-          final mobileNoParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 12, '');
-          final addressParam = const fb.StringReader(asciiOptimization: true)
+          final mobileNoParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 14, '');
-          final areaParam = const fb.StringReader(asciiOptimization: true)
+          final addressParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 16, '');
-          final pincodeParam = const fb.StringReader(asciiOptimization: true)
+          final areaParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 18, '');
-          final aovParam = const fb.StringReader(asciiOptimization: true)
+          final pincodeParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 20, '');
+          final aovParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 22, '');
           final descriptionParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 22, '');
+                  .vTableGet(buffer, rootOffset, 24, '');
           final expectedWeightParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 24, '');
+                  .vTableGet(buffer, rootOffset, 26, '');
           final itemsParam = const fb.ListReader<String>(
                   fb.StringReader(asciiOptimization: true),
                   lazy: false)
-              .vTableGet(buffer, rootOffset, 26, []);
+              .vTableGet(buffer, rootOffset, 28, []);
           final slotParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 30, '');
-          final finalSlotParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 32, '');
-          final statusParam = const fb.StringReader(asciiOptimization: true)
+          final finalSlotParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 34, '');
-          final subStatusParam = const fb.StringReader(asciiOptimization: true)
+          final statusParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 36, '');
+          final subStatusParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 38, '');
           final isCompletedParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 38, false);
-          final isLockedParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 40, false);
+          final isLockedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 42, false);
           final lockedByParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 42, '');
-          final pickerIdParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 44, '');
+          final pickerIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 46, '');
           final pickerPhoneNoParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 46, '');
+                  .vTableGet(buffer, rootOffset, 48, '');
           final helperIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 48, '');
+              .vTableGet(buffer, rootOffset, 50, '');
           final helperPhoneNoParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 50, '');
+                  .vTableGet(buffer, rootOffset, 52, '');
           final routeIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 52, '');
-          final mapLinkParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 54, '');
+          final mapLinkParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 56, '');
           final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 62, 0));
-          final dateParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 64, 0));
-          final finalDateParam = DateTime.fromMillisecondsSinceEpoch(
+          final dateParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 66, 0));
+          final finalDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 68, 0));
           final updatedAtParam = updatedAtValue == null
               ? null
               : DateTime.fromMicrosecondsSinceEpoch(
@@ -1127,11 +1127,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final coordinatesParam = const fb.ListReader<String>(
                   fb.StringReader(asciiOptimization: true),
                   lazy: false)
-              .vTableGet(buffer, rootOffset, 56, []);
+              .vTableGet(buffer, rootOffset, 58, []);
           final totalPriceParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 58, 0);
-          final totalWeightQuantityParam =
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 60, 0);
+          final totalWeightQuantityParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 62, 0);
           final completedAtParam = completedAtValue == null
               ? null
               : DateTime.fromMicrosecondsSinceEpoch(
@@ -1175,7 +1175,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               completedAt: completedAtParam,
               isUpdated: isUpdatedParam);
           object.routeModel.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
           object.routeModel.attach(store);
           obx_int.InternalToManyAccess.setRelInfo<LocalPickup>(
               object.itemsData,
@@ -1184,8 +1184,122 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   5, object.obxId, (Item srcObject) => srcObject.localPickup));
           return object;
         }),
-    Picker: obx_int.EntityDefinition<Picker>(
+    Logger: obx_int.EntityDefinition<Logger>(
         model: _entities[2],
+        toOneRelations: (Logger object) => [],
+        toManyRelations: (Logger object) => {},
+        getId: (Logger object) => object.id,
+        setId: (Logger object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Logger object, fb.Builder fbb) {
+          final messageOffset =
+              object.message == null ? null : fbb.writeString(object.message!);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addInt64(1, object.statusIndex);
+          fbb.addOffset(2, messageOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final messageParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 8);
+          final object = Logger(id: idParam, message: messageParam)
+            ..statusIndex =
+                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 6);
+
+          return object;
+        }),
+    NotificationEntity: obx_int.EntityDefinition<NotificationEntity>(
+        model: _entities[3],
+        toOneRelations: (NotificationEntity object) => [],
+        toManyRelations: (NotificationEntity object) => {},
+        getId: (NotificationEntity object) => object.obxId,
+        setId: (NotificationEntity object, int id) {
+          object.obxId = id;
+        },
+        objectToFB: (NotificationEntity object, fb.Builder fbb) {
+          final idOffset = fbb.writeString(object.id);
+          final detailsOffset = fbb.writeList(
+              object.details.map(fbb.writeString).toList(growable: false));
+          final imageUrlOffset = object.imageUrl == null
+              ? null
+              : fbb.writeString(object.imageUrl!);
+          final messageOffset = fbb.writeString(object.message);
+          final targetSupervisorOffset =
+              fbb.writeString(object.targetSupervisor);
+          final targetScreenOffset = object.targetScreen == null
+              ? null
+              : fbb.writeString(object.targetScreen!);
+          final titleOffset = fbb.writeString(object.title);
+          fbb.startTable(12);
+          fbb.addInt64(0, object.obxId);
+          fbb.addOffset(1, idOffset);
+          fbb.addOffset(2, detailsOffset);
+          fbb.addOffset(3, imageUrlOffset);
+          fbb.addBool(4, object.isRead);
+          fbb.addOffset(5, messageOffset);
+          fbb.addOffset(6, targetSupervisorOffset);
+          fbb.addOffset(7, targetScreenOffset);
+          fbb.addInt64(8, object.timestamp.microsecondsSinceEpoch * 1000);
+          fbb.addOffset(9, titleOffset);
+          fbb.addBool(10, object.isSynced);
+          fbb.finish(fbb.endTable());
+          return object.obxId;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final obxIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          final idParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final detailsParam = const fb.ListReader<String>(
+                  fb.StringReader(asciiOptimization: true),
+                  lazy: false)
+              .vTableGet(buffer, rootOffset, 8, []);
+          final imageUrlParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 10);
+          final isReadParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 12, false);
+          final messageParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 14, '');
+          final targetSupervisorParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, '');
+          final targetScreenParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 18);
+          final timestampParam = DateTime.fromMicrosecondsSinceEpoch(
+              (const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0) /
+                      1000)
+                  .round());
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 22, '');
+          final isSyncedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 24, false);
+          final object = NotificationEntity(
+              obxId: obxIdParam,
+              id: idParam,
+              details: detailsParam,
+              imageUrl: imageUrlParam,
+              isRead: isReadParam,
+              message: messageParam,
+              targetSupervisor: targetSupervisorParam,
+              targetScreen: targetScreenParam,
+              timestamp: timestampParam,
+              title: titleParam,
+              isSynced: isSyncedParam);
+
+          return object;
+        }),
+    Picker: obx_int.EntityDefinition<Picker>(
+        model: _entities[4],
         toOneRelations: (Picker object) => [],
         toManyRelations: (Picker object) => {},
         getId: (Picker object) => object.obxId,
@@ -1277,7 +1391,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Pickup: obx_int.EntityDefinition<Pickup>(
-        model: _entities[3],
+        model: _entities[5],
         toOneRelations: (Pickup object) => [object.routeModel],
         toManyRelations: (Pickup object) => {
               obx_int.RelInfo<Item>.toOneBacklink(
@@ -1290,6 +1404,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         },
         objectToFB: (Pickup object, fb.Builder fbb) {
           final idOffset = fbb.writeString(object.id);
+          final pickupIdOffset = fbb.writeString(object.pickupId);
           final nameOffset = fbb.writeString(object.name);
           final mobileNoOffset = fbb.writeString(object.mobileNo);
           final addressOffset = fbb.writeString(object.address);
@@ -1313,51 +1428,50 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final mapLinkOffset = fbb.writeString(object.mapLink);
           final coordinatesOffset = fbb.writeList(
               object.coordinates.map(fbb.writeString).toList(growable: false));
-          final pickupIdOffset = fbb.writeString(object.pickupId);
           fbb.startTable(37);
           fbb.addInt64(0, object.obxId);
           fbb.addOffset(1, idOffset);
-          fbb.addInt64(2, object.firebaseIndex);
-          fbb.addOffset(3, nameOffset);
-          fbb.addOffset(4, mobileNoOffset);
-          fbb.addOffset(5, addressOffset);
-          fbb.addOffset(6, areaOffset);
-          fbb.addOffset(7, pincodeOffset);
-          fbb.addOffset(8, aovOffset);
-          fbb.addOffset(9, descriptionOffset);
-          fbb.addOffset(10, expectedWeightOffset);
-          fbb.addOffset(11, itemsOffset);
-          fbb.addInt64(12, object.routeModel.targetId);
-          fbb.addOffset(13, slotOffset);
-          fbb.addOffset(14, finalSlotOffset);
-          fbb.addOffset(15, statusOffset);
-          fbb.addOffset(16, subStatusOffset);
-          fbb.addBool(17, object.isCompleted);
-          fbb.addBool(18, object.isLocked);
-          fbb.addOffset(19, lockedByOffset);
-          fbb.addOffset(20, pickerIdOffset);
-          fbb.addOffset(21, pickerPhoneNoOffset);
-          fbb.addOffset(22, helperIdOffset);
-          fbb.addOffset(23, helperPhoneNoOffset);
-          fbb.addOffset(24, routeIdOffset);
-          fbb.addOffset(25, mapLinkOffset);
-          fbb.addOffset(26, coordinatesOffset);
-          fbb.addFloat64(27, object.totalPrice);
-          fbb.addFloat64(28, object.totalWeightQuantity);
-          fbb.addInt64(29, object.createdAt.millisecondsSinceEpoch);
-          fbb.addInt64(30, object.date.millisecondsSinceEpoch);
-          fbb.addInt64(31, object.finalDate.millisecondsSinceEpoch);
+          fbb.addOffset(2, pickupIdOffset);
+          fbb.addInt64(3, object.firebaseIndex);
+          fbb.addOffset(4, nameOffset);
+          fbb.addOffset(5, mobileNoOffset);
+          fbb.addOffset(6, addressOffset);
+          fbb.addOffset(7, areaOffset);
+          fbb.addOffset(8, pincodeOffset);
+          fbb.addOffset(9, aovOffset);
+          fbb.addOffset(10, descriptionOffset);
+          fbb.addOffset(11, expectedWeightOffset);
+          fbb.addOffset(12, itemsOffset);
+          fbb.addInt64(13, object.routeModel.targetId);
+          fbb.addOffset(14, slotOffset);
+          fbb.addOffset(15, finalSlotOffset);
+          fbb.addOffset(16, statusOffset);
+          fbb.addOffset(17, subStatusOffset);
+          fbb.addBool(18, object.isCompleted);
+          fbb.addBool(19, object.isLocked);
+          fbb.addOffset(20, lockedByOffset);
+          fbb.addOffset(21, pickerIdOffset);
+          fbb.addOffset(22, pickerPhoneNoOffset);
+          fbb.addOffset(23, helperIdOffset);
+          fbb.addOffset(24, helperPhoneNoOffset);
+          fbb.addOffset(25, routeIdOffset);
+          fbb.addOffset(26, mapLinkOffset);
+          fbb.addOffset(27, coordinatesOffset);
+          fbb.addFloat64(28, object.totalPrice);
+          fbb.addFloat64(29, object.totalWeightQuantity);
+          fbb.addInt64(30, object.createdAt.millisecondsSinceEpoch);
+          fbb.addInt64(31, object.date.millisecondsSinceEpoch);
+          fbb.addInt64(32, object.finalDate.millisecondsSinceEpoch);
           fbb.addInt64(
-              32,
+              33,
               object.updatedAt == null
                   ? null
                   : object.updatedAt!.microsecondsSinceEpoch * 1000);
           fbb.addInt64(
-              33,
+              34,
               object.completedAt == null
                   ? null
                   : object.completedAt!.microsecondsSinceEpoch * 1000);
-          fbb.addOffset(34, pickupIdOffset);
           fbb.addBool(35, object.isUpdated);
           fbb.finish(fbb.endTable());
           return object.obxId;
@@ -1366,73 +1480,73 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
           final updatedAtValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 68);
-          final completedAtValue =
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 70);
+          final completedAtValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 72);
           final obxIdParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final idParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 6, '');
           final pickupIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 72, '');
+              .vTableGet(buffer, rootOffset, 8, '');
           final firebaseIndexParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0);
           final nameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 10, '');
-          final mobileNoParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 12, '');
-          final addressParam = const fb.StringReader(asciiOptimization: true)
+          final mobileNoParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 14, '');
-          final areaParam = const fb.StringReader(asciiOptimization: true)
+          final addressParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 16, '');
-          final pincodeParam = const fb.StringReader(asciiOptimization: true)
+          final areaParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 18, '');
-          final aovParam = const fb.StringReader(asciiOptimization: true)
+          final pincodeParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 20, '');
+          final aovParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 22, '');
           final descriptionParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 22, '');
+                  .vTableGet(buffer, rootOffset, 24, '');
           final expectedWeightParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 24, '');
+                  .vTableGet(buffer, rootOffset, 26, '');
           final itemsParam = const fb.ListReader<String>(
                   fb.StringReader(asciiOptimization: true),
                   lazy: false)
-              .vTableGet(buffer, rootOffset, 26, []);
+              .vTableGet(buffer, rootOffset, 28, []);
           final slotParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 30, '');
-          final finalSlotParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 32, '');
-          final statusParam = const fb.StringReader(asciiOptimization: true)
+          final finalSlotParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 34, '');
-          final subStatusParam = const fb.StringReader(asciiOptimization: true)
+          final statusParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 36, '');
+          final subStatusParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 38, '');
           final isCompletedParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 38, false);
-          final isLockedParam =
               const fb.BoolReader().vTableGet(buffer, rootOffset, 40, false);
+          final isLockedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 42, false);
           final lockedByParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 42, '');
-          final pickerIdParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 44, '');
+          final pickerIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 46, '');
           final pickerPhoneNoParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 46, '');
+                  .vTableGet(buffer, rootOffset, 48, '');
           final helperIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 48, '');
+              .vTableGet(buffer, rootOffset, 50, '');
           final helperPhoneNoParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 50, '');
+                  .vTableGet(buffer, rootOffset, 52, '');
           final routeIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 52, '');
-          final mapLinkParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 54, '');
+          final mapLinkParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 56, '');
           final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 62, 0));
-          final dateParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 64, 0));
-          final finalDateParam = DateTime.fromMillisecondsSinceEpoch(
+          final dateParam = DateTime.fromMillisecondsSinceEpoch(
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 66, 0));
+          final finalDateParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 68, 0));
           final updatedAtParam = updatedAtValue == null
               ? null
               : DateTime.fromMicrosecondsSinceEpoch(
@@ -1440,11 +1554,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final coordinatesParam = const fb.ListReader<String>(
                   fb.StringReader(asciiOptimization: true),
                   lazy: false)
-              .vTableGet(buffer, rootOffset, 56, []);
+              .vTableGet(buffer, rootOffset, 58, []);
           final totalPriceParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 58, 0);
-          final totalWeightQuantityParam =
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 60, 0);
+          final totalWeightQuantityParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 62, 0);
           final completedAtParam = completedAtValue == null
               ? null
               : DateTime.fromMicrosecondsSinceEpoch(
@@ -1488,7 +1602,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               completedAt: completedAtParam,
               isUpdated: isUpdatedParam);
           object.routeModel.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
           object.routeModel.attach(store);
           obx_int.InternalToManyAccess.setRelInfo<Pickup>(
               object.itemsData,
@@ -1498,7 +1612,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           return object;
         }),
     Product: obx_int.EntityDefinition<Product>(
-        model: _entities[4],
+        model: _entities[6],
         toOneRelations: (Product object) => [],
         toManyRelations: (Product object) => {},
         getId: (Product object) => object.obxId,
@@ -1542,10 +1656,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
           return object;
         }),
     RouteModel: obx_int.EntityDefinition<RouteModel>(
-        model: _entities[5],
+        model: _entities[7],
         toOneRelations: (RouteModel object) => [],
         toManyRelations: (RouteModel object) => {
-              obx_int.RelInfo<Pickup>.toOneBacklink(13, object.obxId,
+              obx_int.RelInfo<Pickup>.toOneBacklink(14, object.obxId,
                       (Pickup srcObject) => srcObject.routeModel):
                   object.pickupsData
             },
@@ -1561,15 +1675,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
               fbb.writeString(object.morningAssetCheck);
           final eveningAssetCheckOffset =
               fbb.writeString(object.eveningAssetCheck);
+          final morningSupervisorOffset =
+              fbb.writeString(object.morningSupervisor);
+          final eveningSupervisorOffset =
+              fbb.writeString(object.eveningSupervisor);
           final pickerFirebaseIdOffset =
               fbb.writeString(object.pickerFirebaseId);
           final helperIdOffset = fbb.writeString(object.helperId);
           final pickupIdsOffset = fbb.writeList(
               object.pickupIds.map(fbb.writeString).toList(growable: false));
-          final morningSupervisorOffset =
-              fbb.writeString(object.morningSupervisor);
-          final eveningSupervisorOffset =
-              fbb.writeString(object.eveningSupervisor);
           fbb.startTable(14);
           fbb.addInt64(0, object.obxId);
           fbb.addOffset(1, idOffset);
@@ -1577,13 +1691,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(3, mapLinkOffset);
           fbb.addOffset(4, morningAssetCheckOffset);
           fbb.addOffset(5, eveningAssetCheckOffset);
-          fbb.addOffset(6, pickerFirebaseIdOffset);
-          fbb.addOffset(7, helperIdOffset);
-          fbb.addOffset(8, pickupIdsOffset);
-          fbb.addInt64(9, object.scheduledDate.millisecondsSinceEpoch);
-          fbb.addInt64(10, object.updatedAt.microsecondsSinceEpoch * 1000);
-          fbb.addOffset(11, morningSupervisorOffset);
-          fbb.addOffset(12, eveningSupervisorOffset);
+          fbb.addOffset(6, morningSupervisorOffset);
+          fbb.addOffset(7, eveningSupervisorOffset);
+          fbb.addOffset(8, pickerFirebaseIdOffset);
+          fbb.addOffset(9, helperIdOffset);
+          fbb.addOffset(10, pickupIdsOffset);
+          fbb.addInt64(11, object.scheduledDate.millisecondsSinceEpoch);
+          fbb.addInt64(12, object.updatedAt.microsecondsSinceEpoch * 1000);
           fbb.finish(fbb.endTable());
           return object.obxId;
         },
@@ -1604,25 +1718,25 @@ obx_int.ModelDefinition getObjectBoxModel() {
                   .vTableGet(buffer, rootOffset, 14, '');
           final morningSupervisorParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 26, '');
+                  .vTableGet(buffer, rootOffset, 16, '');
           final eveningSupervisorParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 28, '');
+                  .vTableGet(buffer, rootOffset, 18, '');
           final pickerFirebaseIdParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 16, '');
+                  .vTableGet(buffer, rootOffset, 20, '');
           final helperIdParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 18, '');
+              .vTableGet(buffer, rootOffset, 22, '');
           final pickupIdsParam = const fb.ListReader<String>(
                   fb.StringReader(asciiOptimization: true),
                   lazy: false)
-              .vTableGet(buffer, rootOffset, 20, []);
+              .vTableGet(buffer, rootOffset, 24, []);
           final mapLinkParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 10, '');
           final scheduledDateParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0));
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0));
           final updatedAtParam = DateTime.fromMicrosecondsSinceEpoch(
-              (const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0) /
+              (const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0) /
                       1000)
                   .round());
           final object = RouteModel(
@@ -1642,12 +1756,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
           obx_int.InternalToManyAccess.setRelInfo<RouteModel>(
               object.pickupsData,
               store,
-              obx_int.RelInfo<Pickup>.toOneBacklink(13, object.obxId,
+              obx_int.RelInfo<Pickup>.toOneBacklink(14, object.obxId,
                   (Pickup srcObject) => srcObject.routeModel));
           return object;
         }),
     SyncStatus: obx_int.EntityDefinition<SyncStatus>(
-        model: _entities[6],
+        model: _entities[8],
         toOneRelations: (SyncStatus object) => [],
         toManyRelations: (SyncStatus object) => {},
         getId: (SyncStatus object) => object.id,
@@ -1655,7 +1769,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.id = id;
         },
         objectToFB: (SyncStatus object, fb.Builder fbb) {
-          fbb.startTable(6);
+          fbb.startTable(5);
           fbb.addInt64(0, object.id);
           fbb.addBool(1, object.isSyncing);
           fbb.addBool(2, object.isSynced);
@@ -1681,120 +1795,6 @@ obx_int.ModelDefinition getObjectBoxModel() {
               isSyncing: isSyncingParam,
               isSynced: isSyncedParam,
               lastSyncTime: lastSyncTimeParam);
-
-          return object;
-        }),
-    Logger: obx_int.EntityDefinition<Logger>(
-        model: _entities[7],
-        toOneRelations: (Logger object) => [],
-        toManyRelations: (Logger object) => {},
-        getId: (Logger object) => object.id,
-        setId: (Logger object, int id) {
-          object.id = id;
-        },
-        objectToFB: (Logger object, fb.Builder fbb) {
-          final messageOffset =
-              object.message == null ? null : fbb.writeString(object.message!);
-          fbb.startTable(5);
-          fbb.addInt64(0, object.id);
-          fbb.addOffset(2, messageOffset);
-          fbb.addInt64(3, object.statusIndex);
-          fbb.finish(fbb.endTable());
-          return object.id;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final idParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final messageParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 8);
-          final object = Logger(id: idParam, message: messageParam)
-            ..statusIndex = const fb.Int64Reader()
-                .vTableGetNullable(buffer, rootOffset, 10);
-
-          return object;
-        }),
-    NotificationEntity: obx_int.EntityDefinition<NotificationEntity>(
-        model: _entities[8],
-        toOneRelations: (NotificationEntity object) => [],
-        toManyRelations: (NotificationEntity object) => {},
-        getId: (NotificationEntity object) => object.obxId,
-        setId: (NotificationEntity object, int id) {
-          object.obxId = id;
-        },
-        objectToFB: (NotificationEntity object, fb.Builder fbb) {
-          final idOffset = fbb.writeString(object.id);
-          final detailsOffset = fbb.writeList(
-              object.details.map(fbb.writeString).toList(growable: false));
-          final imageUrlOffset = object.imageUrl == null
-              ? null
-              : fbb.writeString(object.imageUrl!);
-          final messageOffset = fbb.writeString(object.message);
-          final targetSupervisorOffset =
-              fbb.writeString(object.targetSupervisor);
-          final targetScreenOffset = object.targetScreen == null
-              ? null
-              : fbb.writeString(object.targetScreen!);
-          final titleOffset = fbb.writeString(object.title);
-          fbb.startTable(12);
-          fbb.addInt64(0, object.obxId);
-          fbb.addOffset(1, idOffset);
-          fbb.addOffset(2, detailsOffset);
-          fbb.addOffset(3, imageUrlOffset);
-          fbb.addBool(4, object.isRead);
-          fbb.addOffset(5, messageOffset);
-          fbb.addOffset(6, targetSupervisorOffset);
-          fbb.addOffset(7, targetScreenOffset);
-          fbb.addInt64(8, object.timestamp.microsecondsSinceEpoch * 1000);
-          fbb.addOffset(9, titleOffset);
-          fbb.addBool(10, object.isSynced);
-          fbb.finish(fbb.endTable());
-          return object.obxId;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final obxIdParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-          final idParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 6, '');
-          final detailsParam = const fb.ListReader<String>(
-                  fb.StringReader(asciiOptimization: true),
-                  lazy: false)
-              .vTableGet(buffer, rootOffset, 8, []);
-          final imageUrlParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 10);
-          final isReadParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 12, false);
-          final messageParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 14, '');
-          final targetSupervisorParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 16, '');
-          final targetScreenParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 18);
-          final timestampParam = DateTime.fromMicrosecondsSinceEpoch(
-              (const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0) /
-                      1000)
-                  .round());
-          final titleParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 22, '');
-          final isSyncedParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 24, false);
-          final object = NotificationEntity(
-              obxId: obxIdParam,
-              id: idParam,
-              details: detailsParam,
-              imageUrl: imageUrlParam,
-              isRead: isReadParam,
-              message: messageParam,
-              targetSupervisor: targetSupervisorParam,
-              targetScreen: targetScreenParam,
-              timestamp: timestampParam,
-              title: titleParam,
-              isSynced: isSyncedParam);
 
           return object;
         })
@@ -1871,137 +1871,137 @@ class LocalPickup_ {
   static final id =
       obx.QueryStringProperty<LocalPickup>(_entities[1].properties[1]);
 
+  /// See [LocalPickup.pickupId].
+  static final pickupId =
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[2]);
+
   /// See [LocalPickup.firebaseIndex].
   static final firebaseIndex =
-      obx.QueryIntegerProperty<LocalPickup>(_entities[1].properties[2]);
+      obx.QueryIntegerProperty<LocalPickup>(_entities[1].properties[3]);
 
   /// See [LocalPickup.name].
   static final name =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[3]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[4]);
 
   /// See [LocalPickup.mobileNo].
   static final mobileNo =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[4]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[5]);
 
   /// See [LocalPickup.address].
   static final address =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[5]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[6]);
 
   /// See [LocalPickup.area].
   static final area =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[6]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[7]);
 
   /// See [LocalPickup.pincode].
   static final pincode =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[7]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[8]);
 
   /// See [LocalPickup.aov].
   static final aov =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[8]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[9]);
 
   /// See [LocalPickup.description].
   static final description =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[9]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[10]);
 
   /// See [LocalPickup.expectedWeight].
   static final expectedWeight =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[10]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[11]);
 
   /// See [LocalPickup.items].
   static final items =
-      obx.QueryStringVectorProperty<LocalPickup>(_entities[1].properties[11]);
+      obx.QueryStringVectorProperty<LocalPickup>(_entities[1].properties[12]);
 
   /// See [LocalPickup.routeModel].
   static final routeModel = obx.QueryRelationToOne<LocalPickup, RouteModel>(
-      _entities[1].properties[12]);
+      _entities[1].properties[13]);
 
   /// See [LocalPickup.slot].
   static final slot =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[13]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[14]);
 
   /// See [LocalPickup.finalSlot].
   static final finalSlot =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[14]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[15]);
 
   /// See [LocalPickup.status].
   static final status =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[15]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[16]);
 
   /// See [LocalPickup.subStatus].
   static final subStatus =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[16]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[17]);
 
   /// See [LocalPickup.isCompleted].
   static final isCompleted =
-      obx.QueryBooleanProperty<LocalPickup>(_entities[1].properties[17]);
+      obx.QueryBooleanProperty<LocalPickup>(_entities[1].properties[18]);
 
   /// See [LocalPickup.isLocked].
   static final isLocked =
-      obx.QueryBooleanProperty<LocalPickup>(_entities[1].properties[18]);
+      obx.QueryBooleanProperty<LocalPickup>(_entities[1].properties[19]);
 
   /// See [LocalPickup.lockedBy].
   static final lockedBy =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[19]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[20]);
 
   /// See [LocalPickup.pickerId].
   static final pickerId =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[20]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[21]);
 
   /// See [LocalPickup.pickerPhoneNo].
   static final pickerPhoneNo =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[21]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[22]);
 
   /// See [LocalPickup.helperId].
   static final helperId =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[22]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[23]);
 
   /// See [LocalPickup.helperPhoneNo].
   static final helperPhoneNo =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[23]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[24]);
 
   /// See [LocalPickup.routeId].
   static final routeId =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[24]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[25]);
 
   /// See [LocalPickup.mapLink].
   static final mapLink =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[25]);
+      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[26]);
 
   /// See [LocalPickup.coordinates].
   static final coordinates =
-      obx.QueryStringVectorProperty<LocalPickup>(_entities[1].properties[26]);
+      obx.QueryStringVectorProperty<LocalPickup>(_entities[1].properties[27]);
 
   /// See [LocalPickup.totalPrice].
   static final totalPrice =
-      obx.QueryDoubleProperty<LocalPickup>(_entities[1].properties[27]);
+      obx.QueryDoubleProperty<LocalPickup>(_entities[1].properties[28]);
 
   /// See [LocalPickup.totalWeightQuantity].
   static final totalWeightQuantity =
-      obx.QueryDoubleProperty<LocalPickup>(_entities[1].properties[28]);
+      obx.QueryDoubleProperty<LocalPickup>(_entities[1].properties[29]);
 
   /// See [LocalPickup.createdAt].
   static final createdAt =
-      obx.QueryDateProperty<LocalPickup>(_entities[1].properties[29]);
+      obx.QueryDateProperty<LocalPickup>(_entities[1].properties[30]);
 
   /// See [LocalPickup.date].
   static final date =
-      obx.QueryDateProperty<LocalPickup>(_entities[1].properties[30]);
+      obx.QueryDateProperty<LocalPickup>(_entities[1].properties[31]);
 
   /// See [LocalPickup.finalDate].
   static final finalDate =
-      obx.QueryDateProperty<LocalPickup>(_entities[1].properties[31]);
+      obx.QueryDateProperty<LocalPickup>(_entities[1].properties[32]);
 
   /// See [LocalPickup.updatedAt].
   static final updatedAt =
-      obx.QueryDateNanoProperty<LocalPickup>(_entities[1].properties[32]);
+      obx.QueryDateNanoProperty<LocalPickup>(_entities[1].properties[33]);
 
   /// See [LocalPickup.completedAt].
   static final completedAt =
-      obx.QueryDateNanoProperty<LocalPickup>(_entities[1].properties[33]);
-
-  /// See [LocalPickup.pickupId].
-  static final pickupId =
-      obx.QueryStringProperty<LocalPickup>(_entities[1].properties[34]);
+      obx.QueryDateNanoProperty<LocalPickup>(_entities[1].properties[34]);
 
   /// See [LocalPickup.isUpdated].
   static final isUpdated =
@@ -2012,212 +2012,274 @@ class LocalPickup_ {
       obx.QueryBacklinkToMany<Item, LocalPickup>(Item_.localPickup);
 }
 
+/// [Logger] entity fields to define ObjectBox queries.
+class Logger_ {
+  /// See [Logger.id].
+  static final id =
+      obx.QueryIntegerProperty<Logger>(_entities[2].properties[0]);
+
+  /// See [Logger.statusIndex].
+  static final statusIndex =
+      obx.QueryIntegerProperty<Logger>(_entities[2].properties[1]);
+
+  /// See [Logger.message].
+  static final message =
+      obx.QueryStringProperty<Logger>(_entities[2].properties[2]);
+}
+
+/// [NotificationEntity] entity fields to define ObjectBox queries.
+class NotificationEntity_ {
+  /// See [NotificationEntity.obxId].
+  static final obxId =
+      obx.QueryIntegerProperty<NotificationEntity>(_entities[3].properties[0]);
+
+  /// See [NotificationEntity.id].
+  static final id =
+      obx.QueryStringProperty<NotificationEntity>(_entities[3].properties[1]);
+
+  /// See [NotificationEntity.details].
+  static final details = obx.QueryStringVectorProperty<NotificationEntity>(
+      _entities[3].properties[2]);
+
+  /// See [NotificationEntity.imageUrl].
+  static final imageUrl =
+      obx.QueryStringProperty<NotificationEntity>(_entities[3].properties[3]);
+
+  /// See [NotificationEntity.isRead].
+  static final isRead =
+      obx.QueryBooleanProperty<NotificationEntity>(_entities[3].properties[4]);
+
+  /// See [NotificationEntity.message].
+  static final message =
+      obx.QueryStringProperty<NotificationEntity>(_entities[3].properties[5]);
+
+  /// See [NotificationEntity.targetSupervisor].
+  static final targetSupervisor =
+      obx.QueryStringProperty<NotificationEntity>(_entities[3].properties[6]);
+
+  /// See [NotificationEntity.targetScreen].
+  static final targetScreen =
+      obx.QueryStringProperty<NotificationEntity>(_entities[3].properties[7]);
+
+  /// See [NotificationEntity.timestamp].
+  static final timestamp =
+      obx.QueryDateNanoProperty<NotificationEntity>(_entities[3].properties[8]);
+
+  /// See [NotificationEntity.title].
+  static final title =
+      obx.QueryStringProperty<NotificationEntity>(_entities[3].properties[9]);
+
+  /// See [NotificationEntity.isSynced].
+  static final isSynced =
+      obx.QueryBooleanProperty<NotificationEntity>(_entities[3].properties[10]);
+}
+
 /// [Picker] entity fields to define ObjectBox queries.
 class Picker_ {
   /// See [Picker.obxId].
   static final obxId =
-      obx.QueryIntegerProperty<Picker>(_entities[2].properties[0]);
+      obx.QueryIntegerProperty<Picker>(_entities[4].properties[0]);
 
   /// See [Picker.id].
-  static final id = obx.QueryStringProperty<Picker>(_entities[2].properties[1]);
+  static final id = obx.QueryStringProperty<Picker>(_entities[4].properties[1]);
 
   /// See [Picker.name].
   static final name =
-      obx.QueryStringProperty<Picker>(_entities[2].properties[2]);
+      obx.QueryStringProperty<Picker>(_entities[4].properties[2]);
 
   /// See [Picker.email].
   static final email =
-      obx.QueryStringProperty<Picker>(_entities[2].properties[3]);
+      obx.QueryStringProperty<Picker>(_entities[4].properties[3]);
 
   /// See [Picker.licenseNo].
   static final licenseNo =
-      obx.QueryStringProperty<Picker>(_entities[2].properties[4]);
+      obx.QueryStringProperty<Picker>(_entities[4].properties[4]);
 
   /// See [Picker.phoneNo].
   static final phoneNo =
-      obx.QueryStringProperty<Picker>(_entities[2].properties[5]);
+      obx.QueryStringProperty<Picker>(_entities[4].properties[5]);
 
   /// See [Picker.isAvailable].
   static final isAvailable =
-      obx.QueryBooleanProperty<Picker>(_entities[2].properties[6]);
+      obx.QueryBooleanProperty<Picker>(_entities[4].properties[6]);
 
   /// See [Picker.isDriver].
   static final isDriver =
-      obx.QueryBooleanProperty<Picker>(_entities[2].properties[7]);
+      obx.QueryBooleanProperty<Picker>(_entities[4].properties[7]);
 
   /// See [Picker.isHelper].
   static final isHelper =
-      obx.QueryBooleanProperty<Picker>(_entities[2].properties[8]);
+      obx.QueryBooleanProperty<Picker>(_entities[4].properties[8]);
 
   /// See [Picker.isOnLeave].
   static final isOnLeave =
-      obx.QueryBooleanProperty<Picker>(_entities[2].properties[9]);
+      obx.QueryBooleanProperty<Picker>(_entities[4].properties[9]);
 
   /// See [Picker.isPicker].
   static final isPicker =
-      obx.QueryBooleanProperty<Picker>(_entities[2].properties[10]);
+      obx.QueryBooleanProperty<Picker>(_entities[4].properties[10]);
 
   /// See [Picker.isWorking].
   static final isWorking =
-      obx.QueryBooleanProperty<Picker>(_entities[2].properties[11]);
+      obx.QueryBooleanProperty<Picker>(_entities[4].properties[11]);
 
   /// See [Picker.routeName].
   static final routeName =
-      obx.QueryStringProperty<Picker>(_entities[2].properties[12]);
+      obx.QueryStringProperty<Picker>(_entities[4].properties[12]);
 
   /// See [Picker.assignedVehicleId].
   static final assignedVehicleId =
-      obx.QueryStringProperty<Picker>(_entities[2].properties[13]);
+      obx.QueryStringProperty<Picker>(_entities[4].properties[13]);
 
   /// See [Picker.assignedVehicleName].
   static final assignedVehicleName =
-      obx.QueryStringProperty<Picker>(_entities[2].properties[14]);
+      obx.QueryStringProperty<Picker>(_entities[4].properties[14]);
 }
 
 /// [Pickup] entity fields to define ObjectBox queries.
 class Pickup_ {
   /// See [Pickup.obxId].
   static final obxId =
-      obx.QueryIntegerProperty<Pickup>(_entities[3].properties[0]);
+      obx.QueryIntegerProperty<Pickup>(_entities[5].properties[0]);
 
   /// See [Pickup.id].
-  static final id = obx.QueryStringProperty<Pickup>(_entities[3].properties[1]);
-
-  /// See [Pickup.firebaseIndex].
-  static final firebaseIndex =
-      obx.QueryIntegerProperty<Pickup>(_entities[3].properties[2]);
-
-  /// See [Pickup.name].
-  static final name =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[3]);
-
-  /// See [Pickup.mobileNo].
-  static final mobileNo =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[4]);
-
-  /// See [Pickup.address].
-  static final address =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[5]);
-
-  /// See [Pickup.area].
-  static final area =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[6]);
-
-  /// See [Pickup.pincode].
-  static final pincode =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[7]);
-
-  /// See [Pickup.aov].
-  static final aov =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[8]);
-
-  /// See [Pickup.description].
-  static final description =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[9]);
-
-  /// See [Pickup.expectedWeight].
-  static final expectedWeight =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[10]);
-
-  /// See [Pickup.items].
-  static final items =
-      obx.QueryStringVectorProperty<Pickup>(_entities[3].properties[11]);
-
-  /// See [Pickup.routeModel].
-  static final routeModel =
-      obx.QueryRelationToOne<Pickup, RouteModel>(_entities[3].properties[12]);
-
-  /// See [Pickup.slot].
-  static final slot =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[13]);
-
-  /// See [Pickup.finalSlot].
-  static final finalSlot =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[14]);
-
-  /// See [Pickup.status].
-  static final status =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[15]);
-
-  /// See [Pickup.subStatus].
-  static final subStatus =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[16]);
-
-  /// See [Pickup.isCompleted].
-  static final isCompleted =
-      obx.QueryBooleanProperty<Pickup>(_entities[3].properties[17]);
-
-  /// See [Pickup.isLocked].
-  static final isLocked =
-      obx.QueryBooleanProperty<Pickup>(_entities[3].properties[18]);
-
-  /// See [Pickup.lockedBy].
-  static final lockedBy =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[19]);
-
-  /// See [Pickup.pickerId].
-  static final pickerId =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[20]);
-
-  /// See [Pickup.pickerPhoneNo].
-  static final pickerPhoneNo =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[21]);
-
-  /// See [Pickup.helperId].
-  static final helperId =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[22]);
-
-  /// See [Pickup.helperPhoneNo].
-  static final helperPhoneNo =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[23]);
-
-  /// See [Pickup.routeId].
-  static final routeId =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[24]);
-
-  /// See [Pickup.mapLink].
-  static final mapLink =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[25]);
-
-  /// See [Pickup.coordinates].
-  static final coordinates =
-      obx.QueryStringVectorProperty<Pickup>(_entities[3].properties[26]);
-
-  /// See [Pickup.totalPrice].
-  static final totalPrice =
-      obx.QueryDoubleProperty<Pickup>(_entities[3].properties[27]);
-
-  /// See [Pickup.totalWeightQuantity].
-  static final totalWeightQuantity =
-      obx.QueryDoubleProperty<Pickup>(_entities[3].properties[28]);
-
-  /// See [Pickup.createdAt].
-  static final createdAt =
-      obx.QueryDateProperty<Pickup>(_entities[3].properties[29]);
-
-  /// See [Pickup.date].
-  static final date =
-      obx.QueryDateProperty<Pickup>(_entities[3].properties[30]);
-
-  /// See [Pickup.finalDate].
-  static final finalDate =
-      obx.QueryDateProperty<Pickup>(_entities[3].properties[31]);
-
-  /// See [Pickup.updatedAt].
-  static final updatedAt =
-      obx.QueryDateNanoProperty<Pickup>(_entities[3].properties[32]);
-
-  /// See [Pickup.completedAt].
-  static final completedAt =
-      obx.QueryDateNanoProperty<Pickup>(_entities[3].properties[33]);
+  static final id = obx.QueryStringProperty<Pickup>(_entities[5].properties[1]);
 
   /// See [Pickup.pickupId].
   static final pickupId =
-      obx.QueryStringProperty<Pickup>(_entities[3].properties[34]);
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[2]);
+
+  /// See [Pickup.firebaseIndex].
+  static final firebaseIndex =
+      obx.QueryIntegerProperty<Pickup>(_entities[5].properties[3]);
+
+  /// See [Pickup.name].
+  static final name =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[4]);
+
+  /// See [Pickup.mobileNo].
+  static final mobileNo =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[5]);
+
+  /// See [Pickup.address].
+  static final address =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[6]);
+
+  /// See [Pickup.area].
+  static final area =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[7]);
+
+  /// See [Pickup.pincode].
+  static final pincode =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[8]);
+
+  /// See [Pickup.aov].
+  static final aov =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[9]);
+
+  /// See [Pickup.description].
+  static final description =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[10]);
+
+  /// See [Pickup.expectedWeight].
+  static final expectedWeight =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[11]);
+
+  /// See [Pickup.items].
+  static final items =
+      obx.QueryStringVectorProperty<Pickup>(_entities[5].properties[12]);
+
+  /// See [Pickup.routeModel].
+  static final routeModel =
+      obx.QueryRelationToOne<Pickup, RouteModel>(_entities[5].properties[13]);
+
+  /// See [Pickup.slot].
+  static final slot =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[14]);
+
+  /// See [Pickup.finalSlot].
+  static final finalSlot =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[15]);
+
+  /// See [Pickup.status].
+  static final status =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[16]);
+
+  /// See [Pickup.subStatus].
+  static final subStatus =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[17]);
+
+  /// See [Pickup.isCompleted].
+  static final isCompleted =
+      obx.QueryBooleanProperty<Pickup>(_entities[5].properties[18]);
+
+  /// See [Pickup.isLocked].
+  static final isLocked =
+      obx.QueryBooleanProperty<Pickup>(_entities[5].properties[19]);
+
+  /// See [Pickup.lockedBy].
+  static final lockedBy =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[20]);
+
+  /// See [Pickup.pickerId].
+  static final pickerId =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[21]);
+
+  /// See [Pickup.pickerPhoneNo].
+  static final pickerPhoneNo =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[22]);
+
+  /// See [Pickup.helperId].
+  static final helperId =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[23]);
+
+  /// See [Pickup.helperPhoneNo].
+  static final helperPhoneNo =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[24]);
+
+  /// See [Pickup.routeId].
+  static final routeId =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[25]);
+
+  /// See [Pickup.mapLink].
+  static final mapLink =
+      obx.QueryStringProperty<Pickup>(_entities[5].properties[26]);
+
+  /// See [Pickup.coordinates].
+  static final coordinates =
+      obx.QueryStringVectorProperty<Pickup>(_entities[5].properties[27]);
+
+  /// See [Pickup.totalPrice].
+  static final totalPrice =
+      obx.QueryDoubleProperty<Pickup>(_entities[5].properties[28]);
+
+  /// See [Pickup.totalWeightQuantity].
+  static final totalWeightQuantity =
+      obx.QueryDoubleProperty<Pickup>(_entities[5].properties[29]);
+
+  /// See [Pickup.createdAt].
+  static final createdAt =
+      obx.QueryDateProperty<Pickup>(_entities[5].properties[30]);
+
+  /// See [Pickup.date].
+  static final date =
+      obx.QueryDateProperty<Pickup>(_entities[5].properties[31]);
+
+  /// See [Pickup.finalDate].
+  static final finalDate =
+      obx.QueryDateProperty<Pickup>(_entities[5].properties[32]);
+
+  /// See [Pickup.updatedAt].
+  static final updatedAt =
+      obx.QueryDateNanoProperty<Pickup>(_entities[5].properties[33]);
+
+  /// See [Pickup.completedAt].
+  static final completedAt =
+      obx.QueryDateNanoProperty<Pickup>(_entities[5].properties[34]);
 
   /// See [Pickup.isUpdated].
   static final isUpdated =
-      obx.QueryBooleanProperty<Pickup>(_entities[3].properties[35]);
+      obx.QueryBooleanProperty<Pickup>(_entities[5].properties[35]);
 
   /// see [Pickup.itemsData]
   static final itemsData = obx.QueryBacklinkToMany<Item, Pickup>(Item_.pickup);
@@ -2227,78 +2289,78 @@ class Pickup_ {
 class Product_ {
   /// See [Product.obxId].
   static final obxId =
-      obx.QueryIntegerProperty<Product>(_entities[4].properties[0]);
+      obx.QueryIntegerProperty<Product>(_entities[6].properties[0]);
 
   /// See [Product.id].
   static final id =
-      obx.QueryStringProperty<Product>(_entities[4].properties[1]);
+      obx.QueryStringProperty<Product>(_entities[6].properties[1]);
 
   /// See [Product.name].
   static final name =
-      obx.QueryStringProperty<Product>(_entities[4].properties[2]);
+      obx.QueryStringProperty<Product>(_entities[6].properties[2]);
 
   /// See [Product.price].
   static final price =
-      obx.QueryStringProperty<Product>(_entities[4].properties[3]);
+      obx.QueryStringProperty<Product>(_entities[6].properties[3]);
 
   /// See [Product.unit].
   static final unit =
-      obx.QueryStringProperty<Product>(_entities[4].properties[4]);
+      obx.QueryStringProperty<Product>(_entities[6].properties[4]);
 }
 
 /// [RouteModel] entity fields to define ObjectBox queries.
 class RouteModel_ {
   /// See [RouteModel.obxId].
   static final obxId =
-      obx.QueryIntegerProperty<RouteModel>(_entities[5].properties[0]);
+      obx.QueryIntegerProperty<RouteModel>(_entities[7].properties[0]);
 
   /// See [RouteModel.id].
   static final id =
-      obx.QueryStringProperty<RouteModel>(_entities[5].properties[1]);
+      obx.QueryStringProperty<RouteModel>(_entities[7].properties[1]);
 
   /// See [RouteModel.name].
   static final name =
-      obx.QueryStringProperty<RouteModel>(_entities[5].properties[2]);
+      obx.QueryStringProperty<RouteModel>(_entities[7].properties[2]);
 
   /// See [RouteModel.mapLink].
   static final mapLink =
-      obx.QueryStringProperty<RouteModel>(_entities[5].properties[3]);
+      obx.QueryStringProperty<RouteModel>(_entities[7].properties[3]);
 
   /// See [RouteModel.morningAssetCheck].
   static final morningAssetCheck =
-      obx.QueryStringProperty<RouteModel>(_entities[5].properties[4]);
+      obx.QueryStringProperty<RouteModel>(_entities[7].properties[4]);
 
   /// See [RouteModel.eveningAssetCheck].
   static final eveningAssetCheck =
-      obx.QueryStringProperty<RouteModel>(_entities[5].properties[5]);
-
-  /// See [RouteModel.pickerFirebaseId].
-  static final pickerFirebaseId =
-      obx.QueryStringProperty<RouteModel>(_entities[5].properties[6]);
-
-  /// See [RouteModel.helperId].
-  static final helperId =
-      obx.QueryStringProperty<RouteModel>(_entities[5].properties[7]);
-
-  /// See [RouteModel.pickupIds].
-  static final pickupIds =
-      obx.QueryStringVectorProperty<RouteModel>(_entities[5].properties[8]);
-
-  /// See [RouteModel.scheduledDate].
-  static final scheduledDate =
-      obx.QueryDateProperty<RouteModel>(_entities[5].properties[9]);
-
-  /// See [RouteModel.updatedAt].
-  static final updatedAt =
-      obx.QueryDateNanoProperty<RouteModel>(_entities[5].properties[10]);
+      obx.QueryStringProperty<RouteModel>(_entities[7].properties[5]);
 
   /// See [RouteModel.morningSupervisor].
   static final morningSupervisor =
-      obx.QueryStringProperty<RouteModel>(_entities[5].properties[11]);
+      obx.QueryStringProperty<RouteModel>(_entities[7].properties[6]);
 
   /// See [RouteModel.eveningSupervisor].
   static final eveningSupervisor =
-      obx.QueryStringProperty<RouteModel>(_entities[5].properties[12]);
+      obx.QueryStringProperty<RouteModel>(_entities[7].properties[7]);
+
+  /// See [RouteModel.pickerFirebaseId].
+  static final pickerFirebaseId =
+      obx.QueryStringProperty<RouteModel>(_entities[7].properties[8]);
+
+  /// See [RouteModel.helperId].
+  static final helperId =
+      obx.QueryStringProperty<RouteModel>(_entities[7].properties[9]);
+
+  /// See [RouteModel.pickupIds].
+  static final pickupIds =
+      obx.QueryStringVectorProperty<RouteModel>(_entities[7].properties[10]);
+
+  /// See [RouteModel.scheduledDate].
+  static final scheduledDate =
+      obx.QueryDateProperty<RouteModel>(_entities[7].properties[11]);
+
+  /// See [RouteModel.updatedAt].
+  static final updatedAt =
+      obx.QueryDateNanoProperty<RouteModel>(_entities[7].properties[12]);
 
   /// see [RouteModel.pickupsData]
   static final pickupsData =
@@ -2309,79 +2371,17 @@ class RouteModel_ {
 class SyncStatus_ {
   /// See [SyncStatus.id].
   static final id =
-      obx.QueryIntegerProperty<SyncStatus>(_entities[6].properties[0]);
+      obx.QueryIntegerProperty<SyncStatus>(_entities[8].properties[0]);
 
   /// See [SyncStatus.isSyncing].
   static final isSyncing =
-      obx.QueryBooleanProperty<SyncStatus>(_entities[6].properties[1]);
+      obx.QueryBooleanProperty<SyncStatus>(_entities[8].properties[1]);
 
   /// See [SyncStatus.isSynced].
   static final isSynced =
-      obx.QueryBooleanProperty<SyncStatus>(_entities[6].properties[2]);
+      obx.QueryBooleanProperty<SyncStatus>(_entities[8].properties[2]);
 
   /// See [SyncStatus.lastSyncTime].
   static final lastSyncTime =
-      obx.QueryDateNanoProperty<SyncStatus>(_entities[6].properties[3]);
-}
-
-/// [Logger] entity fields to define ObjectBox queries.
-class Logger_ {
-  /// See [Logger.id].
-  static final id =
-      obx.QueryIntegerProperty<Logger>(_entities[7].properties[0]);
-
-  /// See [Logger.message].
-  static final message =
-      obx.QueryStringProperty<Logger>(_entities[7].properties[1]);
-
-  /// See [Logger.statusIndex].
-  static final statusIndex =
-      obx.QueryIntegerProperty<Logger>(_entities[7].properties[2]);
-}
-
-/// [NotificationEntity] entity fields to define ObjectBox queries.
-class NotificationEntity_ {
-  /// See [NotificationEntity.obxId].
-  static final obxId =
-      obx.QueryIntegerProperty<NotificationEntity>(_entities[8].properties[0]);
-
-  /// See [NotificationEntity.id].
-  static final id =
-      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[1]);
-
-  /// See [NotificationEntity.details].
-  static final details = obx.QueryStringVectorProperty<NotificationEntity>(
-      _entities[8].properties[2]);
-
-  /// See [NotificationEntity.imageUrl].
-  static final imageUrl =
-      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[3]);
-
-  /// See [NotificationEntity.isRead].
-  static final isRead =
-      obx.QueryBooleanProperty<NotificationEntity>(_entities[8].properties[4]);
-
-  /// See [NotificationEntity.message].
-  static final message =
-      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[5]);
-
-  /// See [NotificationEntity.targetSupervisor].
-  static final targetSupervisor =
-      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[6]);
-
-  /// See [NotificationEntity.targetScreen].
-  static final targetScreen =
-      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[7]);
-
-  /// See [NotificationEntity.timestamp].
-  static final timestamp =
-      obx.QueryDateNanoProperty<NotificationEntity>(_entities[8].properties[8]);
-
-  /// See [NotificationEntity.title].
-  static final title =
-      obx.QueryStringProperty<NotificationEntity>(_entities[8].properties[9]);
-
-  /// See [NotificationEntity.isSynced].
-  static final isSynced =
-      obx.QueryBooleanProperty<NotificationEntity>(_entities[8].properties[10]);
+      obx.QueryDateNanoProperty<SyncStatus>(_entities[8].properties[3]);
 }
