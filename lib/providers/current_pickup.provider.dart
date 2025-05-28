@@ -50,6 +50,8 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
     if (previousStatus != subStatus) {
       _notificationService.createSubStatusNotification(
         pickupId: pickup.pickupId,
+        customerNumber: pickup.mobileNo,
+        pickerId: pickup.pickerId,
         previousStatus: previousStatus.isEmpty ? 'None' : previousStatus,
         newStatus: subStatus,
         pickerName: pickup.pickerId,

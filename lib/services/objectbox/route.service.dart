@@ -155,7 +155,7 @@ class OBRouteService {
     objectbox.routeBox.put(finalRoute);
 
     debugPrint(
-      "Updated Route ${finalRoute.id} with pickups: ${newPickups.map((p) => p.id).toList()}",
+      "Updated Route ${finalRoute.id} with pickups: ${newPickups.map((p) => p.pickupId).toList()}",
     );
   }
 
@@ -191,6 +191,7 @@ class OBRouteService {
         totalWeightQuantity: updatedLocalPickup.totalWeightQuantity,
         status: updatedLocalPickup.status,
         isCompleted: updatedLocalPickup.isCompleted,
+        isUpdated: updatedLocalPickup.isUpdated,
         completedAt: updatedLocalPickup.completedAt,
       );
 
@@ -207,7 +208,11 @@ class OBRouteService {
 
   void syncLocalPickup() {
     final subscription = objectbox.localStatePickupBox
-        .query(LocalPickup_.isUpdated.equals(true))
+        .query(
+          LocalPickup_.isUpdated
+              .equals(true)
+              .or(LocalPickup_.isCompleted.equals(true)),
+        )
         .watch(triggerImmediately: true)
         .listen((query) async {
           // Prevent re-entry if already syncing

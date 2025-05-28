@@ -59,7 +59,7 @@ class RouteInfoNotifier extends StateNotifier<RouteInfo> {
   void mergeLocalPickupChanges() async {
     _routeService.getLocalPickups().listen((List<Pickup> localPickups) {
       debugPrint(
-        "LOCAL PICKUPS to MERGE : ${localPickups.map((e) => [e.id, e.firebaseIndex]).toList()}",
+        "LOCAL PICKUPS to MERGE : ${localPickups.map((e) => [e.pickupId, e.firebaseIndex]).toList()}",
       );
       if (state.pickups.isNotEmpty) {
         List<Pickup> notCompletedPickups = state.pickups;
@@ -69,7 +69,7 @@ class RouteInfoNotifier extends StateNotifier<RouteInfo> {
             (data) => data.pickupId == localPickup.pickupId,
           );
           if (index != -1) {
-            print(
+            debugPrint(
               "LocalPickup: ${localPickup.pickupId}, ${localPickup.isCompleted}",
             );
             notCompletedPickups[index] = localPickup;

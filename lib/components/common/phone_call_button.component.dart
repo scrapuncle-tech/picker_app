@@ -223,12 +223,15 @@ class PhoneCallButton extends ConsumerWidget {
     final authState = ref.read(authProvider);
     final supervisorId = ref.read(routeInfoProvider).route?.morningSupervisor;
     final pickerName = authState.pickerData?.name ?? 'Unknown';
+    final pickerId = authState.pickerData?.id ?? 'Unknown';
 
     // Only create notification if we have a pickup ID
     if (actualPickupId.isNotEmpty) {
       final notificationService = OBNotificationService(objectbox: objectbox!);
       notificationService.createExotelErrorNotification(
         pickupId: actualPickupId,
+        customerNumber: customerNo,
+        pickerId: pickerId,
         errorMessage: errorMessage,
         pickerName: pickerName,
         targetSupervisor: supervisorId ?? "none",

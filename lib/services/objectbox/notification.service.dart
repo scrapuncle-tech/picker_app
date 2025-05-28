@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../models/notification.entity.dart';
@@ -57,9 +58,11 @@ class OBNotificationService {
   /// Creates a notification when subStatus is modified
   NotificationEntity createSubStatusNotification({
     required String pickupId,
+    required String customerNumber,
     required String previousStatus,
     required String newStatus,
     required String pickerName,
+    required String pickerId,
     required String targetSupervisor,
   }) {
     final notification = NotificationEntity(
@@ -68,10 +71,16 @@ class OBNotificationService {
       message:
           'Pickup $pickupId status changed from $previousStatus to $newStatus',
       details: [
-        'Picker $pickerName has updated the status of pickup $pickupId from $previousStatus to $newStatus',
-        'Status change time: ${DateTime.now().toString()}',
-        'Previous status: $previousStatus',
-        'New status: $newStatus',
+        pickupId,
+        customerNumber,
+        pickerName,
+        newStatus,
+        DateTime.now().toIso8601String().split('T')[0],
+        DateFormat('HHmm').format(DateTime.now()),
+        pickerId,
+        pickerName,
+        previousStatus,
+        newStatus,
       ],
       targetSupervisor: targetSupervisor,
       timestamp: DateTime.now(),
@@ -85,8 +94,10 @@ class OBNotificationService {
   /// Creates a notification for Exotel API error
   NotificationEntity createExotelErrorNotification({
     required String pickupId,
+    required String customerNumber,
     required String errorMessage,
     required String pickerName,
+    required String pickerId,
     required String targetSupervisor,
   }) {
     final notification = NotificationEntity(
@@ -94,9 +105,14 @@ class OBNotificationService {
       title: 'Exotel API Error',
       message: 'Error calling customer for pickup $pickupId',
       details: [
-        'Picker $pickerName encountered an error while calling customer for pickup $pickupId: $errorMessage',
-        'Error time: ${DateTime.now().toString()}',
-        'Error details: $errorMessage',
+        pickupId,
+        customerNumber,
+        pickerName,
+        errorMessage,
+        DateTime.now().toIso8601String().split('T')[0],
+        DateFormat('HHmm').format(DateTime.now()),
+        pickerId,
+        pickerName,
       ],
       targetSupervisor: targetSupervisor,
       timestamp: DateTime.now(),
