@@ -199,6 +199,7 @@ class PickupTile extends ConsumerWidget {
                             Expanded(
                               child: SubStatusDropdown(
                                 pickup: pickup,
+                                isHomeTile: true,
                                 isDisabled:
                                     isGlobalCompleted || localCompletionState,
                               ),

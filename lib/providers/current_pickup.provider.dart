@@ -6,6 +6,7 @@ import '../models/item.entity.dart';
 import '../models/pickup.entity.dart';
 import '../services/objectbox/notification.service.dart';
 import '../services/objectbox/route.service.dart';
+import 'auth.provider.dart';
 import 'route.provider.dart';
 
 /// Provides the current pickup and whether it is local or from db.
@@ -38,6 +39,7 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
     if (pickup == null) return;
 
     final supervisorId = ref.read(routeInfoProvider).route?.morningSupervisor;
+    final pickerData = ref.read(authProvider).pickerData;
 
     // Store the previous status for notification
     final previousStatus = pickup.subStatus;
@@ -51,10 +53,10 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
       _notificationService.createSubStatusNotification(
         pickupId: pickup.pickupId,
         customerNumber: pickup.mobileNo,
-        pickerId: pickup.pickerId,
+        pickerId: pickerData?.id ?? '',
         previousStatus: previousStatus.isEmpty ? 'None' : previousStatus,
         newStatus: subStatus,
-        pickerName: pickup.pickerId,
+        pickerName: pickerData?.name ?? '',
         targetSupervisor: supervisorId ?? "none",
       );
     }
@@ -117,7 +119,23 @@ class CurrentPickupNotifier extends StateNotifier<(Pickup?, bool)> {
     state = (updatedPickupWithTotalPrice, state.$2);
   }
 
-  void updatePickup({required Pickup pickup}) {
+  void pushNotificationFromHomeTile({
+    required Pickup pickup,
+    required String previousStatus,
+  }) {
+    final supervisorId = ref.read(routeInfoProvider).route?.morningSupervisor;
+    final pickerData = ref.read(authProvider).pickerData;
+
+    _notificationService.createSubStatusNotification(
+      pickupId: pickup.pickupId,
+      customerNumber: pickup.mobileNo,
+      pickerId: pickerData?.id ?? '',
+      previousStatus: previousStatus.isEmpty ? 'None' : previousStatus,
+      newStatus: pickup.subStatus,
+      pickerName: pickerData?.name ?? '',
+      targetSupervisor: supervisorId ?? "none",
+    );
+
     _routeService.updatePickup(pickup: pickup);
   }
 }

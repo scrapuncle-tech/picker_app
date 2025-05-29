@@ -10,11 +10,13 @@ import '../common/text.component.dart';
 class SubStatusDropdown extends ConsumerWidget {
   final Pickup pickup;
   final bool isDisabled;
+  final bool isHomeTile;
 
   const SubStatusDropdown({
     super.key,
     required this.pickup,
     this.isDisabled = false,
+    this.isHomeTile = false,
   });
 
   // List of available sub-status options
@@ -65,18 +67,16 @@ class SubStatusDropdown extends ConsumerWidget {
                   ? null
                   : (String? newValue) {
                     if (newValue != null) {
-                      // check for a local pickup
-                      final isCurrentPickup =
-                          ref.read(currentPickupProvider).$1 != null;
-                      if (isCurrentPickup) {
+                      if (!isHomeTile) {
                         ref
                             .read(currentPickupProvider.notifier)
                             .updateSubStatus(subStatus: newValue);
                       } else {
                         ref
                             .read(currentPickupProvider.notifier)
-                            .updatePickup(
+                            .pushNotificationFromHomeTile(
                               pickup: pickup.copyWith(subStatus: newValue),
+                              previousStatus: pickup.subStatus,
                             );
                       }
                     }

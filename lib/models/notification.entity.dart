@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -92,7 +93,8 @@ class NotificationEntity {
       'message': message,
       'targetSupervisor': targetSupervisor,
       'targetScreen': targetScreen,
-      'timestamp': timestamp.toIso8601String(),
+      'date': timestamp.toIso8601String().split('T')[0],
+      'time': DateFormat('HHmm').format(timestamp),
       'title': title,
     };
   }
